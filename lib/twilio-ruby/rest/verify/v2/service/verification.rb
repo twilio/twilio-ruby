@@ -47,8 +47,9 @@ module Twilio
                     # @param [Object] rate_limits The custom key-value pairs of Programmable Rate Limits. Keys correspond to `unique_name` fields defined when [creating your Rate Limit](https://www.twilio.com/docs/verify/api/service-rate-limits). Associated value pairs represent values in the request that you are rate limiting on. You may include multiple Rate Limit values in each request.
                     # @param [Object] channel_configuration [`email`](https://www.twilio.com/docs/verify/email) channel configuration in json format. The fields 'from' and 'from_name' are optional but if included the 'from' field must have a valid email address.
                     # @param [String] app_hash Your [App Hash](https://developers.google.com/identity/sms-retriever/verify#computing_your_apps_hash_string) to be appended at the end of your verification SMS body. Applies only to SMS. Example SMS body: `<#> Your AppName verification code is: 1234 He42w354ol9`.
-                    # @param [String] template_sid The message [template](https://www.twilio.com/docs/verify/api/templates). If provided, will override the default template for the Service. SMS and Voice channels only.
+                    # @param [String] template_sid The message [template](https://www.twilio.com/docs/verify/api/templates). If provided, will override the default template for the Service. SMS and Voice channels only. If the `Templates` parameter is also provided, `Templates` takes precedence over this parameter.
                     # @param [String] template_custom_substitutions A stringified JSON object in which the keys are the template's special variables and the values are the variables substitutions.
+                    # @param [String] templates A stringified JSON array of template entries, ordered by preference. Each entry is an object with the following fields: `sid` (string, required, matching `^HJ[0-9a-fA-F]{32}$`) — the SID of the message [template](https://www.twilio.com/docs/verify/api/templates) to apply; and `substitutions` (object, optional) — a key-value map in which the keys are the template's special variables and the values are their substitution values. The array may contain up to 10 entries. If provided, `Templates` takes precedence over `TemplateSid` and `TemplateCustomSubstitutions`.
                     # @param [String] device_ip Strongly encouraged if using the auto channel. The IP address of the client's device. If provided, it has to be a valid IPv4 or IPv6 address.
                     # @param [Boolean] enable_sna_client_token An optional Boolean value to indicate the requirement of sna client token in the SNA URL invocation response for added security. This token must match in the Verification Check request to confirm phone number verification.
                     # @param [RiskCheck] risk_check 
@@ -69,6 +70,7 @@ module Twilio
                       app_hash: :unset, 
                       template_sid: :unset, 
                       template_custom_substitutions: :unset, 
+                      templates: :unset, 
                       device_ip: :unset, 
                       enable_sna_client_token: :unset, 
                       risk_check: :unset, 
@@ -90,6 +92,7 @@ module Twilio
                             'AppHash' => app_hash,
                             'TemplateSid' => template_sid,
                             'TemplateCustomSubstitutions' => template_custom_substitutions,
+                            'Templates' => templates,
                             'DeviceIp' => device_ip,
                             'EnableSnaClientToken' => enable_sna_client_token,
                             'RiskCheck' => risk_check,
@@ -124,8 +127,9 @@ module Twilio
                     # @param [Object] rate_limits The custom key-value pairs of Programmable Rate Limits. Keys correspond to `unique_name` fields defined when [creating your Rate Limit](https://www.twilio.com/docs/verify/api/service-rate-limits). Associated value pairs represent values in the request that you are rate limiting on. You may include multiple Rate Limit values in each request.
                     # @param [Object] channel_configuration [`email`](https://www.twilio.com/docs/verify/email) channel configuration in json format. The fields 'from' and 'from_name' are optional but if included the 'from' field must have a valid email address.
                     # @param [String] app_hash Your [App Hash](https://developers.google.com/identity/sms-retriever/verify#computing_your_apps_hash_string) to be appended at the end of your verification SMS body. Applies only to SMS. Example SMS body: `<#> Your AppName verification code is: 1234 He42w354ol9`.
-                    # @param [String] template_sid The message [template](https://www.twilio.com/docs/verify/api/templates). If provided, will override the default template for the Service. SMS and Voice channels only.
+                    # @param [String] template_sid The message [template](https://www.twilio.com/docs/verify/api/templates). If provided, will override the default template for the Service. SMS and Voice channels only. If the `Templates` parameter is also provided, `Templates` takes precedence over this parameter.
                     # @param [String] template_custom_substitutions A stringified JSON object in which the keys are the template's special variables and the values are the variables substitutions.
+                    # @param [String] templates A stringified JSON array of template entries, ordered by preference. Each entry is an object with the following fields: `sid` (string, required, matching `^HJ[0-9a-fA-F]{32}$`) — the SID of the message [template](https://www.twilio.com/docs/verify/api/templates) to apply; and `substitutions` (object, optional) — a key-value map in which the keys are the template's special variables and the values are their substitution values. The array may contain up to 10 entries. If provided, `Templates` takes precedence over `TemplateSid` and `TemplateCustomSubstitutions`.
                     # @param [String] device_ip Strongly encouraged if using the auto channel. The IP address of the client's device. If provided, it has to be a valid IPv4 or IPv6 address.
                     # @param [Boolean] enable_sna_client_token An optional Boolean value to indicate the requirement of sna client token in the SNA URL invocation response for added security. This token must match in the Verification Check request to confirm phone number verification.
                     # @param [RiskCheck] risk_check 
@@ -146,6 +150,7 @@ module Twilio
                       app_hash: :unset, 
                       template_sid: :unset, 
                       template_custom_substitutions: :unset, 
+                      templates: :unset, 
                       device_ip: :unset, 
                       enable_sna_client_token: :unset, 
                       risk_check: :unset, 
@@ -167,6 +172,7 @@ module Twilio
                             'AppHash' => app_hash,
                             'TemplateSid' => template_sid,
                             'TemplateCustomSubstitutions' => template_custom_substitutions,
+                            'Templates' => templates,
                             'DeviceIp' => device_ip,
                             'EnableSnaClientToken' => enable_sna_client_token,
                             'RiskCheck' => risk_check,

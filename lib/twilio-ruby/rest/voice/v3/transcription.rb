@@ -47,56 +47,6 @@ module Twilio
                         end
                     end
 
-                    class VoiceV3TranscriptionParticipant
-                            # @param [type]: [String] The role of this participant in the conversation.
-                            # @param [address]: [String] The phone number or identifier for this participant (E.164 format for phone numbers). Used to correlate this participant with their profile and conversation history. 
-                            # @param [name]: [String] User-defined name for this participant
-                            # @param [audio_channel_index]: [String] One-based index of the audio channel in a multi-channel recording
-                        attr_accessor :type, :address, :name, :audio_channel_index
-                        def initialize(payload)
-                                @type = payload["type"]
-                                @address = payload["address"]
-                                @name = payload["name"]
-                                @audio_channel_index = payload["audio_channel_index"]
-                        end
-                        def to_json(options = {})
-                        {
-                                "type": @type,
-                                "address": @address,
-                                "name": @name,
-                                "audioChannelIndex": @audio_channel_index,
-                        }.to_json(options)
-                        end
-                    end
-
-                    class VoiceV3TranscriptionResolvedConfiguration
-                            # @param [transcription_engine]: [String] The engine used for transcription (Deepgram, Google, or auto)
-                            # @param [speech_model]: [String] The speech model used for transcription (e.g., nova-2, nova-3, chirp_2)
-                            # @param [language]: [String] The language code for transcription
-                            # @param [transcription_status_callback]: [VoiceV3TranscriptionTranscriptionStatusCallback] 
-                            # @param [conversation_configuration_id]: [String] Maestro conversation configuration ID
-                            # @param [participant_defaults]: [Array<VoiceV3TranscriptionResolvedConfigurationParticipantDefaults>] Default participant configurations for the transcription
-                        attr_accessor :transcription_engine, :speech_model, :language, :transcription_status_callback, :conversation_configuration_id, :participant_defaults
-                        def initialize(payload)
-                                @transcription_engine = payload["transcription_engine"]
-                                @speech_model = payload["speech_model"]
-                                @language = payload["language"]
-                                @transcription_status_callback = payload["transcription_status_callback"]
-                                @conversation_configuration_id = payload["conversation_configuration_id"]
-                                @participant_defaults = payload["participant_defaults"]
-                        end
-                        def to_json(options = {})
-                        {
-                                "transcriptionEngine": @transcription_engine,
-                                "speechModel": @speech_model,
-                                "language": @language,
-                                "transcriptionStatusCallback": @transcription_status_callback,
-                                "conversationConfigurationId": @conversation_configuration_id,
-                                "participantDefaults": @participant_defaults,
-                        }.to_json(options)
-                        end
-                    end
-
                     class VoiceV3TranscriptionResolvedConfigurationParticipantDefaults
                             # @param [audio_channel_index]: [Integer] One-based index of the audio channel
                             # @param [type]: [String] The participant role type
@@ -199,6 +149,167 @@ module Twilio
                     end
 
                 
+                    ##
+                    # Lists TranscriptionInstance records from the API as a list.
+                    # Unlike stream(), this operation is eager and will load `limit` records into
+                    # memory before returning.
+                    # @param [Time] created_after Only include transcriptions created at or after this time (inclusive)
+                    # @param [Time] created_before Only include transcriptions created strictly before this time (exclusive)
+                    # @param [String] language_code Only include transcriptions whose resolved language matches this value exactly. The comparison is case sensitive, so use the stored form, for example en-US.
+                    # @param [String] source_id Only include transcriptions for this source audio. Must be a Recording SID in lowercase hex; anything else is rejected with a 400.
+                    # @param [String] status Only include transcriptions in this status
+                    # @param [String] page_token Opaque cursor for retrieving the next or previous page of results
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list(created_after: :unset, created_before: :unset, language_code: :unset, source_id: :unset, status: :unset, page_token: :unset, limit: nil, page_size: nil)
+                        self.stream(
+                            created_after: created_after,
+                            created_before: created_before,
+                            language_code: language_code,
+                            source_id: source_id,
+                            status: status,
+                            page_token: page_token,
+                            limit: limit,
+                            page_size: page_size
+                        ).entries
+                    end
+
+                    ##
+                    # Streams Instance records from the API as an Enumerable.
+                    # This operation lazily loads records as efficiently as possible until the limit
+                    # is reached.
+                    # @param [Time] created_after Only include transcriptions created at or after this time (inclusive)
+                    # @param [Time] created_before Only include transcriptions created strictly before this time (exclusive)
+                    # @param [String] language_code Only include transcriptions whose resolved language matches this value exactly. The comparison is case sensitive, so use the stored form, for example en-US.
+                    # @param [String] source_id Only include transcriptions for this source audio. Must be a Recording SID in lowercase hex; anything else is rejected with a 400.
+                    # @param [String] status Only include transcriptions in this status
+                    # @param [String] page_token Opaque cursor for retrieving the next or previous page of results
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Enumerable] Enumerable that will yield up to limit results
+                    def stream(created_after: :unset, created_before: :unset, language_code: :unset, source_id: :unset, status: :unset, page_token: :unset, limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+
+                        page = self.page(
+                            created_after: created_after,
+                            created_before: created_before,
+                            language_code: language_code,
+                            source_id: source_id,
+                            status: status,
+                            page_token: page_token,
+                            page_size: limits[:page_size], )
+
+                        return [].each if page.nil?
+
+                        result = @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
+                        return [].each if result.nil?
+                        result
+                    end
+
+                    ##
+                    # Lists TranscriptionPageMetadata records from the API as a list.
+                      # @param [Time] created_after Only include transcriptions created at or after this time (inclusive)
+                      # @param [Time] created_before Only include transcriptions created strictly before this time (exclusive)
+                      # @param [String] language_code Only include transcriptions whose resolved language matches this value exactly. The comparison is case sensitive, so use the stored form, for example en-US.
+                      # @param [String] source_id Only include transcriptions for this source audio. Must be a Recording SID in lowercase hex; anything else is rejected with a 400.
+                      # @param [String] status Only include transcriptions in this status
+                      # @param [String] page_token Opaque cursor for retrieving the next or previous page of results
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(created_after: :unset, created_before: :unset, language_code: :unset, source_id: :unset, status: :unset, page_token: :unset, limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            'createdAfter' =>  Twilio.serialize_iso8601_datetime(created_after),
+                            'createdBefore' =>  Twilio.serialize_iso8601_datetime(created_before),
+                            'languageCode' => language_code,
+                            'sourceId' => source_id,
+                            'status' => status,
+                            'pageToken' => page_token,
+                            
+                            'PageSize' => limits[:page_size],
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        TranscriptionPageMetadata.new(@version, response, @solution, limits[:limit])
+                    end
+
+                    ##
+                    # When passed a block, yields TranscriptionInstance records from the API.
+                    # This operation lazily loads records as efficiently as possible until the limit
+                    # is reached.
+                    def each
+                        limits = @version.read_limits
+
+                        page = self.page(page_size: limits[:page_size], )
+
+                        return [].each if page.nil?
+
+                        result = @version.stream(page,
+                            limit: limits[:limit],
+                            page_limit: limits[:page_limit])
+                        return [].each if result.nil?
+                        result.each {|x| yield x}
+                    end
+
+                    ##
+                    # Retrieve a single page of TranscriptionInstance records from the API.
+                    # Request is executed immediately.
+                    # @param [Time] created_after Only include transcriptions created at or after this time (inclusive)
+                    # @param [Time] created_before Only include transcriptions created strictly before this time (exclusive)
+                    # @param [String] language_code Only include transcriptions whose resolved language matches this value exactly. The comparison is case sensitive, so use the stored form, for example en-US.
+                    # @param [String] source_id Only include transcriptions for this source audio. Must be a Recording SID in lowercase hex; anything else is rejected with a 400.
+                    # @param [String] status Only include transcriptions in this status
+                    # @param [String] page_token Opaque cursor for retrieving the next or previous page of results
+                    
+                    # @return [Page] Page of TranscriptionInstance
+                    def page(created_after: :unset, created_before: :unset, language_code: :unset, source_id: :unset, status: :unset, page_token: :unset, page_size: :unset)
+                        params = Twilio::Values.of({
+                            'createdAfter' =>  Twilio.serialize_iso8601_datetime(created_after),
+                            'createdBefore' =>  Twilio.serialize_iso8601_datetime(created_before),
+                            'languageCode' => language_code,
+                            'sourceId' => source_id,
+                            'status' => status,
+                            'pageToken' => page_token,
+                                                        'PageSize' => page_size,
+                        })
+                        headers = Twilio::Values.of({})
+                        
+                        
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        TranscriptionPage.new(@version, response, @solution)
+                    end
+
+                    ##
+                    # Retrieve a single page of TranscriptionInstance records from the API.
+                    # Request is executed immediately.
+                    # @param [String] target_url API-generated URL for the requested results page
+                    # @return [Page] Page of TranscriptionInstance
+                    def get_page(target_url)
+                        response = @version.domain.request(
+                            'GET',
+                            target_url
+                        )
+                    TranscriptionPage.new(@version, response, @solution)
+                    end
+                    
 
 
                     # Provide a user friendly representation
@@ -443,6 +554,19 @@ module Twilio
                             'status_url' => payload['status_url'],
                             'transcription' => payload['transcription'],
                             'operation_id' => payload['operation_id'],
+                            'id' => payload['id'],
+                            'account_id' => payload['account_id'],
+                            'transcription_configuration_id' => payload['transcription_configuration_id'],
+                            'media_url' => payload['media_url'],
+                            'source_id' => payload['source_id'],
+                            'audio_started_at' => Twilio.deserialize_iso8601_datetime(payload['audio_started_at']),
+                            'conversation_id' => payload['conversation_id'],
+                            'participants' => payload['participants'],
+                            'duration' => payload['duration'] == nil ? payload['duration'] : payload['duration'].to_i,
+                            'resolved_configuration' => payload['resolved_configuration'],
+                            'created_at' => Twilio.deserialize_iso8601_datetime(payload['created_at']),
+                            'updated_at' => Twilio.deserialize_iso8601_datetime(payload['updated_at']),
+                            'url' => payload['url'],
                         }
 
                         # Context
@@ -483,6 +607,84 @@ module Twilio
                     # @return [String] Unique identifier for the transcription operation.
                     def operation_id
                         @properties['operation_id']
+                    end
+                    
+                    ##
+                    # @return [String] Unique identifier for a Transcription. This is also the transcriptionId returned in the LRO 202 response.
+                    def id
+                        @properties['id']
+                    end
+                    
+                    ##
+                    # @return [String] Twilio Account SID
+                    def account_id
+                        @properties['account_id']
+                    end
+                    
+                    ##
+                    # @return [String] Unique identifier for a Transcription configuration.
+                    def transcription_configuration_id
+                        @properties['transcription_configuration_id']
+                    end
+                    
+                    ##
+                    # @return [String] The third party media URL
+                    def media_url
+                        @properties['media_url']
+                    end
+                    
+                    ##
+                    # @return [String] The source ID (recording ID) - used for tracking only
+                    def source_id
+                        @properties['source_id']
+                    end
+                    
+                    ##
+                    # @return [Time] The call/recording start time. When the transcription was created using a sourceId, this value is inferred from the recording resource's start time. When created using a mediaUrl, this reflects the value supplied by the caller. 
+                    def audio_started_at
+                        @properties['audio_started_at']
+                    end
+                    
+                    ##
+                    # @return [String] Maestro conversation ID, populated once the transcription has been stored in Maestro.
+                    def conversation_id
+                        @properties['conversation_id']
+                    end
+                    
+                    ##
+                    # @return [Array<VoiceV3TranscriptionParticipant>] Array of participants in the conversation
+                    def participants
+                        @properties['participants']
+                    end
+                    
+                    ##
+                    # @return [String] Audio duration in seconds
+                    def duration
+                        @properties['duration']
+                    end
+                    
+                    ##
+                    # @return [VoiceV3TranscriptionResolvedConfiguration] 
+                    def resolved_configuration
+                        @properties['resolved_configuration']
+                    end
+                    
+                    ##
+                    # @return [Time] When this transcript was created
+                    def created_at
+                        @properties['created_at']
+                    end
+                    
+                    ##
+                    # @return [Time] When this transcript was last updated
+                    def updated_at
+                        @properties['updated_at']
+                    end
+                    
+                    ##
+                    # @return [String] The URL of this resource
+                    def url
+                        @properties['url']
                     end
                     
                     ##
