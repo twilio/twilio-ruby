@@ -1,6 +1,8 @@
 module Twilio
   module REST
     class Sync < SyncBase
+      # Autoload version classes
+      autoload :V1, File.join(__dir__, 'sync', 'v1.rb')
       ##
       # @param [String] sid The unique string that we created to identify the Service
       #   resource.

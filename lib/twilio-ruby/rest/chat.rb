@@ -1,6 +1,11 @@
 module Twilio
   module REST
     class Chat < ChatBase
+      # Autoload version classes
+      autoload :V1, File.join(__dir__, 'chat', 'v1.rb')
+      autoload :V2, File.join(__dir__, 'chat', 'v2.rb')
+      autoload :V3, File.join(__dir__, 'chat', 'v3.rb')
+
       ##
       # @param [String] sid The unique string that we created to identify the Credential
       #   resource.
