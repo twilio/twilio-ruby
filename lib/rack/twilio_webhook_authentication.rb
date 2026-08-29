@@ -28,19 +28,14 @@ module Rack
     def initialize(app, auth_token, *paths, &auth_token_lookup)
       @app = app
       @auth_token = auth_token
-      define_singleton_method(:get_auth_token, auth_token_lookup) if block_given?
+      define_singleton_method(:get_auth_token_for_sid, auth_token_lookup) if block_given?
       @path_regex = Regexp.union(paths)
     end
 
     def call(env)
       return @app.call(env) unless env['PATH_INFO'].match(@path_regex)
-      request = Rack::Request.new(env)
-      original_url = request.url
-      params = extract_params!(request)
-      auth_token = @auth_token || get_auth_token(params['AccountSid'])
-      validator = Twilio::Security::RequestValidator.new(auth_token)
-      signature = env['HTTP_X_TWILIO_SIGNATURE'] || ''
-      if validator.validate(original_url, params, signature)
+
+      if valid_request?(env)
         @app.call(env)
       else
         [
@@ -49,6 +44,31 @@ module Rack
           ['Twilio Request Validation Failed.']
         ]
       end
+    end
+
+    def valid_request?(env)
+      request = Rack::Request.new(env)
+      original_url = request.url
+      params = extract_params!(request)
+      signature = env['HTTP_X_TWILIO_SIGNATURE'] || ''
+
+      validators = build_validators(params['AccountSid'])
+
+      validators.any? { |validator| validator.validate(original_url, params, signature) }
+    end
+
+    private
+
+    def build_validators(account_sid)
+      get_auth_tokens(account_sid).map do |auth_token|
+        Twilio::Security::RequestValidator.new(auth_token)
+      end
+    end
+
+    def get_auth_tokens(account_sid)
+      tokens = @auth_token || get_auth_token_for_sid(account_sid)
+
+      [tokens].flatten
     end
 
     # Extract the params from the the request that we can use to determine the
@@ -66,7 +86,5 @@ module Rack
         body
       end
     end
-
-    private :extract_params!
   end
 end
