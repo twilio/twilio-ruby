@@ -39,7 +39,7 @@ describe Rack::TwilioWebhookAuthentication do
       expect(Twilio::Security::RequestValidator).to receive(:new).with(auth_token).and_return(request_validator)
       expect(request_validator).to receive(:validate).and_return(true)
       request = Rack::MockRequest.env_for('/voice')
-      status, headers, body = @middleware.call(request)
+      status, _headers, _body = @middleware.call(request)
       expect(status).to be(200)
     end
   end
@@ -52,7 +52,7 @@ describe Rack::TwilioWebhookAuthentication do
     it 'should not intercept when the path doesn\'t match' do
       expect(Twilio::Security::RequestValidator).to_not receive(:validate)
       request = Rack::MockRequest.env_for('/sms')
-      status, headers, body = @middleware.call(request)
+      status, _headers, _body = @middleware.call(request)
       expect(status).to be(200)
     end
 
@@ -61,7 +61,7 @@ describe Rack::TwilioWebhookAuthentication do
         receive(:validate).and_return(true)
       )
       request = Rack::MockRequest.env_for('/voice')
-      status, headers, body = @middleware.call(request)
+      status, _headers, _body = @middleware.call(request)
       expect(status).to be(200)
     end
 
@@ -70,7 +70,7 @@ describe Rack::TwilioWebhookAuthentication do
         receive(:validate).and_return(false)
       )
       request = Rack::MockRequest.env_for('/voice')
-      status, headers, body = @middleware.call(request)
+      status, _headers, _body = @middleware.call(request)
       expect(status).to be(403)
     end
   end
@@ -83,7 +83,7 @@ describe Rack::TwilioWebhookAuthentication do
     it 'should not intercept when the path doesn\'t match' do
       expect(Twilio::Security::RequestValidator).to_not receive(:validate)
       request = Rack::MockRequest.env_for('icesms')
-      status, headers, body = @middleware.call(request)
+      status, _headers, _body = @middleware.call(request)
       expect(status).to be(200)
     end
 
@@ -92,7 +92,7 @@ describe Rack::TwilioWebhookAuthentication do
         receive(:validate).and_return(true)
       )
       request = Rack::MockRequest.env_for('/sms')
-      status, headers, body = @middleware.call(request)
+      status, _headers, _body = @middleware.call(request)
       expect(status).to be(200)
     end
 
@@ -101,7 +101,7 @@ describe Rack::TwilioWebhookAuthentication do
         receive(:validate).and_return(false)
       )
       request = Rack::MockRequest.env_for('/sms')
-      status, headers, body = @middleware.call(request)
+      status, _headers, _body = @middleware.call(request)
       expect(status).to be(403)
     end
   end
@@ -119,7 +119,7 @@ describe Rack::TwilioWebhookAuthentication do
       request['HTTP_X_TWILIO_SIGNATURE'] = '+LYlbGr/VmN84YPJQCuWs+9UA7E='
       request['CONTENT_TYPE'] = 'application/json'
 
-      status, headers, body = middleware.call(request)
+      status, _headers, _body = middleware.call(request)
 
       expect(status).not_to be(200)
     end
@@ -136,7 +136,7 @@ describe Rack::TwilioWebhookAuthentication do
       request['HTTP_X_TWILIO_SIGNATURE'] = 'zR5Oq4f6cijN5oz5bisiVuxYnTU='
       request['CONTENT_TYPE'] = 'application/json'
 
-      status, headers, body = middleware.call(request)
+      status, _headers, _body = middleware.call(request)
 
       expect(status).to be(200)
     end
@@ -154,7 +154,7 @@ describe Rack::TwilioWebhookAuthentication do
       request['CONTENT_TYPE'] = 'application/json'
       request['rack.input'].read
 
-      status, headers, body = middleware.call(request)
+      status, _headers, _body = middleware.call(request)
 
       expect(status).to be(200)
     end
@@ -172,7 +172,7 @@ describe Rack::TwilioWebhookAuthentication do
       request['HTTP_X_TWILIO_SIGNATURE'] = 'foobarbaz'
       expect(request['CONTENT_TYPE']).to eq('application/x-www-form-urlencoded')
 
-      status, headers, body = middleware.call(request)
+      status, _headers, _body = middleware.call(request)
 
       expect(status).not_to be(200)
     end
@@ -188,7 +188,7 @@ describe Rack::TwilioWebhookAuthentication do
       request['HTTP_X_TWILIO_SIGNATURE'] = 'TR9Skm9jiF4WVRJznU5glK5I83k='
       expect(request['CONTENT_TYPE']).to eq('application/x-www-form-urlencoded')
 
-      status, headers, body = middleware.call(request)
+      status, _headers, _body = middleware.call(request)
 
       expect(status).to be(200)
     end
