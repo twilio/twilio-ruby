@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'rack/media_type'
+require 'rack/utils'
 
 module Rack
   # Middleware that authenticates webhooks from Twilio using the request
@@ -33,7 +34,7 @@ module Rack
     end
 
     def call(env)
-      return @app.call(env) unless env['PATH_INFO'].match(@path_regex)
+      return @app.call(env) unless protected_path?(env['PATH_INFO'])
       request = Rack::Request.new(env)
       original_url = request.url
       params = extract_params!(request)
@@ -49,6 +50,48 @@ module Rack
           ['Twilio Request Validation Failed.']
         ]
       end
+    end
+
+    # Decide whether a request path needs its signature validated.
+    #
+    # PATH_INFO arrives percent-encoded, but the routers we sit in front of
+    # (Rails, Sinatra) decode and normalize the path before matching it against
+    # their routes. Comparing the configured patterns against the raw PATH_INFO
+    # alone therefore lets a request like `/%76oice` slip past this middleware
+    # unvalidated and still reach the `/voice` action.
+    #
+    # We compare against every form the path could take downstream and validate
+    # if any of them matches. Erring towards validating means a path we can't
+    # make sense of is still checked rather than waved through.
+    def protected_path?(path)
+      path = path.to_s
+      candidates = [path, decode(path)]
+      candidates << remove_dot_segments(candidates.last)
+      candidates.uniq.any? { |candidate| candidate.match(@path_regex) }
+    end
+
+    # Percent-decode a path the way a downstream router would. `unescape_path`
+    # (rather than `unescape`) leaves `+` alone, since a plus is a literal plus
+    # in a path and only means a space in a query string. Undecodable bytes are
+    # scrubbed, as matching a Regexp against invalid UTF-8 raises.
+    def decode(path)
+      decoded = Rack::Utils.unescape_path(path)
+      decoded.valid_encoding? ? decoded : decoded.scrub
+    rescue ArgumentError
+      path
+    end
+
+    # Collapse `.`, `..` and repeated slashes, so an anchored pattern such as
+    # %r{\A/voice\z} still recognizes `/sms/../voice`.
+    def remove_dot_segments(path)
+      segments = path.split('/').each_with_object([]) do |segment, resolved|
+        case segment
+        when '', '.' then next
+        when '..' then resolved.pop
+        else resolved << segment
+        end
+      end
+      "/#{segments.join('/')}"
     end
 
     # Extract the params from the the request that we can use to determine the
@@ -67,6 +110,6 @@ module Rack
       end
     end
 
-    private :extract_params!
+    private :extract_params!, :protected_path?, :decode, :remove_dot_segments
   end
 end

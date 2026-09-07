@@ -106,6 +106,93 @@ describe Rack::TwilioWebhookAuthentication do
     end
   end
 
+  describe 'matching paths that a router would decode' do
+    before do
+      @middleware = Rack::TwilioWebhookAuthentication.new(@app, 'ABC', /\/voice/)
+    end
+
+    it 'should validate a percent-encoded path that resolves to a guarded one' do
+      expect_any_instance_of(Twilio::Security::RequestValidator).to(
+        receive(:validate).and_return(false)
+      )
+      request = Rack::MockRequest.env_for('/%76oice')
+      status, headers, body = @middleware.call(request)
+      expect(status).to be(403)
+    end
+
+    it 'should validate a fully percent-encoded path' do
+      expect_any_instance_of(Twilio::Security::RequestValidator).to(
+        receive(:validate).and_return(false)
+      )
+      request = Rack::MockRequest.env_for('/%76%6F%69%63%65')
+      status, headers, body = @middleware.call(request)
+      expect(status).to be(403)
+    end
+
+    it 'should validate when an encoded slash resolves to a guarded path' do
+      expect_any_instance_of(Twilio::Security::RequestValidator).to(
+        receive(:validate).and_return(false)
+      )
+      request = Rack::MockRequest.env_for('/sms%2F..%2Fvoice')
+      status, headers, body = @middleware.call(request)
+      expect(status).to be(403)
+    end
+
+    it 'should still allow an encoded path that is genuinely unguarded' do
+      expect(Twilio::Security::RequestValidator).to_not receive(:new)
+      request = Rack::MockRequest.env_for('/%73ms')
+      status, headers, body = @middleware.call(request)
+      expect(status).to be(200)
+    end
+
+    it 'should not raise on a path with undecodable bytes' do
+      expect(Twilio::Security::RequestValidator).to_not receive(:new)
+      request = Rack::MockRequest.env_for('/%FF%FEsms')
+      expect { @middleware.call(request) }.not_to raise_error
+    end
+
+    it 'should keep a plus in the path literal rather than reading it as a space' do
+      expect(Twilio::Security::RequestValidator).to_not receive(:new)
+      request = Rack::MockRequest.env_for('/vo+ice')
+      status, headers, body = @middleware.call(request)
+      expect(status).to be(200)
+    end
+  end
+
+  describe 'matching paths against an anchored pattern' do
+    before do
+      @middleware = Rack::TwilioWebhookAuthentication.new(@app, 'ABC', /\A\/voice\z/)
+    end
+
+    it 'should validate a path reached through dot segments' do
+      expect_any_instance_of(Twilio::Security::RequestValidator).to(
+        receive(:validate).and_return(false)
+      )
+      request = Rack::MockRequest.env_for('/sms/../voice')
+      status, headers, body = @middleware.call(request)
+      expect(status).to be(403)
+    end
+
+    it 'should validate a path reached through duplicate slashes' do
+      expect_any_instance_of(Twilio::Security::RequestValidator).to(
+        receive(:validate).and_return(false)
+      )
+      # Set PATH_INFO directly: env_for reads a leading `//` as the start of a
+      # protocol-relative URL rather than as a path.
+      request = Rack::MockRequest.env_for('/voice')
+      request['PATH_INFO'] = '//voice'
+      status, headers, body = @middleware.call(request)
+      expect(status).to be(403)
+    end
+
+    it 'should allow an unrelated path through' do
+      expect(Twilio::Security::RequestValidator).to_not receive(:new)
+      request = Rack::MockRequest.env_for('/sms')
+      status, headers, body = @middleware.call(request)
+      expect(status).to be(200)
+    end
+  end
+
   describe 'validating non-form-data POST payloads' do
     it 'should fail if the body does not validate' do
       middleware = Rack::TwilioWebhookAuthentication.new(@app, 'qwerty', /\/test/)
