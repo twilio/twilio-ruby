@@ -304,11 +304,10 @@ module Twilio
                             'createdAfter' =>  Twilio.serialize_iso8601_datetime(created_after),
                             'createdBefore' =>  Twilio.serialize_iso8601_datetime(created_before),
                             'conversationId' => conversation_id,
-                            'Accept-Encoding' => accept_encoding,
                             
                             'PageSize' => limits[:page_size],
                         });
-                        headers = Twilio::Values.of({})
+                        headers = Twilio::Values.of({ 'Accept-Encoding' => accept_encoding,  })
 
                         response = @version.page('GET', @uri, params: params, headers: headers)
 
@@ -353,10 +352,9 @@ module Twilio
                             'createdAfter' =>  Twilio.serialize_iso8601_datetime(created_after),
                             'createdBefore' =>  Twilio.serialize_iso8601_datetime(created_before),
                             'conversationId' => conversation_id,
-                            'Accept-Encoding' => accept_encoding,
                                                         'PageSize' => page_size,
                         })
-                        headers = Twilio::Values.of({})
+                        headers = Twilio::Values.of({ 'Accept-Encoding' => accept_encoding,  })
                         
                         
 

@@ -259,65 +259,6 @@ module Twilio
                     end
                 end
 
-                class UserDefinedMessageSubscriptionPageMetadata < PageMetadata
-                    attr_reader :user_defined_message_subscription_page
-
-                    def initialize(version, response, solution, limit)
-                        super(version, response)
-                        @user_defined_message_subscription_page = []
-                        @limit = limit
-                        key = get_key(response.body)
-                        records = 0
-                        while( limit != :unset && records < limit )
-                            @user_defined_message_subscription_page << UserDefinedMessageSubscriptionListResponse.new(version, @payload, key, limit - records)
-                            @payload = self.next_page
-                            break unless @payload
-                            records += (@payload.body[key] || []).size
-                        end
-                        # Path Solution
-                        @solution = solution
-                    end
-
-                    def each
-                        @user_defined_message_subscription_page.each do |record|
-                          yield record
-                        end
-                    end
-
-                    def to_s
-                      '<Twilio::REST::Api::V2010PageMetadata>';
-                    end
-                end
-                class UserDefinedMessageSubscriptionListResponse < InstanceListResource
-
-                    # @param [Array<UserDefinedMessageSubscriptionInstance>] instance
-                    # @param [Hash{String => Object}] headers
-                    # @param [Integer] status_code
-                    def initialize(version, payload, key, limit = :unset)
-                      data_list = payload.body[key]  || []
-                      if limit != :unset
-                        data_list = data_list[0, limit]
-                      end
-                      @user_defined_message_subscription = data_list.map do |data|
-                        UserDefinedMessageSubscriptionInstance.new(version, data)
-                      end
-                      @headers = payload.headers
-                      @status_code = payload.status_code
-                    end
-
-                    def user_defined_message_subscription
-                        @user_defined_message_subscription
-                    end
-
-                    def headers
-                      @headers
-                    end
-
-                    def status_code
-                      @status_code
-                    end
-                end
-
                 class UserDefinedMessageSubscriptionInstance < InstanceResource
                     ##
                     # Initialize the UserDefinedMessageSubscriptionInstance

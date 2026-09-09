@@ -212,65 +212,6 @@ module Twilio
                     end
                 end
 
-                class TaskQueueRealTimeStatisticsPageMetadata < PageMetadata
-                    attr_reader :task_queue_real_time_statistics_page
-
-                    def initialize(version, response, solution, limit)
-                        super(version, response)
-                        @task_queue_real_time_statistics_page = []
-                        @limit = limit
-                        key = get_key(response.body)
-                        records = 0
-                        while( limit != :unset && records < limit )
-                            @task_queue_real_time_statistics_page << TaskQueueRealTimeStatisticsListResponse.new(version, @payload, key, limit - records)
-                            @payload = self.next_page
-                            break unless @payload
-                            records += (@payload.body[key] || []).size
-                        end
-                        # Path Solution
-                        @solution = solution
-                    end
-
-                    def each
-                        @task_queue_real_time_statistics_page.each do |record|
-                          yield record
-                        end
-                    end
-
-                    def to_s
-                      '<Twilio::REST::Taskrouter::V1PageMetadata>';
-                    end
-                end
-                class TaskQueueRealTimeStatisticsListResponse < InstanceListResource
-
-                    # @param [Array<TaskQueueRealTimeStatisticsInstance>] instance
-                    # @param [Hash{String => Object}] headers
-                    # @param [Integer] status_code
-                    def initialize(version, payload, key, limit = :unset)
-                      data_list = payload.body[key]  || []
-                      if limit != :unset
-                        data_list = data_list[0, limit]
-                      end
-                      @task_queue_real_time_statistics = data_list.map do |data|
-                        TaskQueueRealTimeStatisticsInstance.new(version, data)
-                      end
-                      @headers = payload.headers
-                      @status_code = payload.status_code
-                    end
-
-                    def task_queue_real_time_statistics
-                        @task_queue_real_time_statistics
-                    end
-
-                    def headers
-                      @headers
-                    end
-
-                    def status_code
-                      @status_code
-                    end
-                end
-
                 class TaskQueueRealTimeStatisticsInstance < InstanceResource
                     ##
                     # Initialize the TaskQueueRealTimeStatisticsInstance

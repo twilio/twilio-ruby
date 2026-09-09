@@ -168,65 +168,6 @@ module Twilio
                     end
                 end
 
-                class ApproveChallengePageMetadata < PageMetadata
-                    attr_reader :approve_challenge_page
-
-                    def initialize(version, response, solution, limit)
-                        super(version, response)
-                        @approve_challenge_page = []
-                        @limit = limit
-                        key = get_key(response.body)
-                        records = 0
-                        while( limit != :unset && records < limit )
-                            @approve_challenge_page << ApproveChallengeListResponse.new(version, @payload, key, limit - records)
-                            @payload = self.next_page
-                            break unless @payload
-                            records += (@payload.body[key] || []).size
-                        end
-                        # Path Solution
-                        @solution = solution
-                    end
-
-                    def each
-                        @approve_challenge_page.each do |record|
-                          yield record
-                        end
-                    end
-
-                    def to_s
-                      '<Twilio::REST::Verify::V2PageMetadata>';
-                    end
-                end
-                class ApproveChallengeListResponse < InstanceListResource
-
-                    # @param [Array<ApproveChallengeInstance>] instance
-                    # @param [Hash{String => Object}] headers
-                    # @param [Integer] status_code
-                    def initialize(version, payload, key, limit = :unset)
-                      data_list = payload.body[key]  || []
-                      if limit != :unset
-                        data_list = data_list[0, limit]
-                      end
-                      @approve_challenge = data_list.map do |data|
-                        ApproveChallengeInstance.new(version, data)
-                      end
-                      @headers = payload.headers
-                      @status_code = payload.status_code
-                    end
-
-                    def approve_challenge
-                        @approve_challenge
-                    end
-
-                    def headers
-                      @headers
-                    end
-
-                    def status_code
-                      @status_code
-                    end
-                end
-
                 class ApproveChallengeInstance < InstanceResource
                     ##
                     # Initialize the ApproveChallengeInstance

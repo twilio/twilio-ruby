@@ -171,6 +171,72 @@ module Twilio
                         end
                     end
 
+                    class PatchConfigurationRequest
+                            # @param [display_name]: [String] A human-readable name for the configuration. Limited to 32 characters.
+                            # @param [description]: [String] Human-readable description for the configuration.
+                            # @param [conversation_grouping_type]: [String] Type of Conversation grouping strategy: - `GROUP_BY_PROFILE`: Groups Communications by resolved Profile from the Memory Store.   A Profile is looked up or created for `CUSTOMER` Participant types. All Communications from the same Profile are in the same Conversation, regardless of address or channel. - `GROUP_BY_PARTICIPANT_ADDRESSES`: Groups Communications by Participant addresses across all channels.   A customer using +18005550100 will be in the same Conversation whether they contact by SMS, WhatsApp, or RCS. - `GROUP_BY_PARTICIPANT_ADDRESSES_AND_CHANNEL_TYPE`: Groups Communications by both Participant addresses AND channel.   A customer using +18005550100 by SMS will be in a different Conversation than the same customer by Voice. 
+                            # @param [memory_store_id]: [String] The Memory Store ID for profile resolution.
+                            # @param [channel_settings]: [Hash<String, PatchConfigurationRequestChannelSettingsValue>] Channel-specific settings to merge onto the existing channelSettings map. A channel key mapped to a value replaces that channel's settings; a channel key explicitly mapped to null removes it; an omitted channel key is left untouched.
+                            # @param [status_callbacks]: [Array<ConfigurationList.UpdateConfigurationRequestStatusCallbacks>] 
+                            # @param [intelligence_configuration_ids]: [Array<String>] A list of Conversational Intelligence configuration IDs.
+                            # @param [memory_extraction_enabled]: [Boolean] Whether memory extraction is enabled for conversations under this configuration.
+                            # @param [conversations_v1_bridge]: [ConfigurationList.PatchConfigurationRequestConversationsV1Bridge] 
+                        attr_accessor :display_name, :description, :conversation_grouping_type, :memory_store_id, :channel_settings, :status_callbacks, :intelligence_configuration_ids, :memory_extraction_enabled, :conversations_v1_bridge
+                        def initialize(payload)
+                                @display_name = payload["display_name"]
+                                @description = payload["description"]
+                                @conversation_grouping_type = payload["conversation_grouping_type"]
+                                @memory_store_id = payload["memory_store_id"]
+                                @channel_settings = payload["channel_settings"]
+                                @status_callbacks = payload["status_callbacks"]
+                                @intelligence_configuration_ids = payload["intelligence_configuration_ids"]
+                                @memory_extraction_enabled = payload["memory_extraction_enabled"]
+                                @conversations_v1_bridge = payload["conversations_v1_bridge"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "displayName": @display_name,
+                                "description": @description,
+                                "conversationGroupingType": @conversation_grouping_type,
+                                "memoryStoreId": @memory_store_id,
+                                "channelSettings": @channel_settings,
+                                "statusCallbacks": @status_callbacks,
+                                "intelligenceConfigurationIds": @intelligence_configuration_ids,
+                                "memoryExtractionEnabled": @memory_extraction_enabled,
+                                "conversationsV1Bridge": @conversations_v1_bridge,
+                        }.to_json(options)
+                        end
+                    end
+
+                    class PatchConfigurationRequestChannelSettingsValue
+                            # @param [status_timeouts]: [UpdateConfigurationRequestChannelSettingsValueStatusTimeouts] 
+                            # @param [capture_rules]: [Array<UpdateConfigurationRequestChannelSettingsValueCaptureRules>] 
+                        attr_accessor :status_timeouts, :capture_rules
+                        def initialize(payload)
+                                @status_timeouts = payload["status_timeouts"]
+                                @capture_rules = payload["capture_rules"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "statusTimeouts": @status_timeouts,
+                                "captureRules": @capture_rules,
+                        }.to_json(options)
+                        end
+                    end
+
+                    class PatchConfigurationRequestConversationsV1Bridge
+                            # @param [service_id]: [String] The Conversations V1 Service SID (IS prefix). One configuration per V1 Service SID.
+                        attr_accessor :service_id
+                        def initialize(payload)
+                                @service_id = payload["service_id"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "serviceId": @service_id,
+                        }.to_json(options)
+                        end
+                    end
+
                     class UpdateConfigurationRequest
                             # @param [display_name]: [String] A human-readable name for the configuration. Limited to 32 characters.
                             # @param [description]: [String] Human-readable description for the configuration.
@@ -424,6 +490,395 @@ module Twilio
                         {
                                 "url": @url,
                                 "method": @method,
+                        }.to_json(options)
+                        end
+                    end
+
+                    class PatchConfigurationRequest
+                            # @param [display_name]: [String] A human-readable name for the configuration. Limited to 32 characters.
+                            # @param [description]: [String] Human-readable description for the configuration.
+                            # @param [conversation_grouping_type]: [String] Type of Conversation grouping strategy: - `GROUP_BY_PROFILE`: Groups Communications by resolved Profile from the Memory Store.   A Profile is looked up or created for `CUSTOMER` Participant types. All Communications from the same Profile are in the same Conversation, regardless of address or channel. - `GROUP_BY_PARTICIPANT_ADDRESSES`: Groups Communications by Participant addresses across all channels.   A customer using +18005550100 will be in the same Conversation whether they contact by SMS, WhatsApp, or RCS. - `GROUP_BY_PARTICIPANT_ADDRESSES_AND_CHANNEL_TYPE`: Groups Communications by both Participant addresses AND channel.   A customer using +18005550100 by SMS will be in a different Conversation than the same customer by Voice. 
+                            # @param [memory_store_id]: [String] The Memory Store ID for profile resolution.
+                            # @param [channel_settings]: [Hash<String, PatchConfigurationRequestChannelSettingsValue>] Channel-specific settings to merge onto the existing channelSettings map. A channel key mapped to a value replaces that channel's settings; a channel key explicitly mapped to null removes it; an omitted channel key is left untouched.
+                            # @param [status_callbacks]: [Array<ConfigurationList.UpdateConfigurationRequestStatusCallbacks>] 
+                            # @param [intelligence_configuration_ids]: [Array<String>] A list of Conversational Intelligence configuration IDs.
+                            # @param [memory_extraction_enabled]: [Boolean] Whether memory extraction is enabled for conversations under this configuration.
+                            # @param [conversations_v1_bridge]: [ConfigurationList.PatchConfigurationRequestConversationsV1Bridge] 
+                        attr_accessor :display_name, :description, :conversation_grouping_type, :memory_store_id, :channel_settings, :status_callbacks, :intelligence_configuration_ids, :memory_extraction_enabled, :conversations_v1_bridge
+                        def initialize(payload)
+                                @display_name = payload["display_name"]
+                                @description = payload["description"]
+                                @conversation_grouping_type = payload["conversation_grouping_type"]
+                                @memory_store_id = payload["memory_store_id"]
+                                @channel_settings = payload["channel_settings"]
+                                @status_callbacks = payload["status_callbacks"]
+                                @intelligence_configuration_ids = payload["intelligence_configuration_ids"]
+                                @memory_extraction_enabled = payload["memory_extraction_enabled"]
+                                @conversations_v1_bridge = payload["conversations_v1_bridge"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "displayName": @display_name,
+                                "description": @description,
+                                "conversationGroupingType": @conversation_grouping_type,
+                                "memoryStoreId": @memory_store_id,
+                                "channelSettings": @channel_settings,
+                                "statusCallbacks": @status_callbacks,
+                                "intelligenceConfigurationIds": @intelligence_configuration_ids,
+                                "memoryExtractionEnabled": @memory_extraction_enabled,
+                                "conversationsV1Bridge": @conversations_v1_bridge,
+                        }.to_json(options)
+                        end
+                    end
+
+                    class PatchConfigurationRequestChannelSettingsValue
+                            # @param [status_timeouts]: [UpdateConfigurationRequestChannelSettingsValueStatusTimeouts] 
+                            # @param [capture_rules]: [Array<UpdateConfigurationRequestChannelSettingsValueCaptureRules>] 
+                        attr_accessor :status_timeouts, :capture_rules
+                        def initialize(payload)
+                                @status_timeouts = payload["status_timeouts"]
+                                @capture_rules = payload["capture_rules"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "statusTimeouts": @status_timeouts,
+                                "captureRules": @capture_rules,
+                        }.to_json(options)
+                        end
+                    end
+
+                    class PatchConfigurationRequestConversationsV1Bridge
+                            # @param [service_id]: [String] The Conversations V1 Service SID (IS prefix). One configuration per V1 Service SID.
+                        attr_accessor :service_id
+                        def initialize(payload)
+                                @service_id = payload["service_id"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "serviceId": @service_id,
+                        }.to_json(options)
+                        end
+                    end
+
+                    class UpdateConfigurationRequest
+                            # @param [display_name]: [String] A human-readable name for the configuration. Limited to 32 characters.
+                            # @param [description]: [String] Human-readable description for the configuration.
+                            # @param [conversation_grouping_type]: [String] Type of Conversation grouping strategy: - `GROUP_BY_PROFILE`: Groups Communications by resolved Profile from the Memory Store.   A Profile is looked up or created for `CUSTOMER` Participant types. All Communications from the same Profile are in the same Conversation, regardless of address or channel. - `GROUP_BY_PARTICIPANT_ADDRESSES`: Groups Communications by Participant addresses across all channels.   A customer using +18005550100 will be in the same Conversation whether they contact by SMS, WhatsApp, or RCS. - `GROUP_BY_PARTICIPANT_ADDRESSES_AND_CHANNEL_TYPE`: Groups Communications by both Participant addresses AND channel.   A customer using +18005550100 by SMS will be in a different Conversation than the same customer by Voice. 
+                            # @param [memory_store_id]: [String] The Memory Store ID for profile resolution.
+                            # @param [channel_settings]: [Hash<String, UpdateConfigurationRequestChannelSettingsValue>] 
+                            # @param [status_callbacks]: [Array<ConfigurationList.UpdateConfigurationRequestStatusCallbacks>] 
+                            # @param [intelligence_configuration_ids]: [Array<String>] A list of Conversational Intelligence configuration IDs.
+                            # @param [memory_extraction_enabled]: [Boolean] Whether memory extraction is enabled for conversations under this configuration. Defaults to false.
+                            # @param [conversations_v1_bridge]: [ConfigurationList.CreateConfigurationRequestConversationsV1Bridge] 
+                        attr_accessor :display_name, :description, :conversation_grouping_type, :memory_store_id, :channel_settings, :status_callbacks, :intelligence_configuration_ids, :memory_extraction_enabled, :conversations_v1_bridge
+                        def initialize(payload)
+                                @display_name = payload["display_name"]
+                                @description = payload["description"]
+                                @conversation_grouping_type = payload["conversation_grouping_type"]
+                                @memory_store_id = payload["memory_store_id"]
+                                @channel_settings = payload["channel_settings"]
+                                @status_callbacks = payload["status_callbacks"]
+                                @intelligence_configuration_ids = payload["intelligence_configuration_ids"]
+                                @memory_extraction_enabled = payload["memory_extraction_enabled"]
+                                @conversations_v1_bridge = payload["conversations_v1_bridge"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "displayName": @display_name,
+                                "description": @description,
+                                "conversationGroupingType": @conversation_grouping_type,
+                                "memoryStoreId": @memory_store_id,
+                                "channelSettings": @channel_settings,
+                                "statusCallbacks": @status_callbacks,
+                                "intelligenceConfigurationIds": @intelligence_configuration_ids,
+                                "memoryExtractionEnabled": @memory_extraction_enabled,
+                                "conversationsV1Bridge": @conversations_v1_bridge,
+                        }.to_json(options)
+                        end
+                    end
+
+                    class UpdateConfigurationRequestChannelSettingsValue
+                            # @param [status_timeouts]: [UpdateConfigurationRequestChannelSettingsValueStatusTimeouts] 
+                            # @param [capture_rules]: [Array<UpdateConfigurationRequestChannelSettingsValueCaptureRules>] 
+                        attr_accessor :status_timeouts, :capture_rules
+                        def initialize(payload)
+                                @status_timeouts = payload["status_timeouts"]
+                                @capture_rules = payload["capture_rules"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "statusTimeouts": @status_timeouts,
+                                "captureRules": @capture_rules,
+                        }.to_json(options)
+                        end
+                    end
+
+                    class UpdateConfigurationRequestChannelSettingsValueCaptureRules
+                            # @param [from]: [String] 
+                            # @param [to]: [String] 
+                            # @param [metadata]: [Hash<String, String>] 
+                        attr_accessor :from, :to, :metadata
+                        def initialize(payload)
+                                @from = payload["from"]
+                                @to = payload["to"]
+                                @metadata = payload["metadata"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "from": @from,
+                                "to": @to,
+                                "metadata": @metadata,
+                        }.to_json(options)
+                        end
+                    end
+
+                    class UpdateConfigurationRequestChannelSettingsValueStatusTimeouts
+                            # @param [inactive]: [Integer] 
+                            # @param [closed]: [Integer] 
+                        attr_accessor :inactive, :closed
+                        def initialize(payload)
+                                @inactive = payload["inactive"]
+                                @closed = payload["closed"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "inactive": @inactive,
+                                "closed": @closed,
+                        }.to_json(options)
+                        end
+                    end
+
+                    class UpdateConfigurationRequestStatusCallbacks
+                            # @param [url]: [String] 
+                            # @param [method]: [String] 
+                        attr_accessor :url, :method
+                        def initialize(payload)
+                                @url = payload["url"]
+                                @method = payload["method"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "url": @url,
+                                "method": @method,
+                        }.to_json(options)
+                        end
+                    end
+
+
+                    class ConversationsV2CaptureRule
+                            # @param [from]: [String] The from address. Use `*` for wildcard to match any from address.
+                            # @param [to]: [String] The to address. Use `*` for wildcard to match any to address.
+                            # @param [metadata]: [Hash<String, String>] Additional matching criteria for the capture rule. For voice calls, can include `callType` (`PSTN`, `SIP`, and similar).
+                        attr_accessor :from, :to, :metadata
+                        def initialize(payload)
+                                @from = payload["from"]
+                                @to = payload["to"]
+                                @metadata = payload["metadata"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "from": @from,
+                                "to": @to,
+                                "metadata": @metadata,
+                        }.to_json(options)
+                        end
+                    end
+
+                    class ConversationsV2StatusTimeouts
+                            # @param [inactive]: [Integer] Inactivity timeout in minutes.
+                            # @param [closed]: [Integer] Close timeout in minutes.
+                        attr_accessor :inactive, :closed
+                        def initialize(payload)
+                                @inactive = payload["inactive"]
+                                @closed = payload["closed"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "inactive": @inactive,
+                                "closed": @closed,
+                        }.to_json(options)
+                        end
+                    end
+
+                    class CreateConfigurationRequest
+                            # @param [display_name]: [String] A human-readable name for the configuration. Limited to 32 characters.
+                            # @param [description]: [String] Human-readable description for the configuration.
+                            # @param [conversation_grouping_type]: [String] Type of Conversation grouping strategy: - `GROUP_BY_PROFILE`: Groups Communications by resolved Profile from the Memory Store.   A Profile is looked up or created for `CUSTOMER` Participant types. All Communications from the same Profile are in the same Conversation, regardless of address or channel. - `GROUP_BY_PARTICIPANT_ADDRESSES`: Groups Communications by Participant addresses across all channels.   A customer using +18005550100 will be in the same Conversation whether they contact by SMS, WhatsApp, or RCS. - `GROUP_BY_PARTICIPANT_ADDRESSES_AND_CHANNEL_TYPE`: Groups Communications by both Participant addresses AND channel.   A customer using +18005550100 by SMS will be in a different Conversation than the same customer by Voice. 
+                            # @param [memory_store_id]: [String] The memory store ID that Conversation Orchestrator uses for profile resolution.
+                            # @param [channel_settings]: [Hash<String, CreateConfigurationRequestChannelSettingsValue>] 
+                            # @param [status_callbacks]: [Array<ConfigurationList.CreateConfigurationRequestStatusCallbacks>] A list of webhook configurations.
+                            # @param [intelligence_configuration_ids]: [Array<String>] A list of Conversational Intelligence configuration IDs.
+                            # @param [memory_extraction_enabled]: [Boolean] Whether memory extraction is enabled for conversations under this configuration. Defaults to false.
+                            # @param [conversations_v1_bridge]: [ConfigurationList.CreateConfigurationRequestConversationsV1Bridge] 
+                        attr_accessor :display_name, :description, :conversation_grouping_type, :memory_store_id, :channel_settings, :status_callbacks, :intelligence_configuration_ids, :memory_extraction_enabled, :conversations_v1_bridge
+                        def initialize(payload)
+                                @display_name = payload["display_name"]
+                                @description = payload["description"]
+                                @conversation_grouping_type = payload["conversation_grouping_type"]
+                                @memory_store_id = payload["memory_store_id"]
+                                @channel_settings = payload["channel_settings"]
+                                @status_callbacks = payload["status_callbacks"]
+                                @intelligence_configuration_ids = payload["intelligence_configuration_ids"]
+                                @memory_extraction_enabled = payload["memory_extraction_enabled"]
+                                @conversations_v1_bridge = payload["conversations_v1_bridge"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "displayName": @display_name,
+                                "description": @description,
+                                "conversationGroupingType": @conversation_grouping_type,
+                                "memoryStoreId": @memory_store_id,
+                                "channelSettings": @channel_settings,
+                                "statusCallbacks": @status_callbacks,
+                                "intelligenceConfigurationIds": @intelligence_configuration_ids,
+                                "memoryExtractionEnabled": @memory_extraction_enabled,
+                                "conversationsV1Bridge": @conversations_v1_bridge,
+                        }.to_json(options)
+                        end
+                    end
+
+                    class CreateConfigurationRequestChannelSettingsValue
+                            # @param [status_timeouts]: [CreateConfigurationRequestChannelSettingsValueStatusTimeouts] 
+                            # @param [capture_rules]: [Array<CreateConfigurationRequestChannelSettingsValueCaptureRules>] 
+                        attr_accessor :status_timeouts, :capture_rules
+                        def initialize(payload)
+                                @status_timeouts = payload["status_timeouts"]
+                                @capture_rules = payload["capture_rules"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "statusTimeouts": @status_timeouts,
+                                "captureRules": @capture_rules,
+                        }.to_json(options)
+                        end
+                    end
+
+                    class CreateConfigurationRequestChannelSettingsValueCaptureRules
+                            # @param [from]: [String] The from address. Use '*' for wildcard.
+                            # @param [to]: [String] The to address. Use '*' for wildcard.
+                            # @param [metadata]: [Hash<String, String>] 
+                        attr_accessor :from, :to, :metadata
+                        def initialize(payload)
+                                @from = payload["from"]
+                                @to = payload["to"]
+                                @metadata = payload["metadata"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "from": @from,
+                                "to": @to,
+                                "metadata": @metadata,
+                        }.to_json(options)
+                        end
+                    end
+
+                    class CreateConfigurationRequestChannelSettingsValueStatusTimeouts
+                            # @param [inactive]: [Integer] The inactivity timeout in minutes. For more information, see [Conversation lifecycle](/docs/platform/conversations/concepts/lifecycle).
+                            # @param [closed]: [Integer] The close timeout in minutes. For more information, see [Conversation lifecycle](/docs/platform/conversations/concepts/lifecycle).
+                        attr_accessor :inactive, :closed
+                        def initialize(payload)
+                                @inactive = payload["inactive"]
+                                @closed = payload["closed"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "inactive": @inactive,
+                                "closed": @closed,
+                        }.to_json(options)
+                        end
+                    end
+
+                    class CreateConfigurationRequestConversationsV1Bridge
+                            # @param [service_id]: [String] The Conversations V1 Service SID (IS prefix). One configuration per V1 Service SID.
+                        attr_accessor :service_id
+                        def initialize(payload)
+                                @service_id = payload["service_id"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "serviceId": @service_id,
+                        }.to_json(options)
+                        end
+                    end
+
+                    class CreateConfigurationRequestStatusCallbacks
+                            # @param [url]: [String] The destination URL for webhooks.
+                            # @param [method]: [String] The HTTP method used to invoke the webhook URL.
+                        attr_accessor :url, :method
+                        def initialize(payload)
+                                @url = payload["url"]
+                                @method = payload["method"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "url": @url,
+                                "method": @method,
+                        }.to_json(options)
+                        end
+                    end
+
+                    class PatchConfigurationRequest
+                            # @param [display_name]: [String] A human-readable name for the configuration. Limited to 32 characters.
+                            # @param [description]: [String] Human-readable description for the configuration.
+                            # @param [conversation_grouping_type]: [String] Type of Conversation grouping strategy: - `GROUP_BY_PROFILE`: Groups Communications by resolved Profile from the Memory Store.   A Profile is looked up or created for `CUSTOMER` Participant types. All Communications from the same Profile are in the same Conversation, regardless of address or channel. - `GROUP_BY_PARTICIPANT_ADDRESSES`: Groups Communications by Participant addresses across all channels.   A customer using +18005550100 will be in the same Conversation whether they contact by SMS, WhatsApp, or RCS. - `GROUP_BY_PARTICIPANT_ADDRESSES_AND_CHANNEL_TYPE`: Groups Communications by both Participant addresses AND channel.   A customer using +18005550100 by SMS will be in a different Conversation than the same customer by Voice. 
+                            # @param [memory_store_id]: [String] The Memory Store ID for profile resolution.
+                            # @param [channel_settings]: [Hash<String, PatchConfigurationRequestChannelSettingsValue>] Channel-specific settings to merge onto the existing channelSettings map. A channel key mapped to a value replaces that channel's settings; a channel key explicitly mapped to null removes it; an omitted channel key is left untouched.
+                            # @param [status_callbacks]: [Array<ConfigurationList.UpdateConfigurationRequestStatusCallbacks>] 
+                            # @param [intelligence_configuration_ids]: [Array<String>] A list of Conversational Intelligence configuration IDs.
+                            # @param [memory_extraction_enabled]: [Boolean] Whether memory extraction is enabled for conversations under this configuration.
+                            # @param [conversations_v1_bridge]: [ConfigurationList.PatchConfigurationRequestConversationsV1Bridge] 
+                        attr_accessor :display_name, :description, :conversation_grouping_type, :memory_store_id, :channel_settings, :status_callbacks, :intelligence_configuration_ids, :memory_extraction_enabled, :conversations_v1_bridge
+                        def initialize(payload)
+                                @display_name = payload["display_name"]
+                                @description = payload["description"]
+                                @conversation_grouping_type = payload["conversation_grouping_type"]
+                                @memory_store_id = payload["memory_store_id"]
+                                @channel_settings = payload["channel_settings"]
+                                @status_callbacks = payload["status_callbacks"]
+                                @intelligence_configuration_ids = payload["intelligence_configuration_ids"]
+                                @memory_extraction_enabled = payload["memory_extraction_enabled"]
+                                @conversations_v1_bridge = payload["conversations_v1_bridge"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "displayName": @display_name,
+                                "description": @description,
+                                "conversationGroupingType": @conversation_grouping_type,
+                                "memoryStoreId": @memory_store_id,
+                                "channelSettings": @channel_settings,
+                                "statusCallbacks": @status_callbacks,
+                                "intelligenceConfigurationIds": @intelligence_configuration_ids,
+                                "memoryExtractionEnabled": @memory_extraction_enabled,
+                                "conversationsV1Bridge": @conversations_v1_bridge,
+                        }.to_json(options)
+                        end
+                    end
+
+                    class PatchConfigurationRequestChannelSettingsValue
+                            # @param [status_timeouts]: [UpdateConfigurationRequestChannelSettingsValueStatusTimeouts] 
+                            # @param [capture_rules]: [Array<UpdateConfigurationRequestChannelSettingsValueCaptureRules>] 
+                        attr_accessor :status_timeouts, :capture_rules
+                        def initialize(payload)
+                                @status_timeouts = payload["status_timeouts"]
+                                @capture_rules = payload["capture_rules"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "statusTimeouts": @status_timeouts,
+                                "captureRules": @capture_rules,
+                        }.to_json(options)
+                        end
+                    end
+
+                    class PatchConfigurationRequestConversationsV1Bridge
+                            # @param [service_id]: [String] The Conversations V1 Service SID (IS prefix). One configuration per V1 Service SID.
+                        attr_accessor :service_id
+                        def initialize(payload)
+                                @service_id = payload["service_id"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "serviceId": @service_id,
                         }.to_json(options)
                         end
                     end
@@ -842,6 +1297,60 @@ module Twilio
                     end
 
                     ##
+                    # Patch the ConfigurationInstance
+                    # @param [String] idempotency_key Client-generated UUID key to ensure idempotent behavior. Submitting the same key returns the original response without creating a duplicate operation. Keys are scoped to account + region with a 24-hour TTL.
+                    # @param [PatchConfigurationRequest] patch_configuration_request The partial configuration update.
+                    # @return [ConfigurationInstance] Patched ConfigurationInstance
+                    def patch(
+                      idempotency_key: :unset,
+                      patch_configuration_request: :unset
+                    )
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', 'Idempotency-Key' => idempotency_key, })
+                        headers['Content-Type'] = 'application/json'
+                        
+                        
+                        
+                        
+                        payload = @version.patch('PATCH', @uri, headers: headers, data: patch_configuration_request.to_json)
+                        ConfigurationInstance.new(
+                            @version,
+                            payload,
+                            id: @solution[:id],
+                        )
+                    end
+
+                    ##
+                    # Patch the ConfigurationInstanceMetadata
+                    # @param [String] idempotency_key Client-generated UUID key to ensure idempotent behavior. Submitting the same key returns the original response without creating a duplicate operation. Keys are scoped to account + region with a 24-hour TTL.
+                    # @param [PatchConfigurationRequest] patch_configuration_request The partial configuration update.
+                    # @return [ConfigurationInstance] Patchd ConfigurationInstance
+                    def patch_with_metadata(
+                      idempotency_key: :unset,
+                    patch_configuration_request: :unset
+                    )
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', 'Idempotency-Key' => idempotency_key, })
+                        headers['Content-Type'] = 'application/json'
+                        
+                        
+                        
+                        
+                        response = @version.patch_with_metadata('PATCH', @uri, headers: headers, data: patch_configuration_request.to_json)
+                        configuration_instance = ConfigurationInstance.new(
+                            @version,
+                            response.body,
+                            id: @solution[:id],
+                        )
+                        ConfigurationInstanceMetadata.new(
+                            @version,
+                            configuration_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
+                    ##
                     # Update the ConfigurationInstance
                     # @param [String] idempotency_key Client-generated UUID key to ensure idempotent behavior. Submitting the same key returns the original response without creating a duplicate operation. Keys are scoped to account + region with a 24-hour TTL.
                     # @param [UpdateConfigurationRequest] update_configuration_request The configuration to update
@@ -1207,6 +1716,22 @@ module Twilio
                     def fetch
 
                         context.fetch
+                    end
+
+                    ##
+                    # Patch the ConfigurationInstance
+                    # @param [String] idempotency_key Client-generated UUID key to ensure idempotent behavior. Submitting the same key returns the original response without creating a duplicate operation. Keys are scoped to account + region with a 24-hour TTL.
+                    # @param [PatchConfigurationRequest] patch_configuration_request The partial configuration update.
+                    # @return [ConfigurationInstance] Patched ConfigurationInstance
+                    def patch(
+                      idempotency_key: :unset,
+                      patch_configuration_request: :unset
+                    )
+
+                        context.patch(
+                            idempotency_key: idempotency_key, 
+                            patch_configuration_request: patch_configuration_request, 
+                        )
                     end
 
                     ##

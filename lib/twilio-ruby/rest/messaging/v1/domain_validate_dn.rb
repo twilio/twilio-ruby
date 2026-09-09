@@ -194,65 +194,6 @@ module Twilio
                     end
                 end
 
-                class DomainValidateDnPageMetadata < PageMetadata
-                    attr_reader :domain_validate_dn_page
-
-                    def initialize(version, response, solution, limit)
-                        super(version, response)
-                        @domain_validate_dn_page = []
-                        @limit = limit
-                        key = get_key(response.body)
-                        records = 0
-                        while( limit != :unset && records < limit )
-                            @domain_validate_dn_page << DomainValidateDnListResponse.new(version, @payload, key, limit - records)
-                            @payload = self.next_page
-                            break unless @payload
-                            records += (@payload.body[key] || []).size
-                        end
-                        # Path Solution
-                        @solution = solution
-                    end
-
-                    def each
-                        @domain_validate_dn_page.each do |record|
-                          yield record
-                        end
-                    end
-
-                    def to_s
-                      '<Twilio::REST::Messaging::V1PageMetadata>';
-                    end
-                end
-                class DomainValidateDnListResponse < InstanceListResource
-
-                    # @param [Array<DomainValidateDnInstance>] instance
-                    # @param [Hash{String => Object}] headers
-                    # @param [Integer] status_code
-                    def initialize(version, payload, key, limit = :unset)
-                      data_list = payload.body[key]  || []
-                      if limit != :unset
-                        data_list = data_list[0, limit]
-                      end
-                      @domain_validate_dn = data_list.map do |data|
-                        DomainValidateDnInstance.new(version, data)
-                      end
-                      @headers = payload.headers
-                      @status_code = payload.status_code
-                    end
-
-                    def domain_validate_dn
-                        @domain_validate_dn
-                    end
-
-                    def headers
-                      @headers
-                    end
-
-                    def status_code
-                      @status_code
-                    end
-                end
-
                 class DomainValidateDnInstance < InstanceResource
                     ##
                     # Initialize the DomainValidateDnInstance

@@ -200,65 +200,6 @@ module Twilio
                     end
                 end
 
-                class EngagementContextPageMetadata < PageMetadata
-                    attr_reader :engagement_context_page
-
-                    def initialize(version, response, solution, limit)
-                        super(version, response)
-                        @engagement_context_page = []
-                        @limit = limit
-                        key = get_key(response.body)
-                        records = 0
-                        while( limit != :unset && records < limit )
-                            @engagement_context_page << EngagementContextListResponse.new(version, @payload, key, limit - records)
-                            @payload = self.next_page
-                            break unless @payload
-                            records += (@payload.body[key] || []).size
-                        end
-                        # Path Solution
-                        @solution = solution
-                    end
-
-                    def each
-                        @engagement_context_page.each do |record|
-                          yield record
-                        end
-                    end
-
-                    def to_s
-                      '<Twilio::REST::Studio::V1PageMetadata>';
-                    end
-                end
-                class EngagementContextListResponse < InstanceListResource
-
-                    # @param [Array<EngagementContextInstance>] instance
-                    # @param [Hash{String => Object}] headers
-                    # @param [Integer] status_code
-                    def initialize(version, payload, key, limit = :unset)
-                      data_list = payload.body[key]  || []
-                      if limit != :unset
-                        data_list = data_list[0, limit]
-                      end
-                      @engagement_context = data_list.map do |data|
-                        EngagementContextInstance.new(version, data)
-                      end
-                      @headers = payload.headers
-                      @status_code = payload.status_code
-                    end
-
-                    def engagement_context
-                        @engagement_context
-                    end
-
-                    def headers
-                      @headers
-                    end
-
-                    def status_code
-                      @status_code
-                    end
-                end
-
                 class EngagementContextInstance < InstanceResource
                     ##
                     # Initialize the EngagementContextInstance

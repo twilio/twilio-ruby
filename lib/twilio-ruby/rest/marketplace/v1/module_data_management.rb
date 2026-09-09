@@ -288,65 +288,6 @@ module Twilio
                     end
                 end
 
-                class ModuleDataManagementPageMetadata < PageMetadata
-                    attr_reader :module_data_management_page
-
-                    def initialize(version, response, solution, limit)
-                        super(version, response)
-                        @module_data_management_page = []
-                        @limit = limit
-                        key = get_key(response.body)
-                        records = 0
-                        while( limit != :unset && records < limit )
-                            @module_data_management_page << ModuleDataManagementListResponse.new(version, @payload, key, limit - records)
-                            @payload = self.next_page
-                            break unless @payload
-                            records += (@payload.body[key] || []).size
-                        end
-                        # Path Solution
-                        @solution = solution
-                    end
-
-                    def each
-                        @module_data_management_page.each do |record|
-                          yield record
-                        end
-                    end
-
-                    def to_s
-                      '<Twilio::REST::Marketplace::V1PageMetadata>';
-                    end
-                end
-                class ModuleDataManagementListResponse < InstanceListResource
-
-                    # @param [Array<ModuleDataManagementInstance>] instance
-                    # @param [Hash{String => Object}] headers
-                    # @param [Integer] status_code
-                    def initialize(version, payload, key, limit = :unset)
-                      data_list = payload.body[key]  || []
-                      if limit != :unset
-                        data_list = data_list[0, limit]
-                      end
-                      @module_data_management = data_list.map do |data|
-                        ModuleDataManagementInstance.new(version, data)
-                      end
-                      @headers = payload.headers
-                      @status_code = payload.status_code
-                    end
-
-                    def module_data_management
-                        @module_data_management
-                    end
-
-                    def headers
-                      @headers
-                    end
-
-                    def status_code
-                      @status_code
-                    end
-                end
-
                 class ModuleDataManagementInstance < InstanceResource
                     ##
                     # Initialize the ModuleDataManagementInstance

@@ -46,7 +46,7 @@ module Twilio
                     # @return [TokenInstance] Created TokenInstance
                     def create(
                       account_sid: :unset, 
-                      grant_type: :unset, 
+                      grant_type: nil, 
                       client_id: :unset, 
                       client_secret: :unset, 
                       code: :unset, 
@@ -100,7 +100,7 @@ module Twilio
                     # @return [TokenInstance] Created TokenInstance
                     def create_with_metadata(
                       account_sid: :unset, 
-                      grant_type: :unset, 
+                      grant_type: nil, 
                       client_id: :unset, 
                       client_secret: :unset, 
                       code: :unset, 
@@ -181,65 +181,6 @@ module Twilio
                     # Provide a user friendly representation
                     def to_s
                         '<Twilio.Oauth.V2.TokenPage>'
-                    end
-                end
-
-                class TokenPageMetadata < PageMetadata
-                    attr_reader :token_page
-
-                    def initialize(version, response, solution, limit)
-                        super(version, response)
-                        @token_page = []
-                        @limit = limit
-                        key = get_key(response.body)
-                        records = 0
-                        while( limit != :unset && records < limit )
-                            @token_page << TokenListResponse.new(version, @payload, key, limit - records)
-                            @payload = self.next_page
-                            break unless @payload
-                            records += (@payload.body[key] || []).size
-                        end
-                        # Path Solution
-                        @solution = solution
-                    end
-
-                    def each
-                        @token_page.each do |record|
-                          yield record
-                        end
-                    end
-
-                    def to_s
-                      '<Twilio::REST::Oauth::V2PageMetadata>';
-                    end
-                end
-                class TokenListResponse < InstanceListResource
-
-                    # @param [Array<TokenInstance>] instance
-                    # @param [Hash{String => Object}] headers
-                    # @param [Integer] status_code
-                    def initialize(version, payload, key, limit = :unset)
-                      data_list = payload.body[key]  || []
-                      if limit != :unset
-                        data_list = data_list[0, limit]
-                      end
-                      @token = data_list.map do |data|
-                        TokenInstance.new(version, data)
-                      end
-                      @headers = payload.headers
-                      @status_code = payload.status_code
-                    end
-
-                    def token
-                        @token
-                    end
-
-                    def headers
-                      @headers
-                    end
-
-                    def status_code
-                      @status_code
                     end
                 end
 

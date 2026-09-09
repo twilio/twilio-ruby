@@ -112,65 +112,6 @@ module Twilio
                     end
                 end
 
-                class OauthAuthorizationServerPageMetadata < PageMetadata
-                    attr_reader :oauth_authorization_server_page
-
-                    def initialize(version, response, solution, limit)
-                        super(version, response)
-                        @oauth_authorization_server_page = []
-                        @limit = limit
-                        key = get_key(response.body)
-                        records = 0
-                        while( limit != :unset && records < limit )
-                            @oauth_authorization_server_page << OauthAuthorizationServerListResponse.new(version, @payload, key, limit - records)
-                            @payload = self.next_page
-                            break unless @payload
-                            records += (@payload.body[key] || []).size
-                        end
-                        # Path Solution
-                        @solution = solution
-                    end
-
-                    def each
-                        @oauth_authorization_server_page.each do |record|
-                          yield record
-                        end
-                    end
-
-                    def to_s
-                      '<Twilio::REST::Oauth::V2PageMetadata>';
-                    end
-                end
-                class OauthAuthorizationServerListResponse < InstanceListResource
-
-                    # @param [Array<OauthAuthorizationServerInstance>] instance
-                    # @param [Hash{String => Object}] headers
-                    # @param [Integer] status_code
-                    def initialize(version, payload, key, limit = :unset)
-                      data_list = payload.body[key]  || []
-                      if limit != :unset
-                        data_list = data_list[0, limit]
-                      end
-                      @oauth_authorization_server = data_list.map do |data|
-                        OauthAuthorizationServerInstance.new(version, data)
-                      end
-                      @headers = payload.headers
-                      @status_code = payload.status_code
-                    end
-
-                    def oauth_authorization_server
-                        @oauth_authorization_server
-                    end
-
-                    def headers
-                      @headers
-                    end
-
-                    def status_code
-                      @status_code
-                    end
-                end
-
                 class OauthAuthorizationServerInstance < InstanceResource
                     ##
                     # Initialize the OauthAuthorizationServerInstance
