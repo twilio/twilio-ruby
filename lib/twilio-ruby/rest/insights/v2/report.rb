@@ -467,9 +467,55 @@ module Twilio
                         
                         # Path Solution
                         @solution = {  }
-                        
+                        @uri = "/Voice/Reports"
                         
                     end
+                    ##
+                    # Create the ReportInstance
+                    # @param [InsightsV2CreateAccountReportRequest] insights_v2_create_account_report_request 
+                    # @return [ReportInstance] Created ReportInstance
+                    def create(insights_v2_create_account_report_request: :unset
+                    )
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        headers['Content-Type'] = 'application/json'
+                        
+                        
+                        
+                        
+                        payload = @version.create('POST', @uri, headers: headers, data: insights_v2_create_account_report_request.to_json)
+                        ReportInstance.new(
+                            @version,
+                            payload,
+                        )
+                    end
+
+                    ##
+                    # Create the ReportInstanceMetadata
+                    # @param [InsightsV2CreateAccountReportRequest] insights_v2_create_account_report_request 
+                    # @return [ReportInstance] Created ReportInstance
+                    def create_with_metadata(insights_v2_create_account_report_request: :unset
+                    )
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        headers['Content-Type'] = 'application/json'
+                        
+                        
+                        
+                        
+                        response = @version.create_with_metadata('POST', @uri, headers: headers, data: insights_v2_create_account_report_request.to_json)
+                        report_instance = ReportInstance.new(
+                            @version,
+                            response.body,
+                        )
+                        ReportInstanceMetadata.new(
+                            @version,
+                            report_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
                 
 
 
@@ -496,54 +542,6 @@ module Twilio
 
                         
                     end
-                    ##
-                    # Create the ReportInstance
-                    # @param [InsightsV2CreateAccountReportRequest] insights_v2_create_account_report_request 
-                    # @return [ReportInstance] Created ReportInstance
-                    def create(insights_v2_create_account_report_request: :unset
-                    )
-
-                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
-                        headers['Content-Type'] = 'application/json'
-                        
-                        
-                        
-                        
-                        payload = @version.create('POST', @uri, headers: headers, data: insights_v2_create_account_report_request.to_json)
-                        ReportInstance.new(
-                            @version,
-                            payload,
-                            report_id: @solution[:report_id],
-                        )
-                    end
-
-                    ##
-                    # Create the ReportInstanceMetadata
-                    # @param [InsightsV2CreateAccountReportRequest] insights_v2_create_account_report_request 
-                    # @return [ReportInstance] Created ReportInstance
-                    def create_with_metadata(insights_v2_create_account_report_request: :unset
-                    )
-
-                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
-                        headers['Content-Type'] = 'application/json'
-                        
-                        
-                        
-                        
-                        response = @version.create_with_metadata('POST', @uri, headers: headers, data: insights_v2_create_account_report_request.to_json)
-                        report_instance = ReportInstance.new(
-                            @version,
-                            response.body,
-                            report_id: @solution[:report_id],
-                        )
-                        ReportInstanceMetadata.new(
-                            @version,
-                            report_instance,
-                            response.headers,
-                            response.status_code
-                        )
-                    end
-
                     ##
                     # Fetch the ReportInstance
                     # @return [ReportInstance] Fetched ReportInstance
@@ -681,65 +679,6 @@ module Twilio
                     end
                 end
 
-                class ReportPageMetadata < PageMetadata
-                    attr_reader :report_page
-
-                    def initialize(version, response, solution, limit)
-                        super(version, response)
-                        @report_page = []
-                        @limit = limit
-                        key = get_key(response.body)
-                        records = 0
-                        while( limit != :unset && records < limit )
-                            @report_page << ReportListResponse.new(version, @payload, key, limit - records)
-                            @payload = self.next_page
-                            break unless @payload
-                            records += (@payload.body[key] || []).size
-                        end
-                        # Path Solution
-                        @solution = solution
-                    end
-
-                    def each
-                        @report_page.each do |record|
-                          yield record
-                        end
-                    end
-
-                    def to_s
-                      '<Twilio::REST::Insights::V2PageMetadata>';
-                    end
-                end
-                class ReportListResponse < InstanceListResource
-
-                    # @param [Array<ReportInstance>] instance
-                    # @param [Hash{String => Object}] headers
-                    # @param [Integer] status_code
-                    def initialize(version, payload, key, limit = :unset)
-                      data_list = payload.body[key]  || []
-                      if limit != :unset
-                        data_list = data_list[0, limit]
-                      end
-                      @report = data_list.map do |data|
-                        ReportInstance.new(version, data)
-                      end
-                      @headers = payload.headers
-                      @status_code = payload.status_code
-                    end
-
-                    def report
-                        @report
-                    end
-
-                    def headers
-                      @headers
-                    end
-
-                    def status_code
-                      @status_code
-                    end
-                end
-
                 class ReportInstance < InstanceResource
                     ##
                     # Initialize the ReportInstance
@@ -761,18 +700,6 @@ module Twilio
                             'status' => payload['status'],
                             'request_meta' => payload['request_meta'],
                             'url' => payload['url'],
-                            'handle' => payload['handle'],
-                            'total_calls' => payload['total_calls'] == nil ? payload['total_calls'] : payload['total_calls'].to_i,
-                            'call_answer_score' => payload['call_answer_score'],
-                            'call_state_percentage' => payload['call_state_percentage'],
-                            'silent_calls_percentage' => payload['silent_calls_percentage'],
-                            'calls_by_device_type' => payload['calls_by_device_type'],
-                            'answer_rate_device_type' => payload['answer_rate_device_type'],
-                            'blocked_calls_by_carrier' => payload['blocked_calls_by_carrier'],
-                            'short_duration_calls_percentage' => payload['short_duration_calls_percentage'],
-                            'long_duration_calls_percentage' => payload['long_duration_calls_percentage'],
-                            'potential_robocalls_percentage' => payload['potential_robocalls_percentage'],
-                            'answering_machine_detection' => payload['answering_machine_detection'],
                             'report' => payload['report'],
                         }
 
@@ -823,95 +750,11 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] Inbound phone number handle represented in the report.
-                    def handle
-                        @properties['handle']
-                    end
-                    
-                    ##
-                    # @return [String] Total number of calls made with the given handle during the report period.
-                    def total_calls
-                        @properties['total_calls']
-                    end
-                    
-                    ##
-                    # @return [Float] The call answer score measures customers behavior to the delivered calls. The score is a value between 0 and 100, where 100 indicates that all calls were successfully answered. 
-                    def call_answer_score
-                        @properties['call_answer_score']
-                    end
-                    
-                    ##
-                    # @return [InsightsV2InboundPhoneNumberReportCallStatePercentage] 
-                    def call_state_percentage
-                        @properties['call_state_percentage']
-                    end
-                    
-                    ##
-                    # @return [Float] Percentage of inbound calls with silence tags over total outbound calls. A silent tag is indicative of a connectivity issue or muted audio.
-                    def silent_calls_percentage
-                        @properties['silent_calls_percentage']
-                    end
-                    
-                    ##
-                    # @return [Hash<String, Integer>] Number of calls made with each device type. `voip`, `mobile`, `landline`, `unknown` 
-                    def calls_by_device_type
-                        @properties['calls_by_device_type']
-                    end
-                    
-                    ##
-                    # @return [Hash<String, Float>] Answer rate for each device type. `voip`, `mobile`, `landline`, `unknown` 
-                    def answer_rate_device_type
-                        @properties['answer_rate_device_type']
-                    end
-                    
-                    ##
-                    # @return [Array<CountyCarrierValue>] Percentage of blocked calls by carrier per country.
-                    def blocked_calls_by_carrier
-                        @properties['blocked_calls_by_carrier']
-                    end
-                    
-                    ##
-                    # @return [Float] Percentage of completed outbound calls under 10 seconds (PSTN Short call tags); More than 15% is typically low trust measured.
-                    def short_duration_calls_percentage
-                        @properties['short_duration_calls_percentage']
-                    end
-                    
-                    ##
-                    # @return [Float] Percentage of long duration calls ( >= 60 seconds)
-                    def long_duration_calls_percentage
-                        @properties['long_duration_calls_percentage']
-                    end
-                    
-                    ##
-                    # @return [Float] Percentage of completed outbound calls to unassigned or unallocated phone numbers.
-                    def potential_robocalls_percentage
-                        @properties['potential_robocalls_percentage']
-                    end
-                    
-                    ##
-                    # @return [InsightsV2OutboundPhoneNumberReportAnsweringMachineDetection] 
-                    def answering_machine_detection
-                        @properties['answering_machine_detection']
-                    end
-                    
-                    ##
                     # @return [AccountReport] 
                     def report
                         @properties['report']
                     end
                     
-                    ##
-                    # Create the ReportInstance
-                    # @param [InsightsV2CreateAccountReportRequest] insights_v2_create_account_report_request 
-                    # @return [ReportInstance] Created ReportInstance
-                    def create(insights_v2_create_account_report_request: :unset
-                    )
-
-                        context.create(
-                            insights_v2_create_account_report_request: insights_v2_create_account_report_request, 
-                        )
-                    end
-
                     ##
                     # Fetch the ReportInstance
                     # @return [ReportInstance] Fetched ReportInstance

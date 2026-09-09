@@ -185,11 +185,10 @@ module Twilio
                     def list_with_metadata(flex_metadata: :unset, limit: nil, page_size: nil)
                         limits = @version.read_limits(limit, page_size)
                         params = Twilio::Values.of({
-                            'Flex-Metadata' => flex_metadata,
                             
                             'PageSize' => limits[:page_size],
                         });
-                        headers = Twilio::Values.of({})
+                        headers = Twilio::Values.of({ 'Flex-Metadata' => flex_metadata,  })
 
                         response = @version.page('GET', @uri, params: params, headers: headers)
 
@@ -224,12 +223,11 @@ module Twilio
                     # @return [Page] Page of PluginVersionsInstance
                     def page(flex_metadata: :unset, page_token: :unset, page_number: :unset,page_size: :unset)
                         params = Twilio::Values.of({
-                            'Flex-Metadata' => flex_metadata,
                             'PageToken' => page_token,
                             'Page' => page_number,
                             'PageSize' => page_size,
                         })
-                        headers = Twilio::Values.of({})
+                        headers = Twilio::Values.of({ 'Flex-Metadata' => flex_metadata,  })
                         
                         
 

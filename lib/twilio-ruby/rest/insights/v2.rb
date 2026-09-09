@@ -22,13 +22,14 @@ module Twilio
                     super
                     @version = 'v2'
                     @inbound = nil
+                    @inbound_reports = nil
                     @outbound = nil
+                    @outbound_reports = nil
                     @reports = nil
                 end
 
                 ##
                 # @param [String] report_id A unique Report Id.
-                # @return [Twilio::REST::Insights::V2::InboundContext] if reportId was passed.
                 # @return [Twilio::REST::Insights::V2::InboundList]
                 def inbound(report_id=:unset)
                     if report_id.nil?
@@ -38,12 +39,16 @@ module Twilio
                     if report_id == :unset
                         @inbound ||= InboundList.new self
                     else
-                        InboundContext.new(self, report_id)
+                        InboundList.new(self, report_id: report_id)
                     end
                 end
                 ##
+                # @return [Twilio::REST::Insights::V2::InboundReportList]
+                def inbound_reports
+                    @inbound_reports ||= InboundReportList.new self
+                end
+                ##
                 # @param [String] report_id A unique Report Id.
-                # @return [Twilio::REST::Insights::V2::OutboundContext] if reportId was passed.
                 # @return [Twilio::REST::Insights::V2::OutboundList]
                 def outbound(report_id=:unset)
                     if report_id.nil?
@@ -53,8 +58,13 @@ module Twilio
                     if report_id == :unset
                         @outbound ||= OutboundList.new self
                     else
-                        OutboundContext.new(self, report_id)
+                        OutboundList.new(self, report_id: report_id)
                     end
+                end
+                ##
+                # @return [Twilio::REST::Insights::V2::OutboundReportList]
+                def outbound_reports
+                    @outbound_reports ||= OutboundReportList.new self
                 end
                 ##
                 # @param [String] report_id A unique request id.

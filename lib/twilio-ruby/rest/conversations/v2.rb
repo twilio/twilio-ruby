@@ -31,17 +31,23 @@ module Twilio
 
                 ##
                 # @param [String] conversation_id 
-                # @return [Twilio::REST::Conversations::V2::ActionContext] if conversationId was passed.
+                # @param [String] action_id
+                # @return [Twilio::REST::Conversations::V2::ActionContext] if action_id was passed.
                 # @return [Twilio::REST::Conversations::V2::ActionList]
-                def actions(conversation_id=:unset)
+                def actions(conversation_id=:unset, action_id=:unset)
                     if conversation_id.nil?
                         raise ArgumentError, 'conversation_id cannot be nil'
                     end
+                    if action_id.nil?
+                        raise ArgumentError, 'action_id cannot be nil'
+                    end
 
-                    if conversation_id == :unset
+                    if conversation_id == :unset && action_id == :unset
                         @actions ||= ActionList.new self
+                    elsif conversation_id != :unset && action_id == :unset
+                        ActionList.new(self, conversation_id: conversation_id)
                     else
-                        ActionContext.new(self, conversation_id)
+                        ActionContext.new(self, conversation_id, action_id)
                     end
                 end
                 ##

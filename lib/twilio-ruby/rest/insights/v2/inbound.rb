@@ -19,74 +19,6 @@ module Twilio
             class V2 < Version
                 class InboundList < ListResource
                 
-                    class InsightsV2CreatePhoneNumbersReportRequest
-                            # @param [time_range]: [InboundList.InsightsV2CreatePhoneNumbersReportRequestTimeRange] 
-                            # @param [filters]: [Array<InboundList.PhoneNumberReportFilter>] 
-                            # @param [size]: [String] The number of max available top Phone Numbers to generate.
-                        attr_accessor :time_range, :filters, :size
-                        def initialize(payload)
-                                @time_range = payload["time_range"]
-                                @filters = payload["filters"]
-                                @size = payload["size"]
-                        end
-                        def to_json(options = {})
-                        {
-                                "time_range": @time_range,
-                                "filters": @filters,
-                                "size": @size,
-                        }.to_json(options)
-                        end
-                    end
-
-                    class InsightsV2CreatePhoneNumbersReportRequestTimeRange
-                            # @param [start_datetime]: [Time] Start date time of the report
-                            # @param [end_datetime]: [Time] End date time of the report
-                        attr_accessor :start_datetime, :end_datetime
-                        def initialize(payload)
-                                @start_datetime = payload["start_datetime"]
-                                @end_datetime = payload["end_datetime"]
-                        end
-                        def to_json(options = {})
-                        {
-                                "start_datetime": @start_datetime,
-                                "end_datetime": @end_datetime,
-                        }.to_json(options)
-                        end
-                    end
-
-                    class PhoneNumberReportFilter
-                            # @param [key]: [String] The name of the filter 
-                            # @param [values]: [Array<String>] List of supported filter values for the field name
-                        attr_accessor :key, :values
-                        def initialize(payload)
-                                @key = payload["key"]
-                                @values = payload["values"]
-                        end
-                        def to_json(options = {})
-                        {
-                                "key": @key,
-                                "values": @values,
-                        }.to_json(options)
-                        end
-                    end
-
-                    class ReportFilter
-                            # @param [key]: [String] The name of the filter 'call_state', 'call_direction', 'call_type', 'twilio_regions', 'caller_country_code', 'callee_country_code', 'silent' 
-                            # @param [values]: [Array<String>] List of supported filter values for the field name
-                        attr_accessor :key, :values
-                        def initialize(payload)
-                                @key = payload["key"]
-                                @values = payload["values"]
-                        end
-                        def to_json(options = {})
-                        {
-                                "key": @key,
-                                "values": @values,
-                        }.to_json(options)
-                        end
-                    end
-
-
                     ##
                     # Initialize the InboundList
                     # @param [Version] version Version that contains the resource
@@ -225,134 +157,6 @@ module Twilio
                     end
                 end
 
-
-                class InboundContext < InstanceContext
-                    ##
-                    # Initialize the InboundContext
-                    # @param [Version] version Version that contains the resource
-                    # @param [String] report_id A unique Report Id.
-                    # @return [InboundContext] InboundContext
-                    def initialize(version, report_id)
-                        super(version)
-                        
-
-                        # Path Solution
-                        @solution = { report_id: report_id,  }
-                        @uri = "/Voice/Reports/PhoneNumbers/Inbound"
-
-                        
-                    end
-                    ##
-                    # Create the InboundInstance
-                    # @param [InsightsV2CreatePhoneNumbersReportRequest] insights_v2_create_phone_numbers_report_request 
-                    # @return [InboundInstance] Created InboundInstance
-                    def create(insights_v2_create_phone_numbers_report_request: :unset
-                    )
-
-                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
-                        headers['Content-Type'] = 'application/json'
-                        
-                        
-                        
-                        
-                        payload = @version.create('POST', @uri, headers: headers, data: insights_v2_create_phone_numbers_report_request.to_json)
-                        InboundInstance.new(
-                            @version,
-                            payload,
-                            report_id: @solution[:report_id],
-                        )
-                    end
-
-                    ##
-                    # Create the InboundInstanceMetadata
-                    # @param [InsightsV2CreatePhoneNumbersReportRequest] insights_v2_create_phone_numbers_report_request 
-                    # @return [InboundInstance] Created InboundInstance
-                    def create_with_metadata(insights_v2_create_phone_numbers_report_request: :unset
-                    )
-
-                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
-                        headers['Content-Type'] = 'application/json'
-                        
-                        
-                        
-                        
-                        response = @version.create_with_metadata('POST', @uri, headers: headers, data: insights_v2_create_phone_numbers_report_request.to_json)
-                        inbound_instance = InboundInstance.new(
-                            @version,
-                            response.body,
-                            report_id: @solution[:report_id],
-                        )
-                        InboundInstanceMetadata.new(
-                            @version,
-                            inbound_instance,
-                            response.headers,
-                            response.status_code
-                        )
-                    end
-
-
-                    ##
-                    # Provide a user friendly representation
-                    def to_s
-                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
-                        "#<Twilio.Insights.V2.InboundContext #{context}>"
-                    end
-
-                    ##
-                    # Provide a detailed, user friendly representation
-                    def inspect
-                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
-                        "#<Twilio.Insights.V2.InboundContext #{context}>"
-                    end
-                end
-
-                class InboundInstanceMetadata <  InstanceResourceMetadata
-                    ##
-                    # Initializes a new InboundInstanceMetadata.
-                    # @param [Version] version Version that contains the resource
-                    # @param [}InboundInstance] inbound_instance The instance associated with the metadata.
-                    # @param [Hash] headers Header object with response headers.
-                    # @param [Integer] status_code The HTTP status code of the response.
-                    # @return [InboundInstanceMetadata] The initialized instance with metadata.
-                    def initialize(version, inbound_instance, headers, status_code)
-                        super(version, headers, status_code)
-                        @inbound_instance = inbound_instance
-                    end
-
-                    def inbound
-                        @inbound_instance
-                    end
-
-                    def headers
-                        @headers
-                    end
-
-                    def status_code
-                        @status_code
-                    end
-
-                    def to_s
-                      "<Twilio.Api.V2010.InboundInstanceMetadata status=#{@status_code}>"
-                    end
-                end
-
-                class InboundListResponse < InstanceListResource
-                    # @param [Array<InboundInstance>] instance
-                    # @param [Hash{String => Object}] headers
-                    # @param [Integer] status_code
-                    def initialize(version, payload, key)
-                       @inbound_instance = payload.body[key].map do |data|
-                        InboundInstance.new(version, data)
-                       end
-                       @headers = payload.headers
-                       @status_code = payload.status_code
-                    end
-
-                      def inbound_instance
-                          @instance
-                      end
-                  end
-
                 class InboundPage < Page
                     ##
                     # Initialize the InboundPage
@@ -458,63 +262,14 @@ module Twilio
                         
                         # Marshaled Properties
                         @properties = { 
-                            'account_sid' => payload['account_sid'],
-                            'report_id' => payload['report_id'],
-                            'status' => payload['status'],
-                            'request_meta' => payload['request_meta'],
-                            'url' => payload['url'],
                             'handle' => payload['handle'],
                             'total_calls' => payload['total_calls'] == nil ? payload['total_calls'] : payload['total_calls'].to_i,
                             'call_answer_score' => payload['call_answer_score'],
                             'call_state_percentage' => payload['call_state_percentage'],
                             'silent_calls_percentage' => payload['silent_calls_percentage'],
                         }
-
-                        # Context
-                        @instance_context = nil
-                        @params = { 'report_id' => report_id  || @properties['report_id']  , }
                     end
 
-                    ##
-                    # Generate an instance context for the instance, the context is capable of
-                    # performing various actions.  All instance actions are proxied to the context
-                    # @return [InboundContext] CallContext for this CallInstance
-                    def context
-                        unless @instance_context
-                            @instance_context = InboundContext.new(@version , @params['report_id'])
-                        end
-                        @instance_context
-                    end
-                    
-                    ##
-                    # @return [String] The unique SID identifier of the Account.
-                    def account_sid
-                        @properties['account_sid']
-                    end
-                    
-                    ##
-                    # @return [String] The report identifier as Voice Insights Report TTID.
-                    def report_id
-                        @properties['report_id']
-                    end
-                    
-                    ##
-                    # @return [ReportStatus] 
-                    def status
-                        @properties['status']
-                    end
-                    
-                    ##
-                    # @return [ReportMetadata] 
-                    def request_meta
-                        @properties['request_meta']
-                    end
-                    
-                    ##
-                    # @return [String] The URL of this resource.
-                    def url
-                        @properties['url']
-                    end
                     
                     ##
                     # @return [String] Inbound phone number handle represented in the report.
@@ -547,29 +302,15 @@ module Twilio
                     end
                     
                     ##
-                    # Create the InboundInstance
-                    # @param [InsightsV2CreatePhoneNumbersReportRequest] insights_v2_create_phone_numbers_report_request 
-                    # @return [InboundInstance] Created InboundInstance
-                    def create(insights_v2_create_phone_numbers_report_request: :unset
-                    )
-
-                        context.create(
-                            insights_v2_create_phone_numbers_report_request: insights_v2_create_phone_numbers_report_request, 
-                        )
-                    end
-
-                    ##
                     # Provide a user friendly representation
                     def to_s
-                        values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
-                        "<Twilio.Insights.V2.InboundInstance #{values}>"
+                        "<Twilio.Insights.V2.InboundInstance>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        values = @properties.map{|k, v| "#{k}: #{v}"}.join(" ")
-                        "<Twilio.Insights.V2.InboundInstance #{values}>"
+                        "<Twilio.Insights.V2.InboundInstance>"
                     end
                 end
 

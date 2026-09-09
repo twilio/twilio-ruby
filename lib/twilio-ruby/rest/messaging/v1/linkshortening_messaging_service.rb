@@ -229,65 +229,6 @@ module Twilio
                     end
                 end
 
-                class LinkshorteningMessagingServicePageMetadata < PageMetadata
-                    attr_reader :linkshortening_messaging_service_page
-
-                    def initialize(version, response, solution, limit)
-                        super(version, response)
-                        @linkshortening_messaging_service_page = []
-                        @limit = limit
-                        key = get_key(response.body)
-                        records = 0
-                        while( limit != :unset && records < limit )
-                            @linkshortening_messaging_service_page << LinkshorteningMessagingServiceListResponse.new(version, @payload, key, limit - records)
-                            @payload = self.next_page
-                            break unless @payload
-                            records += (@payload.body[key] || []).size
-                        end
-                        # Path Solution
-                        @solution = solution
-                    end
-
-                    def each
-                        @linkshortening_messaging_service_page.each do |record|
-                          yield record
-                        end
-                    end
-
-                    def to_s
-                      '<Twilio::REST::Messaging::V1PageMetadata>';
-                    end
-                end
-                class LinkshorteningMessagingServiceListResponse < InstanceListResource
-
-                    # @param [Array<LinkshorteningMessagingServiceInstance>] instance
-                    # @param [Hash{String => Object}] headers
-                    # @param [Integer] status_code
-                    def initialize(version, payload, key, limit = :unset)
-                      data_list = payload.body[key]  || []
-                      if limit != :unset
-                        data_list = data_list[0, limit]
-                      end
-                      @linkshortening_messaging_service = data_list.map do |data|
-                        LinkshorteningMessagingServiceInstance.new(version, data)
-                      end
-                      @headers = payload.headers
-                      @status_code = payload.status_code
-                    end
-
-                    def linkshortening_messaging_service
-                        @linkshortening_messaging_service
-                    end
-
-                    def headers
-                      @headers
-                    end
-
-                    def status_code
-                      @status_code
-                    end
-                end
-
                 class LinkshorteningMessagingServiceInstance < InstanceResource
                     ##
                     # Initialize the LinkshorteningMessagingServiceInstance

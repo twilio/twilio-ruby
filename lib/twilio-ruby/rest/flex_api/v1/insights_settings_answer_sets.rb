@@ -118,65 +118,6 @@ module Twilio
                     end
                 end
 
-                class InsightsSettingsAnswerSetsPageMetadata < PageMetadata
-                    attr_reader :insights_settings_answer_sets_page
-
-                    def initialize(version, response, solution, limit)
-                        super(version, response)
-                        @insights_settings_answer_sets_page = []
-                        @limit = limit
-                        key = get_key(response.body)
-                        records = 0
-                        while( limit != :unset && records < limit )
-                            @insights_settings_answer_sets_page << InsightsSettingsAnswerSetsListResponse.new(version, @payload, key, limit - records)
-                            @payload = self.next_page
-                            break unless @payload
-                            records += (@payload.body[key] || []).size
-                        end
-                        # Path Solution
-                        @solution = solution
-                    end
-
-                    def each
-                        @insights_settings_answer_sets_page.each do |record|
-                          yield record
-                        end
-                    end
-
-                    def to_s
-                      '<Twilio::REST::FlexApi::V1PageMetadata>';
-                    end
-                end
-                class InsightsSettingsAnswerSetsListResponse < InstanceListResource
-
-                    # @param [Array<InsightsSettingsAnswerSetsInstance>] instance
-                    # @param [Hash{String => Object}] headers
-                    # @param [Integer] status_code
-                    def initialize(version, payload, key, limit = :unset)
-                      data_list = payload.body[key]  || []
-                      if limit != :unset
-                        data_list = data_list[0, limit]
-                      end
-                      @insights_settings_answer_sets = data_list.map do |data|
-                        InsightsSettingsAnswerSetsInstance.new(version, data)
-                      end
-                      @headers = payload.headers
-                      @status_code = payload.status_code
-                    end
-
-                    def insights_settings_answer_sets
-                        @insights_settings_answer_sets
-                    end
-
-                    def headers
-                      @headers
-                    end
-
-                    def status_code
-                      @status_code
-                    end
-                end
-
                 class InsightsSettingsAnswerSetsInstance < InstanceResource
                     ##
                     # Initialize the InsightsSettingsAnswerSetsInstance

@@ -17,58 +17,78 @@ module Twilio
     module REST
         class Insights < InsightsBase
             class V3 < Version
-                class MetadataList < ListResource
+                class ResultList < ListResource
                 
                     ##
-                    # Initialize the MetadataList
+                    # Initialize the ResultList
                     # @param [Version] version Version that contains the resource
-                    # @return [MetadataList] MetadataList
-                    def initialize(version)
+                    # @return [ResultList] ResultList
+                    def initialize(version, operation_id: nil)
                         
                         apiV1Version = ApiV1Version.new version.domain, version
                         super(apiV1Version)
                         # Path Solution
-                        @solution = {  }
-                        @uri = "/InsightsDomains/Conversations/Metadata"
+                        @solution = { operation_id: operation_id }
+                        @uri = "/InsightsDomains/Conversations/QueryJobs/#{@solution[:operation_id]}/Results"
                         
                     end
                     ##
-                    # Fetch the MetadataInstance
-                    # @return [MetadataInstance] Fetched MetadataInstance
-                    def fetch
+                    # Fetch the ResultInstance
+                    # @param [String] page_size The maximum number of resources to return
+                    # @param [String] page_token Token for pagination
+                    # @return [ResultInstance] Fetched ResultInstance
+                    def fetch(
+                      page_size: :unset, 
+                      page_token: :unset
+                    )
 
+                        params = Twilio::Values.of({
+                            'pageSize' => page_size,
+                            'pageToken' => page_token,
+                        })
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
                         
                         
                         
                         
-                        payload = @version.fetch('GET', @uri, headers: headers)
-                        MetadataInstance.new(
+                        payload = @version.fetch('GET', @uri, params: params, headers: headers)
+                        ResultInstance.new(
                             @version,
                             payload,
+                            operation_id: @solution[:operation_id],
                         )
                     end
 
                     ##
-                    # Fetch the MetadataInstanceMetadata
-                    # @return [MetadataInstance] Fetched MetadataInstance
-                    def fetch_with_metadata
+                    # Fetch the ResultInstanceMetadata
+                    # @param [String] page_size The maximum number of resources to return
+                    # @param [String] page_token Token for pagination
+                    # @return [ResultInstance] Fetched ResultInstance
+                    def fetch_with_metadata(
+                      page_size: :unset, 
+                      page_token: :unset
+                    )
 
+                        params = Twilio::Values.of({
+                            'pageSize' => page_size,
+                            'pageToken' => page_token,
+                        })
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
                         
                         
                         
                         
                         
-                        response = @version.fetch_with_metadata('GET', @uri, headers: headers)
-                        metadata_instance = MetadataInstance.new(
+                        response = @version.fetch_with_metadata('GET', @uri, params: params, headers: headers)
+                        result_instance = ResultInstance.new(
                             @version,
                             response.body,
+                            operation_id: @solution[:operation_id],
                         )
-                        MetadataInstanceMetadata.new(
+                        ResultInstanceMetadata.new(
                             @version,
-                            metadata_instance,
+                            result_instance,
                             response.headers,
                             response.status_code
                         )
@@ -79,17 +99,17 @@ module Twilio
 
                     # Provide a user friendly representation
                     def to_s
-                        '#<Twilio.Insights.V3.MetadataList>'
+                        '#<Twilio.Insights.V3.ResultList>'
                     end
                 end
 
-                class MetadataPage < TokenPage
+                class ResultPage < TokenPage
                     ##
-                    # Initialize the MetadataPage
+                    # Initialize the ResultPage
                     # @param [Version] version Version that contains the resource
                     # @param [Response] response Response from the API
                     # @param [Hash] solution Path solution for the resource
-                    # @return [MetadataPage] MetadataPage
+                    # @return [ResultPage] ResultPage
                     def initialize(version, response, solution)
                         
                         apiV1Version = ApiV1Version.new version.domain, version
@@ -100,31 +120,31 @@ module Twilio
                     end
 
                     ##
-                    # Build an instance of MetadataInstance
+                    # Build an instance of ResultInstance
                     # @param [Hash] payload Payload response from the API
-                    # @return [MetadataInstance] MetadataInstance
+                    # @return [ResultInstance] ResultInstance
                     def get_instance(payload)
-                        MetadataInstance.new(@version, payload)
+                        ResultInstance.new(@version, payload, operation_id: @solution[:operation_id])
                     end
 
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        '<Twilio.Insights.V3.MetadataPage>'
+                        '<Twilio.Insights.V3.ResultPage>'
                     end
                 end
 
-                class MetadataInstance < InstanceResource
+                class ResultInstance < InstanceResource
                     ##
-                    # Initialize the MetadataInstance
+                    # Initialize the ResultInstance
                     # @param [Version] version Version that contains the resource
                     # @param [Hash] payload payload that contains response from Twilio
                     # @param [String] account_sid The SID of the
-                    #   {Account}[https://www.twilio.com/docs/iam/api/account] that created this Metadata
+                    #   {Account}[https://www.twilio.com/docs/iam/api/account] that created this Result
                     #   resource.
                     # @param [String] sid The SID of the Call resource to fetch.
-                    # @return [MetadataInstance] MetadataInstance
-                    def initialize(version, payload )
+                    # @return [ResultInstance] ResultInstance
+                    def initialize(version, payload , operation_id: nil)
                         
                         apiV1Version = ApiV1Version.new version.domain, version
                         super(apiV1Version)
@@ -132,33 +152,40 @@ module Twilio
                         # Marshaled Properties
                         @properties = { 
                             'domain' => payload['domain'],
-                            'cubes' => payload['cubes'],
+                            'items' => payload['items'],
+                            'meta' => payload['meta'],
                         }
                     end
 
                     
                     ##
-                    # @return [String] The business domain name for which metadata is being provided
+                    # @return [String] Indicates the business domain the query was executed against
                     def domain
                         @properties['domain']
                     end
                     
                     ##
-                    # @return [Array<InsightsMetadataResponseCubes>] List of data cubes available in the domain, each containing measures and dimensions
-                    def cubes
-                        @properties['cubes']
+                    # @return [Array<Hash<String, Object>>] Array of result objects containing the query results. Each object contains properties matching the requested measures and dimensions.
+                    def items
+                        @properties['items']
+                    end
+                    
+                    ##
+                    # @return [PaginationMeta] 
+                    def meta
+                        @properties['meta']
                     end
                     
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        "<Twilio.Insights.V3.MetadataInstance>"
+                        "<Twilio.Insights.V3.ResultInstance>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        "<Twilio.Insights.V3.MetadataInstance>"
+                        "<Twilio.Insights.V3.ResultInstance>"
                     end
                 end
 

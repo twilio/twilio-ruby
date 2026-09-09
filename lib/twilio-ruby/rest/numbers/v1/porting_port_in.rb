@@ -360,65 +360,6 @@ module Twilio
                     end
                 end
 
-                class PortingPortInPageMetadata < PageMetadata
-                    attr_reader :porting_port_in_page
-
-                    def initialize(version, response, solution, limit)
-                        super(version, response)
-                        @porting_port_in_page = []
-                        @limit = limit
-                        key = get_key(response.body)
-                        records = 0
-                        while( limit != :unset && records < limit )
-                            @porting_port_in_page << PortingPortInListResponse.new(version, @payload, key, limit - records)
-                            @payload = self.next_page
-                            break unless @payload
-                            records += (@payload.body[key] || []).size
-                        end
-                        # Path Solution
-                        @solution = solution
-                    end
-
-                    def each
-                        @porting_port_in_page.each do |record|
-                          yield record
-                        end
-                    end
-
-                    def to_s
-                      '<Twilio::REST::Numbers::V1PageMetadata>';
-                    end
-                end
-                class PortingPortInListResponse < InstanceListResource
-
-                    # @param [Array<PortingPortInInstance>] instance
-                    # @param [Hash{String => Object}] headers
-                    # @param [Integer] status_code
-                    def initialize(version, payload, key, limit = :unset)
-                      data_list = payload.body[key]  || []
-                      if limit != :unset
-                        data_list = data_list[0, limit]
-                      end
-                      @porting_port_in = data_list.map do |data|
-                        PortingPortInInstance.new(version, data)
-                      end
-                      @headers = payload.headers
-                      @status_code = payload.status_code
-                    end
-
-                    def porting_port_in
-                        @porting_port_in
-                    end
-
-                    def headers
-                      @headers
-                    end
-
-                    def status_code
-                      @status_code
-                    end
-                end
-
                 class PortingPortInInstance < InstanceResource
                     ##
                     # Initialize the PortingPortInInstance

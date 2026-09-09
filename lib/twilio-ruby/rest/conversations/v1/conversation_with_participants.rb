@@ -196,65 +196,6 @@ module Twilio
                     end
                 end
 
-                class ConversationWithParticipantsPageMetadata < PageMetadata
-                    attr_reader :conversation_with_participants_page
-
-                    def initialize(version, response, solution, limit)
-                        super(version, response)
-                        @conversation_with_participants_page = []
-                        @limit = limit
-                        key = get_key(response.body)
-                        records = 0
-                        while( limit != :unset && records < limit )
-                            @conversation_with_participants_page << ConversationWithParticipantsListResponse.new(version, @payload, key, limit - records)
-                            @payload = self.next_page
-                            break unless @payload
-                            records += (@payload.body[key] || []).size
-                        end
-                        # Path Solution
-                        @solution = solution
-                    end
-
-                    def each
-                        @conversation_with_participants_page.each do |record|
-                          yield record
-                        end
-                    end
-
-                    def to_s
-                      '<Twilio::REST::Conversations::V1PageMetadata>';
-                    end
-                end
-                class ConversationWithParticipantsListResponse < InstanceListResource
-
-                    # @param [Array<ConversationWithParticipantsInstance>] instance
-                    # @param [Hash{String => Object}] headers
-                    # @param [Integer] status_code
-                    def initialize(version, payload, key, limit = :unset)
-                      data_list = payload.body[key]  || []
-                      if limit != :unset
-                        data_list = data_list[0, limit]
-                      end
-                      @conversation_with_participants = data_list.map do |data|
-                        ConversationWithParticipantsInstance.new(version, data)
-                      end
-                      @headers = payload.headers
-                      @status_code = payload.status_code
-                    end
-
-                    def conversation_with_participants
-                        @conversation_with_participants
-                    end
-
-                    def headers
-                      @headers
-                    end
-
-                    def status_code
-                      @status_code
-                    end
-                end
-
                 class ConversationWithParticipantsInstance < InstanceResource
                     ##
                     # Initialize the ConversationWithParticipantsInstance

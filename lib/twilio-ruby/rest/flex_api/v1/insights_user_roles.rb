@@ -197,65 +197,6 @@ module Twilio
                     end
                 end
 
-                class InsightsUserRolesPageMetadata < PageMetadata
-                    attr_reader :insights_user_roles_page
-
-                    def initialize(version, response, solution, limit)
-                        super(version, response)
-                        @insights_user_roles_page = []
-                        @limit = limit
-                        key = get_key(response.body)
-                        records = 0
-                        while( limit != :unset && records < limit )
-                            @insights_user_roles_page << InsightsUserRolesListResponse.new(version, @payload, key, limit - records)
-                            @payload = self.next_page
-                            break unless @payload
-                            records += (@payload.body[key] || []).size
-                        end
-                        # Path Solution
-                        @solution = solution
-                    end
-
-                    def each
-                        @insights_user_roles_page.each do |record|
-                          yield record
-                        end
-                    end
-
-                    def to_s
-                      '<Twilio::REST::FlexApi::V1PageMetadata>';
-                    end
-                end
-                class InsightsUserRolesListResponse < InstanceListResource
-
-                    # @param [Array<InsightsUserRolesInstance>] instance
-                    # @param [Hash{String => Object}] headers
-                    # @param [Integer] status_code
-                    def initialize(version, payload, key, limit = :unset)
-                      data_list = payload.body[key]  || []
-                      if limit != :unset
-                        data_list = data_list[0, limit]
-                      end
-                      @insights_user_roles = data_list.map do |data|
-                        InsightsUserRolesInstance.new(version, data)
-                      end
-                      @headers = payload.headers
-                      @status_code = payload.status_code
-                    end
-
-                    def insights_user_roles
-                        @insights_user_roles
-                    end
-
-                    def headers
-                      @headers
-                    end
-
-                    def status_code
-                      @status_code
-                    end
-                end
-
                 class InsightsUserRolesInstance < InstanceResource
                     ##
                     # Initialize the InsightsUserRolesInstance

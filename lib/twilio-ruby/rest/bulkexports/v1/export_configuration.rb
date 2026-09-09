@@ -264,65 +264,6 @@ module Twilio
                     end
                 end
 
-                class ExportConfigurationPageMetadata < PageMetadata
-                    attr_reader :export_configuration_page
-
-                    def initialize(version, response, solution, limit)
-                        super(version, response)
-                        @export_configuration_page = []
-                        @limit = limit
-                        key = get_key(response.body)
-                        records = 0
-                        while( limit != :unset && records < limit )
-                            @export_configuration_page << ExportConfigurationListResponse.new(version, @payload, key, limit - records)
-                            @payload = self.next_page
-                            break unless @payload
-                            records += (@payload.body[key] || []).size
-                        end
-                        # Path Solution
-                        @solution = solution
-                    end
-
-                    def each
-                        @export_configuration_page.each do |record|
-                          yield record
-                        end
-                    end
-
-                    def to_s
-                      '<Twilio::REST::Bulkexports::V1PageMetadata>';
-                    end
-                end
-                class ExportConfigurationListResponse < InstanceListResource
-
-                    # @param [Array<ExportConfigurationInstance>] instance
-                    # @param [Hash{String => Object}] headers
-                    # @param [Integer] status_code
-                    def initialize(version, payload, key, limit = :unset)
-                      data_list = payload.body[key]  || []
-                      if limit != :unset
-                        data_list = data_list[0, limit]
-                      end
-                      @export_configuration = data_list.map do |data|
-                        ExportConfigurationInstance.new(version, data)
-                      end
-                      @headers = payload.headers
-                      @status_code = payload.status_code
-                    end
-
-                    def export_configuration
-                        @export_configuration
-                    end
-
-                    def headers
-                      @headers
-                    end
-
-                    def status_code
-                      @status_code
-                    end
-                end
-
                 class ExportConfigurationInstance < InstanceResource
                     ##
                     # Initialize the ExportConfigurationInstance
