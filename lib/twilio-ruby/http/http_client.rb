@@ -76,7 +76,7 @@ module Twilio
                          request.url,
                          request.data)
       rescue Faraday::Error => e
-        raise Twilio::REST::TwilioError, e
+        raise Twilio::REST::NetworkError, e
       end
 
       def request(host, port, method, url, params = {}, data = {}, headers = {}, auth = nil, timeout = nil)
