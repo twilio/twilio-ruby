@@ -1,1 +1,12 @@
+if git diff --cached --name-only | grep -q '^Gemfile\.lock$'; then
+  if grep -qE 'https://[^[:space:]]+/artifactory/api/gems/[^/[:space:]]+/?' Gemfile.lock; then
+    # A committed lockfile must only reference public registry hosts (enforced in CI by
+    # gems-lockfile-hygiene) - rewrite before it lands in the commit.
+    sed -E -i.bak 's#https://[^[:space:]]+/artifactory/api/gems/[^/[:space:]]+/?#https://rubygems.org/#' Gemfile.lock
+    rm -f Gemfile.lock.bak
+    git add Gemfile.lock
+    echo "pre-commit: rewrote internal registry URLs in Gemfile.lock to rubygems.org"
+  fi
+fi
+
 make test

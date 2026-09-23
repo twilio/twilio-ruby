@@ -49,7 +49,19 @@ jobs:
       - run: bundle exec rake install
 
       - name: Run linter
-        run: bundle exec rubocop -d --cache true --parallel
+        # rubocop's ConfigStore path cache (config_store.rb) does a non-atomic
+        # `@path_cache[dir] ||= ...` read-modify-write. --parallel runs worker
+        # threads via Parallel.in_threads, and on JRuby (no GIL, true parallel
+        # threads) that race can hand a thread a nil config path, crashing with
+        # "no implicit conversion of nil into String" in File.absolute_path.
+        # CRuby's GIL happens to serialize the Hash access enough to avoid it.
+        # Run JRuby serially and uncached to sidestep the race.
+        run: |
+          if [[ "${{ matrix.ruby }}" == jruby-* ]]; then
+            bundle exec rubocop -d
+          else
+            bundle exec rubocop -d --cache true --parallel
+          fi
         if: ${{ matrix.ruby != '2.4'}}
 
       - name: Run Unit Tests
