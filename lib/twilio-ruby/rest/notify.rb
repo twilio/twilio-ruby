@@ -1,6 +1,8 @@
 module Twilio
   module REST
     class Notify < NotifyBase
+      # Autoload version classes
+      autoload :V1, File.join(__dir__, 'notify', 'v1.rb')
       ##
       # @param [String] sid The unique string that we created to identify the Credential
       #   resource.
