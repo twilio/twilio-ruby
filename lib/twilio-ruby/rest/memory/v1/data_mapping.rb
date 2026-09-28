@@ -470,7 +470,7 @@ module Twilio
                     # @return [DataMappingInstance] Patched DataMappingInstance
                     def patch(
                       if_match: :unset,
-                      data_mapping_core: :unset
+                      data_mapping_core: nil
                     )
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', 'If-Match' => if_match, })
@@ -495,7 +495,7 @@ module Twilio
                     # @return [DataMappingInstance] Patchd DataMappingInstance
                     def patch_with_metadata(
                       if_match: :unset,
-                    data_mapping_core: :unset
+                    data_mapping_core: nil
                     )
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', 'If-Match' => if_match, })
@@ -807,7 +807,7 @@ module Twilio
                     # @return [DataMappingInstance] Patched DataMappingInstance
                     def patch(
                       if_match: :unset,
-                      data_mapping_core: :unset
+                      data_mapping_core: nil
                     )
 
                         context.patch(

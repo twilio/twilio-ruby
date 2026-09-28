@@ -23,17 +23,20 @@ module Twilio
                             # @param [intelligence_configuration_id]: [String] The Intelligence Configuration identifier to execute the Rule within.
                             # @param [rule_id]: [String] The rule identifier to execute within the selected Intelligence Configuration.
                             # @param [conversation_id]: [String] The Conversation identifier to execute the Rule against.
-                        attr_accessor :intelligence_configuration_id, :rule_id, :conversation_id
+                            # @param [rule]: [RuleExecutionList.RuleOverride] 
+                        attr_accessor :intelligence_configuration_id, :rule_id, :conversation_id, :rule
                         def initialize(payload)
                                 @intelligence_configuration_id = payload["intelligence_configuration_id"]
                                 @rule_id = payload["rule_id"]
                                 @conversation_id = payload["conversation_id"]
+                                @rule = payload["rule"]
                         end
                         def to_json(options = {})
                         {
                                 "intelligenceConfigurationId": @intelligence_configuration_id,
                                 "ruleId": @rule_id,
                                 "conversationId": @conversation_id,
+                                "rule": @rule,
                         }.to_json(options)
                         end
                     end
@@ -105,6 +108,22 @@ module Twilio
                         end
                     end
 
+                    class OperatorOverride
+                            # @param [id]: [String] The operator id (as configured in the stored rule) to override.
+                            # @param [parameters]: [Hash<String, Object>] Parameter overrides merged into the stored operator's parameters.
+                        attr_accessor :id, :parameters
+                        def initialize(payload)
+                                @id = payload["id"]
+                                @parameters = payload["parameters"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "id": @id,
+                                "parameters": @parameters,
+                        }.to_json(options)
+                        end
+                    end
+
                     class ResolvedContext
                             # @param [memory]: [ResolvedContextMemory] 
                             # @param [knowledge]: [ResolvedContextKnowledge] 
@@ -162,6 +181,19 @@ module Twilio
                         {
                                 "profileId": @profile_id,
                                 "memoryStoreId": @memory_store_id,
+                        }.to_json(options)
+                        end
+                    end
+
+                    class RuleOverride
+                            # @param [operators]: [Array<RuleExecutionList.OperatorOverride>] Operator parameter overrides, merged key-by-key into the stored operator's parameters (override wins on matching keys; unspecified keys retain their stored values). Operators in the stored rule not referenced here execute with their stored parameters unchanged. 
+                        attr_accessor :operators
+                        def initialize(payload)
+                                @operators = payload["operators"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "operators": @operators,
                         }.to_json(options)
                         end
                     end

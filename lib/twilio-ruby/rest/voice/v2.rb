@@ -24,6 +24,7 @@ module Twilio
                     @account_default_configuration = nil
                     @configurations = nil
                     @recording = nil
+                    @recording_account_default_configuration = nil
                     @transcription = nil
                     @type = nil
                 end
@@ -72,6 +73,11 @@ module Twilio
                     else
                         RecordingContext.new(self, id_or_unique_name)
                     end
+                end
+                ##
+                # @return [Twilio::REST::Voice::V2::recordingAccountDefaultConfigurationContext]
+                def recording_account_default_configuration
+                    @recording_account_default_configuration ||= RecordingAccountDefaultConfigurationContext.new self
                 end
                 ##
                 # @param [String] id_or_unique_name Config id or unique name
