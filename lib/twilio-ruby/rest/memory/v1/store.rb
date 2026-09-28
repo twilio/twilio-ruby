@@ -388,7 +388,7 @@ module Twilio
                     # @return [StoreInstance] Patched StoreInstance
                     def patch(
                       if_match: :unset,
-                      patch_store_request: :unset
+                      patch_store_request: nil
                     )
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', 'If-Match' => if_match, })
@@ -412,7 +412,7 @@ module Twilio
                     # @return [StoreInstance] Patchd StoreInstance
                     def patch_with_metadata(
                       if_match: :unset,
-                    patch_store_request: :unset
+                    patch_store_request: nil
                     )
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', 'If-Match' => if_match, })
@@ -716,7 +716,7 @@ module Twilio
                     # @return [StoreInstance] Patched StoreInstance
                     def patch(
                       if_match: :unset,
-                      patch_store_request: :unset
+                      patch_store_request: nil
                     )
 
                         context.patch(

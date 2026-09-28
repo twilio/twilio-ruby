@@ -21,11 +21,23 @@ module Twilio
                 def initialize(domain)
                     super
                     @version = 'v3'
+                    @capacity = nil
+                    @custom_field_mappings = nil
                     @metadata = nil
                     @query = nil
                     @query_jobs = nil
                 end
 
+                ##
+                # @return [Twilio::REST::Insights::V3::CapacityList]
+                def capacity
+                    @capacity ||= CapacityList.new self
+                end
+                ##
+                # @return [Twilio::REST::Insights::V3::CustomFieldMappingList]
+                def custom_field_mappings
+                    @custom_field_mappings ||= CustomFieldMappingList.new self
+                end
                 ##
                 # @return [Twilio::REST::Insights::V3::MetadataList]
                 def metadata
