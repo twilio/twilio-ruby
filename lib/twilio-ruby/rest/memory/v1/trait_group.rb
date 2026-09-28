@@ -594,7 +594,7 @@ module Twilio
                     # @return [TraitGroupInstance] Patched TraitGroupInstance
                     def patch(
                       if_match: :unset,
-                      patch_trait_group_request: :unset
+                      patch_trait_group_request: nil
                     )
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', 'If-Match' => if_match, })
@@ -619,7 +619,7 @@ module Twilio
                     # @return [TraitGroupInstance] Patchd TraitGroupInstance
                     def patch_with_metadata(
                       if_match: :unset,
-                    patch_trait_group_request: :unset
+                    patch_trait_group_request: nil
                     )
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', 'If-Match' => if_match, })
@@ -924,7 +924,7 @@ module Twilio
                     # @return [TraitGroupInstance] Patched TraitGroupInstance
                     def patch(
                       if_match: :unset,
-                      patch_trait_group_request: :unset
+                      patch_trait_group_request: nil
                     )
 
                         context.patch(
