@@ -5,6 +5,9 @@ module Twilio
     class TwilioError < StandardError
     end
 
+    class NetworkError < TwilioError
+    end
+
     class RestError < TwilioError
       attr_reader :message, :response, :code, :status_code, :details, :more_info, :error_message
 
