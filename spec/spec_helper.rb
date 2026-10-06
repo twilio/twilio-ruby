@@ -1,3 +1,5 @@
+$VERBOSE = true
+
 if RUBY_VERSION.start_with?('3.0')
   require 'simplecov'
   require 'simplecov_json_formatter'
