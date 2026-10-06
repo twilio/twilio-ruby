@@ -113,15 +113,21 @@ module Twilio
 
                     class CreateConversationWithConfigRequestConfiguration
                             # @param [intelligence_configuration_ids]: [Array<String>] A list of Conversational Intelligence configuration IDs.
+                            # @param [trait_extraction_strategy_ids]: [Array<String>] A list of Trait Extraction Strategy IDs.
+                            # @param [observation_extraction_strategy_ids]: [Array<String>] A list of Observation Extraction Strategy IDs.
                             # @param [workflows]: [Array<ConversationList.ConversationWorkflow>] The Workflows to associate with this Conversation. Overrides the Configuration's own.
-                        attr_accessor :intelligence_configuration_ids, :workflows
+                        attr_accessor :intelligence_configuration_ids, :trait_extraction_strategy_ids, :observation_extraction_strategy_ids, :workflows
                         def initialize(payload)
                                 @intelligence_configuration_ids = payload["intelligence_configuration_ids"]
+                                @trait_extraction_strategy_ids = payload["trait_extraction_strategy_ids"]
+                                @observation_extraction_strategy_ids = payload["observation_extraction_strategy_ids"]
                                 @workflows = payload["workflows"]
                         end
                         def to_json(options = {})
                         {
                                 "intelligenceConfigurationIds": @intelligence_configuration_ids,
+                                "traitExtractionStrategyIds": @trait_extraction_strategy_ids,
+                                "observationExtractionStrategyIds": @observation_extraction_strategy_ids,
                                 "workflows": @workflows,
                         }.to_json(options)
                         end
@@ -317,15 +323,21 @@ module Twilio
 
                     class CreateConversationWithConfigRequestConfiguration
                             # @param [intelligence_configuration_ids]: [Array<String>] A list of Conversational Intelligence configuration IDs.
+                            # @param [trait_extraction_strategy_ids]: [Array<String>] A list of Trait Extraction Strategy IDs.
+                            # @param [observation_extraction_strategy_ids]: [Array<String>] A list of Observation Extraction Strategy IDs.
                             # @param [workflows]: [Array<ConversationList.ConversationWorkflow>] The Workflows to associate with this Conversation. Overrides the Configuration's own.
-                        attr_accessor :intelligence_configuration_ids, :workflows
+                        attr_accessor :intelligence_configuration_ids, :trait_extraction_strategy_ids, :observation_extraction_strategy_ids, :workflows
                         def initialize(payload)
                                 @intelligence_configuration_ids = payload["intelligence_configuration_ids"]
+                                @trait_extraction_strategy_ids = payload["trait_extraction_strategy_ids"]
+                                @observation_extraction_strategy_ids = payload["observation_extraction_strategy_ids"]
                                 @workflows = payload["workflows"]
                         end
                         def to_json(options = {})
                         {
                                 "intelligenceConfigurationIds": @intelligence_configuration_ids,
+                                "traitExtractionStrategyIds": @trait_extraction_strategy_ids,
+                                "observationExtractionStrategyIds": @observation_extraction_strategy_ids,
                                 "workflows": @workflows,
                         }.to_json(options)
                         end
@@ -521,15 +533,21 @@ module Twilio
 
                     class CreateConversationWithConfigRequestConfiguration
                             # @param [intelligence_configuration_ids]: [Array<String>] A list of Conversational Intelligence configuration IDs.
+                            # @param [trait_extraction_strategy_ids]: [Array<String>] A list of Trait Extraction Strategy IDs.
+                            # @param [observation_extraction_strategy_ids]: [Array<String>] A list of Observation Extraction Strategy IDs.
                             # @param [workflows]: [Array<ConversationList.ConversationWorkflow>] The Workflows to associate with this Conversation. Overrides the Configuration's own.
-                        attr_accessor :intelligence_configuration_ids, :workflows
+                        attr_accessor :intelligence_configuration_ids, :trait_extraction_strategy_ids, :observation_extraction_strategy_ids, :workflows
                         def initialize(payload)
                                 @intelligence_configuration_ids = payload["intelligence_configuration_ids"]
+                                @trait_extraction_strategy_ids = payload["trait_extraction_strategy_ids"]
+                                @observation_extraction_strategy_ids = payload["observation_extraction_strategy_ids"]
                                 @workflows = payload["workflows"]
                         end
                         def to_json(options = {})
                         {
                                 "intelligenceConfigurationIds": @intelligence_configuration_ids,
+                                "traitExtractionStrategyIds": @trait_extraction_strategy_ids,
+                                "observationExtractionStrategyIds": @observation_extraction_strategy_ids,
                                 "workflows": @workflows,
                         }.to_json(options)
                         end
@@ -1229,6 +1247,8 @@ module Twilio
                             'channel_settings' => payload['channel_settings'],
                             'status_callbacks' => payload['status_callbacks'],
                             'intelligence_configuration_ids' => payload['intelligence_configuration_ids'],
+                            'trait_extraction_strategy_ids' => payload['trait_extraction_strategy_ids'],
+                            'observation_extraction_strategy_ids' => payload['observation_extraction_strategy_ids'],
                             'memory_extraction_enabled' => payload['memory_extraction_enabled'],
                             'conversations_v1_bridge' => payload['conversations_v1_bridge'],
                             'version' => payload['version'],
@@ -1368,6 +1388,18 @@ module Twilio
                     # @return [Array<String>] A list of Conversational Intelligence configuration IDs.
                     def intelligence_configuration_ids
                         @properties['intelligence_configuration_ids']
+                    end
+                    
+                    ##
+                    # @return [Array<String>] A list of Trait Extraction Strategy IDs.
+                    def trait_extraction_strategy_ids
+                        @properties['trait_extraction_strategy_ids']
+                    end
+                    
+                    ##
+                    # @return [Array<String>] A list of Observation Extraction Strategy IDs.
+                    def observation_extraction_strategy_ids
+                        @properties['observation_extraction_strategy_ids']
                     end
                     
                     ##

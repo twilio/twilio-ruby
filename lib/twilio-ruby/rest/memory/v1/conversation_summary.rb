@@ -33,7 +33,7 @@ module Twilio
                     end
 
                     class SummaryCore
-                            # @param [source]: [String] The source system that generated the summary. Allows letters, numbers, spaces, and URL-safe symbols. Excludes URL-unsafe characters like quotes, angle brackets, and control characters.
+                            # @param [source]: [String] The source system that generated the summary. Allows letters, numbers, spaces, periods, underscores, hyphens, and forward slashes.
                             # @param [content]: [String] The main content of the summary.
                             # @param [occurred_at]: [Time] The timestamp when the summary was originally created.
                             # @param [conversation_id]: [String] A unique identifier for the conversation using Twilio Type ID (TTID) format.
@@ -55,7 +55,7 @@ module Twilio
                     end
 
                     class SummaryCorePatch
-                            # @param [source]: [String] The source system that generated the summary. Allows letters, numbers, spaces, and URL-safe symbols. Excludes URL-unsafe characters like quotes, angle brackets, and control characters.
+                            # @param [source]: [String] The source system that generated the summary. Allows letters, numbers, spaces, periods, underscores, hyphens, and forward slashes.
                             # @param [content]: [String] The main content of the summary.
                             # @param [occurred_at]: [Time] The timestamp when the summary was originally created. If not provided, defaults to the time the summary was received.
                             # @param [conversation_id]: [String] A unique identifier for the conversation using Twilio Type ID (TTID) format.
@@ -91,7 +91,7 @@ module Twilio
                     end
 
                     class SummaryCore
-                            # @param [source]: [String] The source system that generated the summary. Allows letters, numbers, spaces, and URL-safe symbols. Excludes URL-unsafe characters like quotes, angle brackets, and control characters.
+                            # @param [source]: [String] The source system that generated the summary. Allows letters, numbers, spaces, periods, underscores, hyphens, and forward slashes.
                             # @param [content]: [String] The main content of the summary.
                             # @param [occurred_at]: [Time] The timestamp when the summary was originally created.
                             # @param [conversation_id]: [String] A unique identifier for the conversation using Twilio Type ID (TTID) format.
@@ -113,7 +113,7 @@ module Twilio
                     end
 
                     class SummaryCorePatch
-                            # @param [source]: [String] The source system that generated the summary. Allows letters, numbers, spaces, and URL-safe symbols. Excludes URL-unsafe characters like quotes, angle brackets, and control characters.
+                            # @param [source]: [String] The source system that generated the summary. Allows letters, numbers, spaces, periods, underscores, hyphens, and forward slashes.
                             # @param [content]: [String] The main content of the summary.
                             # @param [occurred_at]: [Time] The timestamp when the summary was originally created. If not provided, defaults to the time the summary was received.
                             # @param [conversation_id]: [String] A unique identifier for the conversation using Twilio Type ID (TTID) format.
@@ -714,7 +714,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] The source system that generated the summary. Allows letters, numbers, spaces, and URL-safe symbols. Excludes URL-unsafe characters like quotes, angle brackets, and control characters.
+                    # @return [String] The source system that generated the summary. Allows letters, numbers, spaces, periods, underscores, hyphens, and forward slashes.
                     def source
                         @properties['source']
                     end

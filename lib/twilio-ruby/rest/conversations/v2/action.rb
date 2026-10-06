@@ -353,6 +353,7 @@ module Twilio
                             'created_at' => Twilio.deserialize_iso8601_datetime(payload['created_at']),
                             'updated_at' => Twilio.deserialize_iso8601_datetime(payload['updated_at']),
                             'completed_at' => Twilio.deserialize_iso8601_datetime(payload['completed_at']),
+                            'failure_reason' => payload['failure_reason'],
                         }
 
                         # Context
@@ -378,7 +379,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] The type of action. Accepted values: SEND_MESSAGE.
+                    # @return [String] The type of action: action-send-message or action-start-flow.
                     def type
                         @properties['type']
                     end
@@ -396,7 +397,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [Hash<String, String>] Named identifiers from downstream. For SEND_MESSAGE: - messageSid: The downstream message SID (present when PENDING or COMPLETED) - communicationId: The Communication ID (present when COMPLETED) 
+                    # @return [Hash<String, String>] Named identifiers from downstream. For SEND_MESSAGE: - messageSid: The downstream message SID (present when PENDING or COMPLETED) - communicationId: The Communication ID (present when COMPLETED) For START_FLOW: - executionSid: The Studio Flow execution SID (present when COMPLETED) 
                     def related
                         @properties['related']
                     end
@@ -417,6 +418,12 @@ module Twilio
                     # @return [Time] Timestamp when the action reached a terminal status.
                     def completed_at
                         @properties['completed_at']
+                    end
+                    
+                    ##
+                    # @return [String] Human-readable failure reason. Null unless status is FAILED.
+                    def failure_reason
+                        @properties['failure_reason']
                     end
                     
                     ##

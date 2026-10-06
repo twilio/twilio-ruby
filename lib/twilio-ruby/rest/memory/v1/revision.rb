@@ -299,7 +299,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] The source system that generated this observation. Allows letters, numbers, spaces, and URL-safe symbols. Excludes URL-unsafe characters like quotes, angle brackets, and control characters.
+                    # @return [String] The source system that generated this observation. Allows letters, numbers, spaces, periods, underscores, hyphens, and forward slashes.
                     def source
                         @properties['source']
                     end
