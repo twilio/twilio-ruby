@@ -20,7 +20,7 @@ module Twilio
                 class ChannelsSenderList < ListResource
                 
                     class MessagingV2ChannelsSenderProfile
-                            # @param [name]: [String] The name of the sender. Required for WhatsApp senders and must follow [Meta's display name guidelines](https://www.facebook.com/business/help/757569725593362).
+                            # @param [name]: [String] The name of the sender. Required for WhatsApp senders and must follow [Meta's display name guidelines](https://www.facebook.com/business/help/757569725593362). On update, a WhatsApp sender's name is not changed synchronously: it is submitted to Meta for review, and `profile.name` continues to report the current active name until Meta approves the new one and the sender is automatically re-registered. Track progress with `pending_display_name_status` on Fetch Sender, and see `display_name_status` on the update response for the immediate outcome. Re-submitting the same name is how you retry applying a name Meta has already approved, for example after correcting the sender's two-step verification PIN. Meta permits a limited number of display name changes per 30-day period. 
                             # @param [about]: [String] The profile about text for the sender.
                             # @param [address]: [String] The address of the sender.
                             # @param [description]: [String] The description of the sender.
@@ -206,7 +206,7 @@ module Twilio
 
 
                     class MessagingV2ChannelsSenderProfile
-                            # @param [name]: [String] The name of the sender. Required for WhatsApp senders and must follow [Meta's display name guidelines](https://www.facebook.com/business/help/757569725593362).
+                            # @param [name]: [String] The name of the sender. Required for WhatsApp senders and must follow [Meta's display name guidelines](https://www.facebook.com/business/help/757569725593362). On update, a WhatsApp sender's name is not changed synchronously: it is submitted to Meta for review, and `profile.name` continues to report the current active name until Meta approves the new one and the sender is automatically re-registered. Track progress with `pending_display_name_status` on Fetch Sender, and see `display_name_status` on the update response for the immediate outcome. Re-submitting the same name is how you retry applying a name Meta has already approved, for example after correcting the sender's two-step verification PIN. Meta permits a limited number of display name changes per 30-day period. 
                             # @param [about]: [String] The profile about text for the sender.
                             # @param [address]: [String] The address of the sender.
                             # @param [description]: [String] The description of the sender.
@@ -899,10 +899,14 @@ module Twilio
                             'configuration' => payload['configuration'],
                             'webhook' => payload['webhook'],
                             'profile' => payload['profile'],
+                            'pending_display_name' => payload['pending_display_name'],
+                            'pending_display_name_status' => payload['pending_display_name_status'],
+                            'pending_display_name_status_date' => Twilio.deserialize_iso8601_datetime(payload['pending_display_name_status_date']),
                             'properties' => payload['properties'],
                             'offline_reasons' => payload['offline_reasons'],
                             'compliance' => payload['compliance'],
                             'url' => payload['url'],
+                            'display_name_status' => payload['display_name_status'],
                         }
 
                         # Context
@@ -964,6 +968,24 @@ module Twilio
                     end
                     
                     ##
+                    # @return [String] WhatsApp only. The display name the most recent change applies to — awaiting Meta review, approved by Meta and awaiting re-registration, or, once `pending_display_name_status` is `COMPLETED`, the name now in effect (identical to `name`). Absent when no display name change has been made, and once a completed change stops being reported. 
+                    def pending_display_name
+                        @properties['pending_display_name']
+                    end
+                    
+                    ##
+                    # @return [String] WhatsApp only. The status of the most recent display name change. `PENDING_REVIEW`, `APPROVED` and `DECLINED` are reported by Meta. `PIN_MISMATCH` and `REGISTRATION_FAILED` mean Meta approved the name but it could not be applied; `EXPIRED` means Meta's 14-day window to apply an approved name elapsed. In all three cases, re-submit the same `profile.name` to retry. `COMPLETED` means the name was approved and applied — `name` now returns it. A `COMPLETED` change is reported for 14 days after it completes and is absent afterwards, so treat its presence as \"recently completed\" rather than a permanent flag; use `pending_display_name_status_date` to tell how recent. Absent when no display name change has been made. 
+                    def pending_display_name_status
+                        @properties['pending_display_name_status']
+                    end
+                    
+                    ##
+                    # @return [Time] WhatsApp only. The date and time in UTC when `pending_display_name_status` last changed, specified in ISO 8601 format. Absent whenever `pending_display_name_status` is absent, so the three `pending_display_name*` fields are always present or absent together. 
+                    def pending_display_name_status_date
+                        @properties['pending_display_name_status_date']
+                    end
+                    
+                    ##
                     # @return [MessagingV2ChannelsSenderProperties] 
                     def properties
                         @properties['properties']
@@ -985,6 +1007,12 @@ module Twilio
                     # @return [String] The URL of the resource.
                     def url
                         @properties['url']
+                    end
+                    
+                    ##
+                    # @return [String] WhatsApp only. The outcome of the display name operation in this request. Present only when the request included `profile.name`. `updating` — accepted; either submitted to Meta for review, or, when Meta had already approved this exact name, routed straight to re-registration. `no_change` — the name already matches the sender's active display name; nothing was submitted to Meta. `pending_review` — the same name is already under review at Meta; the existing request continues unchanged. `error` — the display name could not be processed, while other profile fields in the same request were still applied. Returned with a 202 and carries no error code or message. This covers every failure mode, including the case where Meta accepted the name but tracking could not be started — poll `pending_display_name_status` to establish the real state rather than assuming the name was rejected. When `profile.name` is the only field in the request, the failure is returned as an error response with a specific code instead of this status. 
+                    def display_name_status
+                        @properties['display_name_status']
                     end
                     
                     ##

@@ -278,6 +278,38 @@ module Twilio
                         @dependent_hosted_number_orders = nil
                     end
                     ##
+                    # Delete the AuthorizationDocumentInstance
+                    # @return [Boolean] True if delete succeeds, false otherwise
+                    def delete
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+
+                        @version.delete('DELETE', @uri, headers: headers)
+                    end
+
+                    ##
+                    # Delete the AuthorizationDocumentInstanceMetadata
+                    # @return [Boolean] True if delete succeeds, false otherwise
+                    def delete_with_metadata
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        
+                        
+                        
+                          response = @version.delete_with_metadata('DELETE', @uri, headers: headers)
+                          authorizationDocument_instance = AuthorizationDocumentInstance.new(
+                              @version,
+                              response.body,
+                              account_sid: @solution[:account_sid],
+                              sid: @solution[:sid],
+                          )
+                          AuthorizationDocumentInstanceMetadata.new(@version, authorizationDocument_instance, response.headers, response.status_code)
+                    end
+
+                    ##
                     # Fetch the AuthorizationDocumentInstance
                     # @return [AuthorizationDocumentInstance] Fetched AuthorizationDocumentInstance
                     def fetch
@@ -675,6 +707,14 @@ module Twilio
                         @properties['links']
                     end
                     
+                    ##
+                    # Delete the AuthorizationDocumentInstance
+                    # @return [Boolean] True if delete succeeds, false otherwise
+                    def delete
+
+                        context.delete
+                    end
+
                     ##
                     # Fetch the AuthorizationDocumentInstance
                     # @return [AuthorizationDocumentInstance] Fetched AuthorizationDocumentInstance

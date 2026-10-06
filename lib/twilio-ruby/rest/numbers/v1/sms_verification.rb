@@ -19,6 +19,26 @@ module Twilio
             class V1 < Version
                 class SmsVerificationList < ListResource
                 
+                    class NumbersV1SmsVerificationRequest
+                            # @param [to]: [String] The phone number to verify in E.164 format.
+                            # @param [locale]: [String] The locale for the verification SMS message.
+                            # @param [friendly_name]: [String] A human-readable name for the caller ID.
+                        attr_accessor :to, :locale, :friendly_name
+                        def initialize(payload)
+                                @to = payload["to"]
+                                @locale = payload["locale"]
+                                @friendly_name = payload["friendly_name"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "to": @to,
+                                "locale": @locale,
+                                "friendly_name": @friendly_name,
+                        }.to_json(options)
+                        end
+                    end
+
+
                     ##
                     # Initialize the SmsVerificationList
                     # @param [Version] version Version that contains the resource
@@ -33,16 +53,18 @@ module Twilio
                     end
                     ##
                     # Create the SmsVerificationInstance
+                    # @param [NumbersV1SmsVerificationRequest] numbers_v1_sms_verification_request 
                     # @return [SmsVerificationInstance] Created SmsVerificationInstance
-                    def create
+                    def create(numbers_v1_sms_verification_request: nil
+                    )
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        headers['Content-Type'] = 'application/json'
                         
                         
                         
                         
-                        
-                        payload = @version.create('POST', @uri, headers: headers)
+                        payload = @version.create('POST', @uri, headers: headers, data: numbers_v1_sms_verification_request.to_json)
                         SmsVerificationInstance.new(
                             @version,
                             payload,
@@ -51,16 +73,18 @@ module Twilio
 
                     ##
                     # Create the SmsVerificationInstanceMetadata
+                    # @param [NumbersV1SmsVerificationRequest] numbers_v1_sms_verification_request 
                     # @return [SmsVerificationInstance] Created SmsVerificationInstance
-                    def create_with_metadata
+                    def create_with_metadata(numbers_v1_sms_verification_request: nil
+                    )
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        headers['Content-Type'] = 'application/json'
                         
                         
                         
                         
-                        
-                        response = @version.create_with_metadata('POST', @uri, headers: headers)
+                        response = @version.create_with_metadata('POST', @uri, headers: headers, data: numbers_v1_sms_verification_request.to_json)
                         sms_verification_instance = SmsVerificationInstance.new(
                             @version,
                             response.body,

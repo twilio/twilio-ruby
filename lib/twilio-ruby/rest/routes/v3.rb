@@ -21,9 +21,52 @@ module Twilio
                 def initialize(domain)
                     super
                     @version = 'v3'
+                    @iso_country_code = nil
                     @phone_numbers = nil
                 end
 
+                ##
+                # @param [String] iso_country_code The ISO country code of the short code
+                # @param [String] short_code The short code
+                # @return [Twilio::REST::Routes::V3::IsoCountryCodeContext] if isoCountryCode was passed.
+                # @return [Twilio::REST::Routes::V3::IsoCountryCodeList]
+                def iso_country_code(iso_country_code=:unset, short_code=:unset)
+                    if iso_country_code.nil?
+                        raise ArgumentError, 'iso_country_code cannot be nil'
+                    end
+                    if short_code.nil?
+                        raise ArgumentError, 'short_code cannot be nil'
+                    end
+
+                    if iso_country_code == :unset && short_code == :unset
+                        @iso_country_code ||= IsoCountryCodeList.new self
+                    elsif iso_country_code != :unset && short_code == :unset
+                        IsoCountryCodeList.new(self, iso_country_code: iso_country_code)
+                    else
+                        IsoCountryCodeContext.new(self, iso_country_code, short_code)
+                    end
+                end
+                ##
+                # @param [String] iso_country_code The ISO country code of the short code
+                # @param [String] short_code The short code
+                # @return [Twilio::REST::Routes::V3::IsoCountryCodeContext] if shortCode was passed.
+                # @return [Twilio::REST::Routes::V3::IsoCountryCodeList]
+                def iso_country_code(iso_country_code=:unset, short_code=:unset)
+                    if iso_country_code.nil?
+                        raise ArgumentError, 'iso_country_code cannot be nil'
+                    end
+                    if short_code.nil?
+                        raise ArgumentError, 'short_code cannot be nil'
+                    end
+
+                    if iso_country_code == :unset && short_code == :unset
+                        @iso_country_code ||= IsoCountryCodeList.new self
+                    elsif iso_country_code != :unset && short_code == :unset
+                        IsoCountryCodeList.new(self, iso_country_code: iso_country_code)
+                    else
+                        IsoCountryCodeContext.new(self, iso_country_code, short_code)
+                    end
+                end
                 ##
                 # @param [String] phone_number The phone number in E.164 format
                 # @return [Twilio::REST::Routes::V3::PhoneNumberContext] if phoneNumber was passed.

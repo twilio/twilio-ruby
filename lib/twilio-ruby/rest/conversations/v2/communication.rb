@@ -83,13 +83,15 @@ module Twilio
                             # @param [author]: [CommunicationList.CreateCommunicationInConversationRequestAuthor] 
                             # @param [content]: [CommunicationList.CreateCommunicationInConversationRequestContent] 
                             # @param [channel_id]: [String] 
+                            # @param [resource_id]: [String] External resource identifier for this Communication (e.g. MessageSid for SMS/RCS/WhatsApp, TranscriptionSid + MessageIndex for Voice). If a Communication with the same resourceId already exists in the Conversation, it is updated instead of a new one being created.
                             # @param [recipients]: [Array<CommunicationList.CreateCommunicationInConversationRequestRecipients>] 
                             # @param [occurred_at]: [Time] Timestamp when this Communication occurred. If omitted, the server uses the current time.
-                        attr_accessor :author, :content, :channel_id, :recipients, :occurred_at
+                        attr_accessor :author, :content, :channel_id, :resource_id, :recipients, :occurred_at
                         def initialize(payload)
                                 @author = payload["author"]
                                 @content = payload["content"]
                                 @channel_id = payload["channel_id"]
+                                @resource_id = payload["resource_id"]
                                 @recipients = payload["recipients"]
                                 @occurred_at = payload["occurred_at"]
                         end
@@ -98,6 +100,7 @@ module Twilio
                                 "author": @author,
                                 "content": @content,
                                 "channelId": @channel_id,
+                                "resourceId": @resource_id,
                                 "recipients": @recipients,
                                 "occurredAt": @occurred_at,
                         }.to_json(options)
