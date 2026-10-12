@@ -35,7 +35,7 @@ module Twilio
                     class ObservationBase
                             # @param [content]: [String] The main content of the observation.
                             # @param [occurred_at]: [Time] The timestamp when the observation originally occurred.
-                            # @param [source]: [String] The source system that generated this observation. Allows letters, numbers, spaces, and URL-safe symbols. Excludes URL-unsafe characters like quotes, angle brackets, and control characters.
+                            # @param [source]: [String] The source system that generated this observation. Allows letters, numbers, spaces, periods, underscores, hyphens, and forward slashes.
                             # @param [conversation_ids]: [Array<String>] Array of conversation IDs associated with this observation.
                         attr_accessor :content, :occurred_at, :source, :conversation_ids
                         def initialize(payload)
@@ -57,7 +57,7 @@ module Twilio
                     class ObservationCreateRequest
                             # @param [content]: [String] The main content of the observation.
                             # @param [occurred_at]: [Time] The timestamp when the observation originally occurred.
-                            # @param [source]: [String] The source system that generated this observation. Allows letters, numbers, spaces, and URL-safe symbols. Excludes URL-unsafe characters like quotes, angle brackets, and control characters.
+                            # @param [source]: [String] The source system that generated this observation. Allows letters, numbers, spaces, periods, underscores, hyphens, and forward slashes.
                             # @param [conversation_ids]: [Array<String>] Array of conversation IDs associated with this observation.
                         attr_accessor :content, :occurred_at, :source, :conversation_ids
                         def initialize(payload)
@@ -93,7 +93,7 @@ module Twilio
                     class ObservationBase
                             # @param [content]: [String] The main content of the observation.
                             # @param [occurred_at]: [Time] The timestamp when the observation originally occurred.
-                            # @param [source]: [String] The source system that generated this observation. Allows letters, numbers, spaces, and URL-safe symbols. Excludes URL-unsafe characters like quotes, angle brackets, and control characters.
+                            # @param [source]: [String] The source system that generated this observation. Allows letters, numbers, spaces, periods, underscores, hyphens, and forward slashes.
                             # @param [conversation_ids]: [Array<String>] Array of conversation IDs associated with this observation.
                         attr_accessor :content, :occurred_at, :source, :conversation_ids
                         def initialize(payload)
@@ -115,7 +115,7 @@ module Twilio
                     class ObservationCreateRequest
                             # @param [content]: [String] The main content of the observation.
                             # @param [occurred_at]: [Time] The timestamp when the observation originally occurred.
-                            # @param [source]: [String] The source system that generated this observation. Allows letters, numbers, spaces, and URL-safe symbols. Excludes URL-unsafe characters like quotes, angle brackets, and control characters.
+                            # @param [source]: [String] The source system that generated this observation. Allows letters, numbers, spaces, periods, underscores, hyphens, and forward slashes.
                             # @param [conversation_ids]: [Array<String>] Array of conversation IDs associated with this observation.
                         attr_accessor :content, :occurred_at, :source, :conversation_ids
                         def initialize(payload)
@@ -215,7 +215,7 @@ module Twilio
                     # memory before returning.
                     # @param [String] page_token The token for the page of results to retrieve.
                     # @param [String] order_by Either 'ASC' or 'DESC' to sort results ascending or descending respectively.
-                    # @param [String] source Filter by source. Allows letters, numbers, spaces, and URL-safe symbols. Excludes URL-unsafe characters like quotes, angle brackets, and control characters.
+                    # @param [String] source Filter by source. Allows letters, numbers, spaces, periods, underscores, hyphens, and forward slashes.
                     # @param [Time] created_after Filter observations created after this timestamp (inclusive).
                     # @param [Time] created_before Filter observations created before this timestamp (exclusive).
                     # @param [String] conversation_id Filter by conversation ID. Returns only items associated with the specified conversation.
@@ -247,7 +247,7 @@ module Twilio
                     # is reached.
                     # @param [String] page_token The token for the page of results to retrieve.
                     # @param [String] order_by Either 'ASC' or 'DESC' to sort results ascending or descending respectively.
-                    # @param [String] source Filter by source. Allows letters, numbers, spaces, and URL-safe symbols. Excludes URL-unsafe characters like quotes, angle brackets, and control characters.
+                    # @param [String] source Filter by source. Allows letters, numbers, spaces, periods, underscores, hyphens, and forward slashes.
                     # @param [Time] created_after Filter observations created after this timestamp (inclusive).
                     # @param [Time] created_before Filter observations created before this timestamp (exclusive).
                     # @param [String] conversation_id Filter by conversation ID. Returns only items associated with the specified conversation.
@@ -283,7 +283,7 @@ module Twilio
                     # Lists ObservationPageMetadata records from the API as a list.
                       # @param [String] page_token The token for the page of results to retrieve.
                       # @param [String] order_by Either 'ASC' or 'DESC' to sort results ascending or descending respectively.
-                      # @param [String] source Filter by source. Allows letters, numbers, spaces, and URL-safe symbols. Excludes URL-unsafe characters like quotes, angle brackets, and control characters.
+                      # @param [String] source Filter by source. Allows letters, numbers, spaces, periods, underscores, hyphens, and forward slashes.
                       # @param [Time] created_after Filter observations created after this timestamp (inclusive).
                       # @param [Time] created_before Filter observations created before this timestamp (exclusive).
                       # @param [String] conversation_id Filter by conversation ID. Returns only items associated with the specified conversation.
@@ -337,7 +337,7 @@ module Twilio
                     # Request is executed immediately.
                     # @param [String] page_token The token for the page of results to retrieve.
                     # @param [String] order_by Either 'ASC' or 'DESC' to sort results ascending or descending respectively.
-                    # @param [String] source Filter by source. Allows letters, numbers, spaces, and URL-safe symbols. Excludes URL-unsafe characters like quotes, angle brackets, and control characters.
+                    # @param [String] source Filter by source. Allows letters, numbers, spaces, periods, underscores, hyphens, and forward slashes.
                     # @param [Time] created_after Filter observations created after this timestamp (inclusive).
                     # @param [Time] created_before Filter observations created before this timestamp (exclusive).
                     # @param [String] conversation_id Filter by conversation ID. Returns only items associated with the specified conversation.
@@ -758,7 +758,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] The source system that generated this observation. Allows letters, numbers, spaces, and URL-safe symbols. Excludes URL-unsafe characters like quotes, angle brackets, and control characters.
+                    # @return [String] The source system that generated this observation. Allows letters, numbers, spaces, periods, underscores, hyphens, and forward slashes.
                     def source
                         @properties['source']
                     end

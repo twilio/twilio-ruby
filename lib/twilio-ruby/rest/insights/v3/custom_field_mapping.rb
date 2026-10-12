@@ -21,9 +21,9 @@ module Twilio
                 
                     class CustomFieldMappingRequest
                             # @param [category]: [MappingCategory] 
-                            # @param [name]: [String] Customer-facing name for the field; becomes the ClickHouse Map key and the platform field alias. Unique per account across every `sourceType` — the Map key namespace is account-global. 
-                            # @param [description]: [String] Optional, free-text description of this custom field mapping. Display-only — not part of any uniqueness check. 
-                            # @param [entity_metadata]: [CustomFieldMappingList.IntelligenceOperatorEntityMetadata] 
+                            # @param [name]: [String] Name of the custom field, used to reference it in Insights queries. Contains only letters, digits and `_`, and must not be empty. Must be unique within the account across every `sourceType`; registering an existing name returns `409`. Cannot be changed after registration. 
+                            # @param [description]: [String] Optional, free-text description of this custom field mapping, up to 150 characters. Display-only — not part of any uniqueness check. 
+                            # @param [entity_metadata]: [CustomFieldMappingList.EntityMetadata] 
                         attr_accessor :category, :name, :description, :entity_metadata
                         def initialize(payload)
                                 @category = payload["category"]
@@ -37,6 +37,151 @@ module Twilio
                                 "name": @name,
                                 "description": @description,
                                 "entityMetadata": @entity_metadata,
+                        }.to_json(options)
+                        end
+                    end
+
+                    class CustomFieldMappingUpdateRequest
+                            # @param [entity_metadata]: [CustomFieldMappingList.EntityMetadataUpdate] 
+                        attr_accessor :entity_metadata
+                        def initialize(payload)
+                                @entity_metadata = payload["entity_metadata"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "entityMetadata": @entity_metadata,
+                        }.to_json(options)
+                        end
+                    end
+
+                    class EntityMetadataUpdate
+                            # @param [source_type]: [SourceType] 
+                            # @param [intelligence_operator]: [CustomFieldMappingList.IntelligenceOperatorSourceUpdate] 
+                        attr_accessor :source_type, :intelligence_operator
+                        def initialize(payload)
+                                @source_type = payload["source_type"]
+                                @intelligence_operator = payload["intelligence_operator"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "sourceType": @source_type,
+                                "intelligenceOperator": @intelligence_operator,
+                        }.to_json(options)
+                        end
+                    end
+
+                    class IntelligenceOperatorSource
+                            # @param [operator_id]: [String] The ID of the Conversational Intelligence operator whose output supplies this field's value. Must match `^intelligence_operator_[0-7][0-9a-z]{25}$`. Cannot be changed after registration. 
+                            # @param [operator_name]: [String] Optional, display-only name of the operator. Stored as supplied and not validated against the operator. 
+                            # @param [field]: [String] Path to the property in the operator's output schema that supplies this field's value. Rules: - one or two segments separated by `.` — a top-level property   (`leadScore`) or one level of nesting (`scores.leadScore`); - each segment contains only letters, digits and `_`; array   indexing (such as `items[0]`) is not supported; - the path must exist in the output schema of the operator's   latest active version and resolve to a property of type `number`   or `integer`. 
+                        attr_accessor :operator_id, :operator_name, :field
+                        def initialize(payload)
+                                @operator_id = payload["operator_id"]
+                                @operator_name = payload["operator_name"]
+                                @field = payload["field"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "operatorId": @operator_id,
+                                "operatorName": @operator_name,
+                                "field": @field,
+                        }.to_json(options)
+                        end
+                    end
+
+                    class IntelligenceOperatorSourceUpdate
+                            # @param [field]: [String] New path to the property in the operator's output schema. Follows the same rules as `field` at registration: one or two `.`-separated segments of letters, digits and `_`, resolving to a `number` or `integer` property on the operator's latest active version. 
+                        attr_accessor :field
+                        def initialize(payload)
+                                @field = payload["field"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "field": @field,
+                        }.to_json(options)
+                        end
+                    end
+
+
+                    class CustomFieldMappingRequest
+                            # @param [category]: [MappingCategory] 
+                            # @param [name]: [String] Name of the custom field, used to reference it in Insights queries. Contains only letters, digits and `_`, and must not be empty. Must be unique within the account across every `sourceType`; registering an existing name returns `409`. Cannot be changed after registration. 
+                            # @param [description]: [String] Optional, free-text description of this custom field mapping, up to 150 characters. Display-only — not part of any uniqueness check. 
+                            # @param [entity_metadata]: [CustomFieldMappingList.EntityMetadata] 
+                        attr_accessor :category, :name, :description, :entity_metadata
+                        def initialize(payload)
+                                @category = payload["category"]
+                                @name = payload["name"]
+                                @description = payload["description"]
+                                @entity_metadata = payload["entity_metadata"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "category": @category,
+                                "name": @name,
+                                "description": @description,
+                                "entityMetadata": @entity_metadata,
+                        }.to_json(options)
+                        end
+                    end
+
+                    class CustomFieldMappingUpdateRequest
+                            # @param [entity_metadata]: [CustomFieldMappingList.EntityMetadataUpdate] 
+                        attr_accessor :entity_metadata
+                        def initialize(payload)
+                                @entity_metadata = payload["entity_metadata"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "entityMetadata": @entity_metadata,
+                        }.to_json(options)
+                        end
+                    end
+
+                    class EntityMetadataUpdate
+                            # @param [source_type]: [SourceType] 
+                            # @param [intelligence_operator]: [CustomFieldMappingList.IntelligenceOperatorSourceUpdate] 
+                        attr_accessor :source_type, :intelligence_operator
+                        def initialize(payload)
+                                @source_type = payload["source_type"]
+                                @intelligence_operator = payload["intelligence_operator"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "sourceType": @source_type,
+                                "intelligenceOperator": @intelligence_operator,
+                        }.to_json(options)
+                        end
+                    end
+
+                    class IntelligenceOperatorSource
+                            # @param [operator_id]: [String] The ID of the Conversational Intelligence operator whose output supplies this field's value. Must match `^intelligence_operator_[0-7][0-9a-z]{25}$`. Cannot be changed after registration. 
+                            # @param [operator_name]: [String] Optional, display-only name of the operator. Stored as supplied and not validated against the operator. 
+                            # @param [field]: [String] Path to the property in the operator's output schema that supplies this field's value. Rules: - one or two segments separated by `.` — a top-level property   (`leadScore`) or one level of nesting (`scores.leadScore`); - each segment contains only letters, digits and `_`; array   indexing (such as `items[0]`) is not supported; - the path must exist in the output schema of the operator's   latest active version and resolve to a property of type `number`   or `integer`. 
+                        attr_accessor :operator_id, :operator_name, :field
+                        def initialize(payload)
+                                @operator_id = payload["operator_id"]
+                                @operator_name = payload["operator_name"]
+                                @field = payload["field"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "operatorId": @operator_id,
+                                "operatorName": @operator_name,
+                                "field": @field,
+                        }.to_json(options)
+                        end
+                    end
+
+                    class IntelligenceOperatorSourceUpdate
+                            # @param [field]: [String] New path to the property in the operator's output schema. Follows the same rules as `field` at registration: one or two `.`-separated segments of letters, digits and `_`, resolving to a `number` or `integer` property on the operator's latest active version. 
+                        attr_accessor :field
+                        def initialize(payload)
+                                @field = payload["field"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "field": @field,
                         }.to_json(options)
                         end
                     end
@@ -101,6 +246,154 @@ module Twilio
                         )
                     end
 
+                
+                    ##
+                    # Lists CustomFieldMappingInstance records from the API as a list.
+                    # Unlike stream(), this operation is eager and will load `limit` records into
+                    # memory before returning.
+                    # @param [String] page_token Token for pagination
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list(page_token: :unset, limit: nil, page_size: nil)
+                        self.stream(
+                            page_token: page_token,
+                            limit: limit,
+                            page_size: page_size
+                        ).entries
+                    end
+
+                    ##
+                    # Streams Instance records from the API as an Enumerable.
+                    # This operation lazily loads records as efficiently as possible until the limit
+                    # is reached.
+                    # @param [String] page_token Token for pagination
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Enumerable] Enumerable that will yield up to limit results
+                    def stream(page_token: :unset, limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+
+                        page = self.page(
+                            page_token: page_token,
+                            page_size: limits[:page_size], )
+
+                        return [].each if page.nil?
+
+                        result = @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
+                        return [].each if result.nil?
+                        result
+                    end
+
+                    ##
+                    # Lists CustomFieldMappingPageMetadata records from the API as a list.
+                      # @param [String] page_token Token for pagination
+                    # @param [Integer] limit Upper limit for the number of records to return. stream()
+                    #    guarantees to never return more than limit.  Default is no limit
+                    # @param [Integer] page_size Number of records to fetch per request, when
+                    #    not set will use the default value of 50 records.  If no page_size is defined
+                    #    but a limit is defined, stream() will attempt to read the limit with the most
+                    #    efficient page size, i.e. min(limit, 1000)
+                    # @return [Array] Array of up to limit results
+                    def list_with_metadata(page_token: :unset, limit: nil, page_size: nil)
+                        limits = @version.read_limits(limit, page_size)
+                        params = Twilio::Values.of({
+                            'pageToken' => page_token,
+                            
+                            'PageSize' => limits[:page_size],
+                        });
+                        headers = Twilio::Values.of({})
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        CustomFieldMappingPageMetadata.new(@version, response, @solution, limits[:limit])
+                    end
+
+                    ##
+                    # When passed a block, yields CustomFieldMappingInstance records from the API.
+                    # This operation lazily loads records as efficiently as possible until the limit
+                    # is reached.
+                    def each
+                        limits = @version.read_limits
+
+                        page = self.page(page_size: limits[:page_size], )
+
+                        return [].each if page.nil?
+
+                        result = @version.stream(page,
+                            limit: limits[:limit],
+                            page_limit: limits[:page_limit])
+                        return [].each if result.nil?
+                        result.each {|x| yield x}
+                    end
+
+                    ##
+                    # Retrieve a single page of CustomFieldMappingInstance records from the API.
+                    # Request is executed immediately.
+                    # @param [String] page_token Token for pagination
+                    
+                    # @return [Page] Page of CustomFieldMappingInstance
+                    def page(page_token: :unset, page_size: :unset)
+                        params = Twilio::Values.of({
+                            'pageToken' => page_token,
+                                                        'PageSize' => page_size,
+                        })
+                        headers = Twilio::Values.of({})
+                        
+                        
+
+                        response = @version.page('GET', @uri, params: params, headers: headers)
+
+                        CustomFieldMappingPage.new(@version, response, @solution)
+                    end
+
+                    ##
+                    # Retrieve a single page of CustomFieldMappingInstance records from the API.
+                    # Request is executed immediately.
+                    # @param [String] target_url API-generated URL for the requested results page
+                    # @return [Page] Page of CustomFieldMappingInstance
+                    def get_page(target_url)
+                        response = @version.domain.request(
+                            'GET',
+                            target_url
+                        )
+                    CustomFieldMappingPage.new(@version, response, @solution)
+                    end
+                    
+
+
+                    # Provide a user friendly representation
+                    def to_s
+                        '#<Twilio.Insights.V3.CustomFieldMappingList>'
+                    end
+                end
+
+
+                class CustomFieldMappingContext < InstanceContext
+                    ##
+                    # Initialize the CustomFieldMappingContext
+                    # @param [Version] version Version that contains the resource
+                    # @param [String] mapping_id The unique identifier of the custom field mapping, as returned in `id` when the mapping was created.
+                    # @return [CustomFieldMappingContext] CustomFieldMappingContext
+                    def initialize(version, mapping_id)
+                        
+                        apiV1Version = ApiV1Version.new version.domain, version
+                        super(apiV1Version)
+
+                        # Path Solution
+                        @solution = { mapping_id: mapping_id,  }
+                        @uri = "/ControlPlane/ConversationInsights/CustomFieldMappings/#{@solution[:mapping_id]}"
+
+                        
+                    end
                     ##
                     # Fetch the CustomFieldMappingInstance
                     # @return [CustomFieldMappingInstance] Fetched CustomFieldMappingInstance
@@ -116,6 +409,7 @@ module Twilio
                         CustomFieldMappingInstance.new(
                             @version,
                             payload,
+                            mapping_id: @solution[:mapping_id],
                         )
                     end
 
@@ -134,6 +428,7 @@ module Twilio
                         custom_field_mapping_instance = CustomFieldMappingInstance.new(
                             @version,
                             response.body,
+                            mapping_id: @solution[:mapping_id],
                         )
                         CustomFieldMappingInstanceMetadata.new(
                             @version,
@@ -143,14 +438,122 @@ module Twilio
                         )
                     end
 
-                
+                    ##
+                    # Patch the CustomFieldMappingInstance
+                    # @param [String] if_match ETag of the custom field mapping, as returned in the `ETag` response header. When supplied, the update is applied only if the mapping has not changed since that ETag was issued; otherwise `412` is returned. 
+                    # @param [CustomFieldMappingUpdateRequest] custom_field_mapping_update_request 
+                    # @return [CustomFieldMappingInstance] Patched CustomFieldMappingInstance
+                    def patch(
+                      if_match: :unset,
+                      custom_field_mapping_update_request: nil
+                    )
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', 'If-Match' => if_match, })
+                        headers['Content-Type'] = 'application/json'
+                        
+                        
+                        
+                        
+                        payload = @version.patch('PATCH', @uri, headers: headers, data: custom_field_mapping_update_request.to_json)
+                        CustomFieldMappingInstance.new(
+                            @version,
+                            payload,
+                            mapping_id: @solution[:mapping_id],
+                        )
+                    end
+
+                    ##
+                    # Patch the CustomFieldMappingInstanceMetadata
+                    # @param [String] if_match ETag of the custom field mapping, as returned in the `ETag` response header. When supplied, the update is applied only if the mapping has not changed since that ETag was issued; otherwise `412` is returned. 
+                    # @param [CustomFieldMappingUpdateRequest] custom_field_mapping_update_request 
+                    # @return [CustomFieldMappingInstance] Patchd CustomFieldMappingInstance
+                    def patch_with_metadata(
+                      if_match: :unset,
+                    custom_field_mapping_update_request: nil
+                    )
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', 'If-Match' => if_match, })
+                        headers['Content-Type'] = 'application/json'
+                        
+                        
+                        
+                        
+                        response = @version.patch_with_metadata('PATCH', @uri, headers: headers, data: custom_field_mapping_update_request.to_json)
+                        custom_field_mapping_instance = CustomFieldMappingInstance.new(
+                            @version,
+                            response.body,
+                            mapping_id: @solution[:mapping_id],
+                        )
+                        CustomFieldMappingInstanceMetadata.new(
+                            @version,
+                            custom_field_mapping_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
 
 
+                    ##
                     # Provide a user friendly representation
                     def to_s
-                        '#<Twilio.Insights.V3.CustomFieldMappingList>'
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
+                        "#<Twilio.Insights.V3.CustomFieldMappingContext #{context}>"
+                    end
+
+                    ##
+                    # Provide a detailed, user friendly representation
+                    def inspect
+                        context = @solution.map{|k, v| "#{k}: #{v}"}.join(',')
+                        "#<Twilio.Insights.V3.CustomFieldMappingContext #{context}>"
                     end
                 end
+
+                class CustomFieldMappingInstanceMetadata <  InstanceResourceMetadata
+                    ##
+                    # Initializes a new CustomFieldMappingInstanceMetadata.
+                    # @param [Version] version Version that contains the resource
+                    # @param [}CustomFieldMappingInstance] custom_field_mapping_instance The instance associated with the metadata.
+                    # @param [Hash] headers Header object with response headers.
+                    # @param [Integer] status_code The HTTP status code of the response.
+                    # @return [CustomFieldMappingInstanceMetadata] The initialized instance with metadata.
+                    def initialize(version, custom_field_mapping_instance, headers, status_code)
+                        super(version, headers, status_code)
+                        @custom_field_mapping_instance = custom_field_mapping_instance
+                    end
+
+                    def custom_field_mapping
+                        @custom_field_mapping_instance
+                    end
+
+                    def headers
+                        @headers
+                    end
+
+                    def status_code
+                        @status_code
+                    end
+
+                    def to_s
+                      "<Twilio.Api.V2010.CustomFieldMappingInstanceMetadata status=#{@status_code}>"
+                    end
+                end
+
+                class CustomFieldMappingListResponse < InstanceListResource
+                    # @param [Array<CustomFieldMappingInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key)
+                       @custom_field_mapping_instance = payload.body[key].map do |data|
+                        CustomFieldMappingInstance.new(version, data)
+                       end
+                       @headers = payload.headers
+                       @status_code = payload.status_code
+                    end
+
+                      def custom_field_mapping_instance
+                          @instance
+                      end
+                  end
 
                 class CustomFieldMappingPage < TokenPage
                     ##
@@ -183,6 +586,65 @@ module Twilio
                     end
                 end
 
+                class CustomFieldMappingPageMetadata < PageMetadata
+                    attr_reader :custom_field_mapping_page
+
+                    def initialize(version, response, solution, limit)
+                        super(version, response)
+                        @custom_field_mapping_page = []
+                        @limit = limit
+                        key = get_key(response.body)
+                        records = 0
+                        while( limit != :unset && records < limit )
+                            @custom_field_mapping_page << CustomFieldMappingListResponse.new(version, @payload, key, limit - records)
+                            @payload = self.next_page
+                            break unless @payload
+                            records += (@payload.body[key] || []).size
+                        end
+                        # Path Solution
+                        @solution = solution
+                    end
+
+                    def each
+                        @custom_field_mapping_page.each do |record|
+                          yield record
+                        end
+                    end
+
+                    def to_s
+                      '<Twilio::REST::Insights::V3PageMetadata>';
+                    end
+                end
+                class CustomFieldMappingListResponse < InstanceListResource
+
+                    # @param [Array<CustomFieldMappingInstance>] instance
+                    # @param [Hash{String => Object}] headers
+                    # @param [Integer] status_code
+                    def initialize(version, payload, key, limit = :unset)
+                      data_list = payload.body[key]  || []
+                      if limit != :unset
+                        data_list = data_list[0, limit]
+                      end
+                      @custom_field_mapping = data_list.map do |data|
+                        CustomFieldMappingInstance.new(version, data)
+                      end
+                      @headers = payload.headers
+                      @status_code = payload.status_code
+                    end
+
+                    def custom_field_mapping
+                        @custom_field_mapping
+                    end
+
+                    def headers
+                      @headers
+                    end
+
+                    def status_code
+                      @status_code
+                    end
+                end
+
                 class CustomFieldMappingInstance < InstanceResource
                     ##
                     # Initialize the CustomFieldMappingInstance
@@ -193,7 +655,7 @@ module Twilio
                     #   resource.
                     # @param [String] sid The SID of the Call resource to fetch.
                     # @return [CustomFieldMappingInstance] CustomFieldMappingInstance
-                    def initialize(version, payload )
+                    def initialize(version, payload , mapping_id: nil)
                         
                         apiV1Version = ApiV1Version.new version.domain, version
                         super(apiV1Version)
@@ -207,13 +669,26 @@ module Twilio
                             'entity_metadata' => payload['entity_metadata'],
                             'created_at' => Twilio.deserialize_iso8601_datetime(payload['created_at']),
                             'updated_at' => Twilio.deserialize_iso8601_datetime(payload['updated_at']),
-                            'mappings' => payload['mappings'],
                         }
+
+                        # Context
+                        @instance_context = nil
+                        @params = { 'mapping_id' => mapping_id  || @properties['mapping_id']  , }
                     end
 
+                    ##
+                    # Generate an instance context for the instance, the context is capable of
+                    # performing various actions.  All instance actions are proxied to the context
+                    # @return [CustomFieldMappingContext] CallContext for this CallInstance
+                    def context
+                        unless @instance_context
+                            @instance_context = CustomFieldMappingContext.new(@version , @params['mapping_id'])
+                        end
+                        @instance_context
+                    end
                     
                     ##
-                    # @return [String] TTID for conversation insights custom field mapping
+                    # @return [String] The unique identifier of the custom field mapping.
                     def id
                         @properties['id']
                     end
@@ -225,7 +700,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] 
+                    # @return [String] Name of the custom field, unique within the account.
                     def name
                         @properties['name']
                     end
@@ -237,7 +712,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [IntelligenceOperatorEntityMetadata] 
+                    # @return [EntityMetadata] 
                     def entity_metadata
                         @properties['entity_metadata']
                     end
@@ -249,27 +724,47 @@ module Twilio
                     end
                     
                     ##
-                    # @return [Time] When the mapping was last materially modified in-place. Null until the first update-in-place.
+                    # @return [Time] When the mapping was last modified via `PATCH`. Null until the first update.
                     def updated_at
                         @properties['updated_at']
                     end
                     
                     ##
-                    # @return [Array<CustomFieldMappingResponse>] 
-                    def mappings
-                        @properties['mappings']
+                    # Fetch the CustomFieldMappingInstance
+                    # @return [CustomFieldMappingInstance] Fetched CustomFieldMappingInstance
+                    def fetch
+
+                        context.fetch
                     end
-                    
+
+                    ##
+                    # Patch the CustomFieldMappingInstance
+                    # @param [String] if_match ETag of the custom field mapping, as returned in the `ETag` response header. When supplied, the update is applied only if the mapping has not changed since that ETag was issued; otherwise `412` is returned. 
+                    # @param [CustomFieldMappingUpdateRequest] custom_field_mapping_update_request 
+                    # @return [CustomFieldMappingInstance] Patched CustomFieldMappingInstance
+                    def patch(
+                      if_match: :unset,
+                      custom_field_mapping_update_request: nil
+                    )
+
+                        context.patch(
+                            if_match: if_match, 
+                            custom_field_mapping_update_request: custom_field_mapping_update_request, 
+                        )
+                    end
+
                     ##
                     # Provide a user friendly representation
                     def to_s
-                        "<Twilio.Insights.V3.CustomFieldMappingInstance>"
+                        values = @params.map{|k, v| "#{k}: #{v}"}.join(" ")
+                        "<Twilio.Insights.V3.CustomFieldMappingInstance #{values}>"
                     end
 
                     ##
                     # Provide a detailed, user friendly representation
                     def inspect
-                        "<Twilio.Insights.V3.CustomFieldMappingInstance>"
+                        values = @properties.map{|k, v| "#{k}: #{v}"}.join(" ")
+                        "<Twilio.Insights.V3.CustomFieldMappingInstance #{values}>"
                     end
                 end
 

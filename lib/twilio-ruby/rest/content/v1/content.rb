@@ -492,7 +492,7 @@ module Twilio
                         {
                                 "id": @id,
                                 "title": @title,
-                                "timeSlots": @time_slots,
+                                "time_slots": @time_slots,
                         }.to_json(options)
                         end
                     end
@@ -1114,7 +1114,7 @@ module Twilio
                         {
                                 "id": @id,
                                 "title": @title,
-                                "timeSlots": @time_slots,
+                                "time_slots": @time_slots,
                         }.to_json(options)
                         end
                     end

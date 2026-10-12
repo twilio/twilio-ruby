@@ -35,7 +35,6 @@ module Twilio
                     @sms_verifications = nil
                     @sms_verification_checks = nil
                     @voice_verifications = nil
-                    @voice_verification_checks = nil
                     @webhook = nil
                 end
 
@@ -194,11 +193,6 @@ module Twilio
                 # @return [Twilio::REST::Numbers::V1::VoiceVerificationList]
                 def voice_verifications
                     @voice_verifications ||= VoiceVerificationList.new self
-                end
-                ##
-                # @return [Twilio::REST::Numbers::V1::VoiceVerificationCheckList]
-                def voice_verification_checks
-                    @voice_verification_checks ||= VoiceVerificationCheckList.new self
                 end
                 ##
                 # @return [Twilio::REST::Numbers::V1::WebhookList]

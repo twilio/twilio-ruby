@@ -21,22 +21,32 @@ module Twilio
                 def initialize(domain)
                     super
                     @version = 'v3'
-                    @capacity = nil
                     @custom_field_mappings = nil
+                    @custom_field_mappings_capacity = nil
                     @metadata = nil
                     @query = nil
                     @query_jobs = nil
                 end
 
                 ##
-                # @return [Twilio::REST::Insights::V3::CapacityList]
-                def capacity
-                    @capacity ||= CapacityList.new self
+                # @param [String] mapping_id The unique identifier of the custom field mapping, as returned in `id` when the mapping was created.
+                # @return [Twilio::REST::Insights::V3::CustomFieldMappingContext] if mappingId was passed.
+                # @return [Twilio::REST::Insights::V3::CustomFieldMappingList]
+                def custom_field_mappings(mapping_id=:unset)
+                    if mapping_id.nil?
+                        raise ArgumentError, 'mapping_id cannot be nil'
+                    end
+
+                    if mapping_id == :unset
+                        @custom_field_mappings ||= CustomFieldMappingList.new self
+                    else
+                        CustomFieldMappingContext.new(self, mapping_id)
+                    end
                 end
                 ##
-                # @return [Twilio::REST::Insights::V3::CustomFieldMappingList]
-                def custom_field_mappings
-                    @custom_field_mappings ||= CustomFieldMappingList.new self
+                # @return [Twilio::REST::Insights::V3::CustomFieldMappingsCapacityList]
+                def custom_field_mappings_capacity
+                    @custom_field_mappings_capacity ||= CustomFieldMappingsCapacityList.new self
                 end
                 ##
                 # @return [Twilio::REST::Insights::V3::MetadataList]
