@@ -19,6 +19,41 @@ module Twilio
             class V1 < Version
                 class VoiceVerificationList < ListResource
                 
+                    class NumbersV1VoiceVerificationRequest
+                            # @param [phone_number]: [String] The phone number to verify in E.164 format.
+                            # @param [friendly_name]: [String] A human-readable name for the caller ID.
+                            # @param [custom_code]: [String] A custom verification code to use instead of a generated one.
+                            # @param [call_delay]: [String] Number of seconds to delay the verification call (0-60).
+                            # @param [status_callback]: [String] URL to receive status callback events.
+                            # @param [status_callback_method]: [String] HTTP method for status callback requests.
+                            # @param [extension]: [String] Phone extension to dial after connecting.
+                            # @param [custom_success_message]: [String] Custom message to play after successful verification.
+                        attr_accessor :phone_number, :friendly_name, :custom_code, :call_delay, :status_callback, :status_callback_method, :extension, :custom_success_message
+                        def initialize(payload)
+                                @phone_number = payload["phone_number"]
+                                @friendly_name = payload["friendly_name"]
+                                @custom_code = payload["custom_code"]
+                                @call_delay = payload["call_delay"]
+                                @status_callback = payload["status_callback"]
+                                @status_callback_method = payload["status_callback_method"]
+                                @extension = payload["extension"]
+                                @custom_success_message = payload["custom_success_message"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "phone_number": @phone_number,
+                                "friendly_name": @friendly_name,
+                                "custom_code": @custom_code,
+                                "call_delay": @call_delay,
+                                "status_callback": @status_callback,
+                                "status_callback_method": @status_callback_method,
+                                "extension": @extension,
+                                "custom_success_message": @custom_success_message,
+                        }.to_json(options)
+                        end
+                    end
+
+
                     ##
                     # Initialize the VoiceVerificationList
                     # @param [Version] version Version that contains the resource
@@ -33,16 +68,18 @@ module Twilio
                     end
                     ##
                     # Create the VoiceVerificationInstance
+                    # @param [NumbersV1VoiceVerificationRequest] numbers_v1_voice_verification_request 
                     # @return [VoiceVerificationInstance] Created VoiceVerificationInstance
-                    def create
+                    def create(numbers_v1_voice_verification_request: nil
+                    )
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        headers['Content-Type'] = 'application/json'
                         
                         
                         
                         
-                        
-                        payload = @version.create('POST', @uri, headers: headers)
+                        payload = @version.create('POST', @uri, headers: headers, data: numbers_v1_voice_verification_request.to_json)
                         VoiceVerificationInstance.new(
                             @version,
                             payload,
@@ -51,16 +88,18 @@ module Twilio
 
                     ##
                     # Create the VoiceVerificationInstanceMetadata
+                    # @param [NumbersV1VoiceVerificationRequest] numbers_v1_voice_verification_request 
                     # @return [VoiceVerificationInstance] Created VoiceVerificationInstance
-                    def create_with_metadata
+                    def create_with_metadata(numbers_v1_voice_verification_request: nil
+                    )
 
                         headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        headers['Content-Type'] = 'application/json'
                         
                         
                         
                         
-                        
-                        response = @version.create_with_metadata('POST', @uri, headers: headers)
+                        response = @version.create_with_metadata('POST', @uri, headers: headers, data: numbers_v1_voice_verification_request.to_json)
                         voice_verification_instance = VoiceVerificationInstance.new(
                             @version,
                             response.body,
