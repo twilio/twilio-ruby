@@ -1,14 +1,90 @@
 # frozen_string_literal: true
 
+# Load framework/rest files (these are core and should be loaded immediately)
 Dir[File.join(__dir__, 'framework/rest/*.rb')].sort.each do |file|
   require file
 end
 
-Dir[File.join(__dir__, 'rest/*.rb')].sort.each do |file|
-  require file.gsub(/\.rb$/, '_base.rb') unless file.end_with?('client.rb') || file.end_with?('_base.rb')
-  require file
-end
+# Load base client classes that are always needed
+require_relative 'rest/client'
 
-Dir[File.join(__dir__, 'rest/**/*.rb')].sort.each do |file|
-  require file
+# Use autoload for REST service modules to reduce memory usage
+module Twilio
+  module REST
+    # Autoload all REST service classes
+    autoload :Accounts, File.join(__dir__, 'rest', 'accounts.rb')
+    autoload :AccountsBase, File.join(__dir__, 'rest', 'accounts_base.rb')
+    autoload :Api, File.join(__dir__, 'rest', 'api.rb')
+    autoload :ApiBase, File.join(__dir__, 'rest', 'api_base.rb')
+    autoload :Assistants, File.join(__dir__, 'rest', 'assistants.rb')
+    autoload :AssistantsBase, File.join(__dir__, 'rest', 'assistants_base.rb')
+    autoload :Bulkexports, File.join(__dir__, 'rest', 'bulkexports.rb')
+    autoload :BulkexportsBase, File.join(__dir__, 'rest', 'bulkexports_base.rb')
+    autoload :Chat, File.join(__dir__, 'rest', 'chat.rb')
+    autoload :ChatBase, File.join(__dir__, 'rest', 'chat_base.rb')
+    autoload :Content, File.join(__dir__, 'rest', 'content.rb')
+    autoload :ContentBase, File.join(__dir__, 'rest', 'content_base.rb')
+    autoload :Conversations, File.join(__dir__, 'rest', 'conversations.rb')
+    autoload :ConversationsBase, File.join(__dir__, 'rest', 'conversations_base.rb')
+    autoload :Events, File.join(__dir__, 'rest', 'events.rb')
+    autoload :EventsBase, File.join(__dir__, 'rest', 'events_base.rb')
+    autoload :FlexApi, File.join(__dir__, 'rest', 'flex_api.rb')
+    autoload :FlexApiBase, File.join(__dir__, 'rest', 'flex_api_base.rb')
+    autoload :FrontlineApi, File.join(__dir__, 'rest', 'frontline_api.rb')
+    autoload :FrontlineApiBase, File.join(__dir__, 'rest', 'frontline_api_base.rb')
+    autoload :Iam, File.join(__dir__, 'rest', 'iam.rb')
+    autoload :IamBase, File.join(__dir__, 'rest', 'iam_base.rb')
+    autoload :Insights, File.join(__dir__, 'rest', 'insights.rb')
+    autoload :InsightsBase, File.join(__dir__, 'rest', 'insights_base.rb')
+    autoload :Intelligence, File.join(__dir__, 'rest', 'intelligence.rb')
+    autoload :IntelligenceBase, File.join(__dir__, 'rest', 'intelligence_base.rb')
+    autoload :IpMessaging, File.join(__dir__, 'rest', 'ip_messaging.rb')
+    autoload :IpMessagingBase, File.join(__dir__, 'rest', 'ip_messaging_base.rb')
+    autoload :Lookups, File.join(__dir__, 'rest', 'lookups.rb')
+    autoload :LookupsBase, File.join(__dir__, 'rest', 'lookups_base.rb')
+    autoload :Marketplace, File.join(__dir__, 'rest', 'marketplace.rb')
+    autoload :MarketplaceBase, File.join(__dir__, 'rest', 'marketplace_base.rb')
+    autoload :Messaging, File.join(__dir__, 'rest', 'messaging.rb')
+    autoload :MessagingBase, File.join(__dir__, 'rest', 'messaging_base.rb')
+    autoload :Monitor, File.join(__dir__, 'rest', 'monitor.rb')
+    autoload :MonitorBase, File.join(__dir__, 'rest', 'monitor_base.rb')
+    autoload :Notify, File.join(__dir__, 'rest', 'notify.rb')
+    autoload :NotifyBase, File.join(__dir__, 'rest', 'notify_base.rb')
+    autoload :Numbers, File.join(__dir__, 'rest', 'numbers.rb')
+    autoload :NumbersBase, File.join(__dir__, 'rest', 'numbers_base.rb')
+    autoload :Oauth, File.join(__dir__, 'rest', 'oauth.rb')
+    autoload :OauthBase, File.join(__dir__, 'rest', 'oauth_base.rb')
+    autoload :Preview, File.join(__dir__, 'rest', 'preview.rb')
+    autoload :PreviewBase, File.join(__dir__, 'rest', 'preview_base.rb')
+    autoload :PreviewIam, File.join(__dir__, 'rest', 'preview_iam.rb')
+    autoload :PreviewIamBase, File.join(__dir__, 'rest', 'preview_iam_base.rb')
+    autoload :Pricing, File.join(__dir__, 'rest', 'pricing.rb')
+    autoload :PricingBase, File.join(__dir__, 'rest', 'pricing_base.rb')
+    autoload :Proxy, File.join(__dir__, 'rest', 'proxy.rb')
+    autoload :ProxyBase, File.join(__dir__, 'rest', 'proxy_base.rb')
+    autoload :Routes, File.join(__dir__, 'rest', 'routes.rb')
+    autoload :RoutesBase, File.join(__dir__, 'rest', 'routes_base.rb')
+    autoload :Serverless, File.join(__dir__, 'rest', 'serverless.rb')
+    autoload :ServerlessBase, File.join(__dir__, 'rest', 'serverless_base.rb')
+    autoload :Studio, File.join(__dir__, 'rest', 'studio.rb')
+    autoload :StudioBase, File.join(__dir__, 'rest', 'studio_base.rb')
+    autoload :Supersim, File.join(__dir__, 'rest', 'supersim.rb')
+    autoload :SupersimBase, File.join(__dir__, 'rest', 'supersim_base.rb')
+    autoload :Sync, File.join(__dir__, 'rest', 'sync.rb')
+    autoload :SyncBase, File.join(__dir__, 'rest', 'sync_base.rb')
+    autoload :Taskrouter, File.join(__dir__, 'rest', 'taskrouter.rb')
+    autoload :TaskrouterBase, File.join(__dir__, 'rest', 'taskrouter_base.rb')
+    autoload :Trunking, File.join(__dir__, 'rest', 'trunking.rb')
+    autoload :TrunkingBase, File.join(__dir__, 'rest', 'trunking_base.rb')
+    autoload :Trusthub, File.join(__dir__, 'rest', 'trusthub.rb')
+    autoload :TrusthubBase, File.join(__dir__, 'rest', 'trusthub_base.rb')
+    autoload :Verify, File.join(__dir__, 'rest', 'verify.rb')
+    autoload :VerifyBase, File.join(__dir__, 'rest', 'verify_base.rb')
+    autoload :Video, File.join(__dir__, 'rest', 'video.rb')
+    autoload :VideoBase, File.join(__dir__, 'rest', 'video_base.rb')
+    autoload :Voice, File.join(__dir__, 'rest', 'voice.rb')
+    autoload :VoiceBase, File.join(__dir__, 'rest', 'voice_base.rb')
+    autoload :Wireless, File.join(__dir__, 'rest', 'wireless.rb')
+    autoload :WirelessBase, File.join(__dir__, 'rest', 'wireless_base.rb')
+  end
 end
