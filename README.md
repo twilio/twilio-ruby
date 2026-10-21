@@ -262,6 +262,8 @@ puts @client.http_client.last_response.status_code
 
 To use a custom HTTP client with this helper library, please see the [advanced example of how to do so](./advanced-examples/custom-http-client.md).
 
+The default HTTP client refuses TLS connections whose certificate chain contains one of eight intermediate certificates with compromised keys (CVE-2026-111943). This check relies on the `:net_http` Faraday adapter, so switching to another adapter, or building your own HTTP client, removes it. Net::HTTP users can restore it with `http.verify_callback = Twilio::HTTP::DistrustedIntermediates.verify_callback`.
+
 To apply customizations such as middleware, you can use the `configure_connection` method like so:
 
 ```ruby
