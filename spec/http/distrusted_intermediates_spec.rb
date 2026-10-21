@@ -33,8 +33,14 @@ describe Twilio::HTTP::DistrustedIntermediates do
     build_cert('127.0.0.1', leaf_key, issuer: intermediate, issuer_key: intermediate_key, san: 'IP:127.0.0.1,DNS:localhost')
   end
 
+  # The server sends only the leaf. jruby-openssl signs the key exchange wrongly when the server sets
+  # extra_chain_cert, so the client gets the intermediate from its store instead. OpenSSL still builds the
+  # chain through it and calls the verify callback for it.
   def trusting_root
-    OpenSSL::X509::Store.new.tap { |store| store.add_cert(root) }
+    OpenSSL::X509::Store.new.tap do |store|
+      store.add_cert(root)
+      store.add_cert(intermediate)
+    end
   end
 
   describe 'the distrusted list' do
@@ -52,17 +58,32 @@ describe Twilio::HTTP::DistrustedIntermediates do
   end
 
   describe 'TLS handshake' do
-    # MRI reports "certificate rejected"; jruby-openssl only reports "certificate verify failed".
-    let(:rejected_message) { /rejected|certificate verify failed/ }
+    # Handshakes with the intermediate blocklisted. Returns the error and the certificates our callback refused.
+    # MRI raises an SSLError, but jruby-openssl sometimes surfaces the aborted handshake as EPIPE or ETIMEDOUT, so
+    # the refused certificates are what show the check did the refusing.
+    def refused_handshake(port, host = '127.0.0.1')
+      distrusted = Set[described_class.spki_sha256_hex(intermediate)]
+      callback = described_class.verify_callback(distrusted)
+      refused = []
+      spy = lambda do |preverify_ok, store_context|
+        callback.call(preverify_ok, store_context).tap do |ok|
+          refused << store_context.current_cert.subject.to_s unless ok
+        end
+      end
+      error = begin
+        handshake(port, spy, host)
+        nil
+      rescue OpenSSL::SSL::SSLError, SystemCallError => e
+        e
+      end
+      [error, refused]
+    end
 
     def serve
       tcp = TCPServer.new('127.0.0.1', 0)
       context = OpenSSL::SSL::SSLContext.new
       context.cert = leaf
       context.key = leaf_key
-      context.extra_chain_cert = [intermediate]
-      # jruby-openssl fails TLS 1.3 CertificateVerify with these test keys, so pin both ends to TLS 1.2.
-      context.max_version = OpenSSL::SSL::TLS1_2_VERSION
       server = OpenSSL::SSL::SSLServer.new(tcp, context)
       thread = Thread.new do
         loop do
@@ -86,14 +107,20 @@ describe Twilio::HTTP::DistrustedIntermediates do
       context.verify_mode = OpenSSL::SSL::VERIFY_PEER
       context.cert_store = trusting_root
       context.verify_callback = callback
-      context.max_version = OpenSSL::SSL::TLS1_2_VERSION
-      socket = OpenSSL::SSL::SSLSocket.new(TCPSocket.new('127.0.0.1', port), context)
+      tcp = TCPSocket.new('127.0.0.1', port)
+      socket = OpenSSL::SSL::SSLSocket.new(tcp, context)
       socket.hostname = host
       socket.connect
       socket.post_connection_check(host)
       true
     ensure
-      socket&.close
+      # Closing after a failed handshake can raise EPIPE or ETIMEDOUT on jruby-openssl.
+      begin
+        socket&.close
+      rescue SystemCallError, IOError
+        nil
+      end
+      tcp&.close
     end
 
     it 'accepts a chain with no distrusted intermediate' do
@@ -104,17 +131,18 @@ describe Twilio::HTTP::DistrustedIntermediates do
 
     it 'refuses a chain containing a distrusted intermediate' do
       serve do |port|
-        distrusted = Set[described_class.spki_sha256_hex(intermediate)]
-        callback = described_class.verify_callback(distrusted)
-        expect { handshake(port, callback) }.to raise_error(OpenSSL::SSL::SSLError, rejected_message)
+        error, refused = refused_handshake(port)
+        expect(error).not_to be_nil
+        expect(refused).to eq(['/CN=Test Intermediate'])
       end
     end
 
     it 'refuses a distrusted chain on every connection' do
       serve do |port|
-        callback = described_class.verify_callback(Set[described_class.spki_sha256_hex(intermediate)])
         3.times do
-          expect { handshake(port, callback) }.to raise_error(OpenSSL::SSL::SSLError, rejected_message)
+          error, refused = refused_handshake(port)
+          expect(error).not_to be_nil
+          expect(refused).to eq(['/CN=Test Intermediate'])
         end
       end
     end
@@ -123,8 +151,9 @@ describe Twilio::HTTP::DistrustedIntermediates do
       serve do |port|
         callback = described_class.verify_callback
         expect(handshake(port, callback, 'localhost')).to be(true)
-        blocked = described_class.verify_callback(Set[described_class.spki_sha256_hex(intermediate)])
-        expect { handshake(port, blocked, 'localhost') }.to raise_error(OpenSSL::SSL::SSLError, rejected_message)
+        error, refused = refused_handshake(port, 'localhost')
+        expect(error).not_to be_nil
+        expect(refused).to eq(['/CN=Test Intermediate'])
       end
     end
   end
