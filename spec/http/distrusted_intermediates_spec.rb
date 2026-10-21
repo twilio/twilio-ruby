@@ -30,7 +30,7 @@ describe Twilio::HTTP::DistrustedIntermediates do
     build_cert('Test Intermediate', intermediate_key, issuer: root, issuer_key: root_key, ca: true)
   end
   let(:leaf) do
-    build_cert('127.0.0.1', leaf_key, issuer: intermediate, issuer_key: intermediate_key, san: 'IP:127.0.0.1')
+    build_cert('127.0.0.1', leaf_key, issuer: intermediate, issuer_key: intermediate_key, san: 'IP:127.0.0.1,DNS:localhost')
   end
 
   def trusting_root
@@ -76,15 +76,15 @@ describe Twilio::HTTP::DistrustedIntermediates do
     end
 
     # Net::HTTP configures its SSLContext with the same cert_store Faraday hands it, so handshake directly.
-    def handshake(port, callback)
+    def handshake(port, callback, host = '127.0.0.1')
       context = OpenSSL::SSL::SSLContext.new
       context.verify_mode = OpenSSL::SSL::VERIFY_PEER
       context.cert_store = trusting_root
       context.verify_callback = callback
       socket = OpenSSL::SSL::SSLSocket.new(TCPSocket.new('127.0.0.1', port), context)
-      socket.hostname = '127.0.0.1'
+      socket.hostname = host
       socket.connect
-      socket.post_connection_check('127.0.0.1')
+      socket.post_connection_check(host)
       true
     ensure
       socket&.close
@@ -101,6 +101,24 @@ describe Twilio::HTTP::DistrustedIntermediates do
         distrusted = Set[described_class.spki_sha256_hex(intermediate)]
         callback = described_class.verify_callback(distrusted)
         expect { handshake(port, callback) }.to raise_error(OpenSSL::SSL::SSLError, /rejected/)
+      end
+    end
+
+    it 'refuses a distrusted chain on every connection' do
+      serve do |port|
+        callback = described_class.verify_callback(Set[described_class.spki_sha256_hex(intermediate)])
+        3.times do
+          expect { handshake(port, callback) }.to raise_error(OpenSSL::SSL::SSLError, /rejected/)
+        end
+      end
+    end
+
+    it 'refuses a chain that is otherwise valid for the host' do
+      serve do |port|
+        callback = described_class.verify_callback
+        expect(handshake(port, callback, 'localhost')).to be(true)
+        blocked = described_class.verify_callback(Set[described_class.spki_sha256_hex(intermediate)])
+        expect { handshake(port, blocked, 'localhost') }.to raise_error(OpenSSL::SSL::SSLError, /rejected/)
       end
     end
   end
