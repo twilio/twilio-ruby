@@ -78,7 +78,7 @@ class MyRequestClass
     @connection = Faraday.new(url: request.host + ":" + request.port.to_s, ssl: { verify: true }) do |f|
       f.options.params_encoder = Faraday::FlatParamsEncoder
       f.request :url_encoded
-      f.adapter @adapter
+      f.adapter(@adapter) { |http| Twilio::HTTP::DistrustedIntermediates.apply(http) }
       f.headers = request.headers
       f.basic_auth(request.auth[0], request.auth[1])
       if @proxy_addr
@@ -112,6 +112,10 @@ class MyRequestClass
   end
 end
 ```
+
+### Keep the distrusted-intermediate check
+
+The library's default client refuses TLS connections whose certificate chain contains one of eight intermediate certificates with compromised keys (CVE-2026-111943). A custom client doesn't get this check unless it opts in, as the example above does by passing `Twilio::HTTP::DistrustedIntermediates.apply` to Faraday's `:net_http` adapter. Adapters other than `:net_http` don't support it.
 
 In this example, we are using some environment variables loaded at the program startup to retrieve various configuration settings:
 

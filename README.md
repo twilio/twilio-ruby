@@ -260,6 +260,8 @@ puts @client.http_client.last_response.status_code
 @client.http_client.adapter = :typhoeus
 ```
 
+The default `:net_http` adapter refuses TLS connections whose certificate chain contains one of eight intermediate certificates with compromised keys (CVE-2026-111943). Other adapters and custom HTTP clients don't get this check unless they opt in; see [Keep the distrusted-intermediate check](./advanced-examples/custom-http-client.md#keep-the-distrusted-intermediate-check).
+
 To use a custom HTTP client with this helper library, please see the [advanced example of how to do so](./advanced-examples/custom-http-client.md).
 
 To apply customizations such as middleware, you can use the `configure_connection` method like so:

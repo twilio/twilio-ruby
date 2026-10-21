@@ -50,7 +50,11 @@ module Twilio
           f.params = request.params.nil? ? {} : request.params
 
           @configure_connection_blocks.each { |block| block.call(f) }
-          f.adapter @adapter
+          if @adapter == :net_http
+            f.adapter(@adapter) { |http| DistrustedIntermediates.apply(http) }
+          else
+            f.adapter @adapter
+          end
         end
 
         @last_request = request
