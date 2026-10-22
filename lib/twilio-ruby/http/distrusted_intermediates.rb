@@ -35,7 +35,7 @@ module Twilio
 
       # X509_V_ERR_CERT_REJECTED
       REJECTED_ERROR = OpenSSL::X509::V_ERR_CERT_REJECTED
-      ERROR_MESSAGE = 'ertificate chain which you are using contains a distrusted intermediate certificate'
+      ERROR_MESSAGE = 'Certificate chain which you are using contains a distrusted intermediate certificate'
 
       module_function
 
