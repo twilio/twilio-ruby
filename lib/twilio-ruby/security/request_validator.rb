@@ -3,11 +3,35 @@
 module Twilio
   module Security
     class RequestValidator
+      # Header that carries the webhook signature
+      SIGNATURE_HEADER = 'X-Twilio-Signature'
+      # Header Twilio adds to webhooks signed with a SharedKey: key=<sharedKeyId>,algorithm=<algorithm>
+      SIGNATURE_SETTINGS_HEADER = 'X-Twilio-Webhooks-Signature-Settings'
+      HMAC_SHA1 = 'HMAC_SHA1'
+      HMAC_SHA256 = 'HMAC_SHA256'
+      DIGESTS = { HMAC_SHA1 => 'sha1', HMAC_SHA256 => 'sha256' }.freeze
+
+      ##
+      # Returns the signing algorithm named in the X-Twilio-Webhooks-Signature-Settings header. A missing or
+      # empty header (or one without +algorithm=+) means the legacy Auth Token signature, HMAC_SHA1.
+      #
+      # @param [String] signature_settings_header e.g. "key=webhooks_sharedkey_...,algorithm=HMAC_SHA256"
+      #
+      # @return [String] the algorithm name
+      def self.signature_algorithm(signature_settings_header)
+        signature_settings_header.to_s.split(',').each do |part|
+          name, value = part.split('=', 2).map(&:strip)
+          return value if name == 'algorithm' && !value.to_s.empty?
+        end
+        HMAC_SHA1
+      end
+
       ##
       # Initialize a Request Validator. auth_token will either be grabbed from the global Twilio object or you can
       # pass it in here.
       #
-      # @param [String] auth_token Your account auth token, used to sign requests
+      # @param [String] auth_token The secret the webhook was signed with: your account auth token, or the
+      #   SharedKey secret when the request carries the X-Twilio-Webhooks-Signature-Settings header
       def initialize(auth_token = nil)
         @auth_token = auth_token || Twilio.auth_token
         raise ArgumentError, 'Auth token is required' if @auth_token.nil?
@@ -22,9 +46,17 @@ module Twilio
       #   a bodySHA256 parameter in the query string, this parameter can instead be the POST body as a string to
       #   validate JSON or other text-based payloads that aren't x-www-form-urlencoded.
       # @param [String] signature The expected signature, from the X-Twilio-Signature header of the request
+      # @param [String] algorithm HMAC_SHA1 (default) or HMAC_SHA256, see {.signature_algorithm}. An unsupported
+      #   algorithm fails validation and logs a warning.
       #
       # @return [Boolean] whether or not the computed signature matches the signature parameter
-      def validate(url, params, signature)
+      def validate(url, params, signature, algorithm = nil)
+        unless digest_name_for(algorithm)
+          warn "[Twilio] Unsupported webhook signature algorithm '#{algorithm}'. " \
+               "Supported: #{HMAC_SHA1}, #{HMAC_SHA256}. Upgrade twilio-ruby if Twilio added a new one."
+          return false
+        end
+
         parsed_url = URI(url)
         url_with_port = add_port(parsed_url)
         url_without_port = remove_port(parsed_url)
@@ -40,8 +72,10 @@ module Twilio
 
         # Check signature of the url with and without port numbers
         # since signature generation on the back end is inconsistent
-        valid_signature_with_port = secure_compare(build_signature_for(url_with_port, params_hash), signature)
-        valid_signature_without_port = secure_compare(build_signature_for(url_without_port, params_hash), signature)
+        valid_signature_with_port = secure_compare(build_signature_for(url_with_port, params_hash, algorithm),
+                                                   signature)
+        valid_signature_without_port = secure_compare(build_signature_for(url_without_port, params_hash, algorithm),
+                                                      signature)
 
         valid_body && (valid_signature_with_port || valid_signature_without_port)
       end
@@ -58,19 +92,31 @@ module Twilio
       end
 
       ##
-      # Build a SHA1-HMAC signature for a url and parameter hash
+      # Build an HMAC signature for a url and parameter hash
       #
       # @param [String] url The request url, including any query parameters
       # @param [#join] params The POST parameters
+      # @param [String] algorithm HMAC_SHA1 (default) or HMAC_SHA256
       #
-      # @return [String] A base64 encoded SHA1-HMAC
-      def build_signature_for(url, params)
+      # @return [String] A base64 encoded HMAC
+      # @raise [ArgumentError] if the algorithm is not supported
+      def build_signature_for(url, params, algorithm = nil)
+        digest_name = digest_name_for(algorithm)
+        raise ArgumentError, "Unsupported webhook signature algorithm: #{algorithm}" unless digest_name
+
         data = url + params.sort.join
-        digest = OpenSSL::Digest.new('sha1')
+        digest = OpenSSL::Digest.new(digest_name)
         Base64.strict_encode64(OpenSSL::HMAC.digest(digest, @auth_token, data))
       end
 
       private
+
+      # Maps an algorithm name to an OpenSSL digest name, or nil when unsupported. nil or empty means HMAC_SHA1.
+      def digest_name_for(algorithm)
+        return DIGESTS[HMAC_SHA1] if algorithm.nil? || algorithm.to_s.empty?
+
+        DIGESTS[algorithm.to_s.upcase]
+      end
 
       # Compares two strings in constant time to avoid timing attacks.
       # Borrowed from ActiveSupport::MessageVerifier.
