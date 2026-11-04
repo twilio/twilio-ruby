@@ -20,15 +20,28 @@ module Rack
   # the ENV and only against paths that match /\/messages/. If the request
   # validates then it gets passed on to the action as normal. If the request
   # doesn't validate then the middleware responds immediately with a 403 status.
+  #
+  # Webhooks signed with a SharedKey (see the Webhooks Rules API) carry an
+  # X-Twilio-Webhooks-Signature-Settings header naming the signing algorithm, and
+  # are signed with the SharedKey secret instead of the auth token. Pass it with
+  # the shared_key_secret option:
+  #
+  # use Rack::TwilioWebhookAuthentication, ENV['AUTH_TOKEN'], /\/voice/, shared_key_secret: ENV['SHARED_KEY_SECRET']
+  #
+  # Requests without that header are still validated with the auth token and
+  # HMAC-SHA1. A request with the header but no shared_key_secret configured gets
+  # a 500, as the middleware cannot validate it.
 
   class TwilioWebhookAuthentication
     # Rack's FORM_DATA_MEDIA_TYPES can be modified to taste, so we're slightly
     # more conservative in what we consider form data.
     FORM_URLENCODED_MEDIA_TYPE = Rack::MediaType.type('application/x-www-form-urlencoded')
+    SIGNATURE_SETTINGS_ENV_KEY = 'HTTP_X_TWILIO_WEBHOOKS_SIGNATURE_SETTINGS'
 
-    def initialize(app, auth_token, *paths, &auth_token_lookup)
+    def initialize(app, auth_token, *paths, shared_key_secret: nil, &auth_token_lookup)
       @app = app
       @auth_token = auth_token
+      @shared_key_secret = shared_key_secret
       define_singleton_method(:get_auth_token, auth_token_lookup) if block_given?
       @path_regex = Regexp.union(paths)
     end
@@ -38,10 +51,14 @@ module Rack
       request = Rack::Request.new(env)
       original_url = request.url
       params = extract_params!(request)
-      auth_token = @auth_token || get_auth_token(params['AccountSid'])
-      validator = Twilio::Security::RequestValidator.new(auth_token)
+      signature_settings = env[SIGNATURE_SETTINGS_ENV_KEY]
+      secret = signature_settings ? @shared_key_secret : (@auth_token || get_auth_token(params['AccountSid']))
+      return missing_shared_key_secret_response if secret.nil?
+
+      validator = Twilio::Security::RequestValidator.new(secret)
       signature = env['HTTP_X_TWILIO_SIGNATURE'] || ''
-      if validator.validate(original_url, params, signature)
+      algorithm = Twilio::Security::RequestValidator.signature_algorithm(signature_settings)
+      if validator.validate(original_url, params, signature, algorithm)
         @app.call(env)
       else
         [
@@ -50,6 +67,14 @@ module Rack
           ['Twilio Request Validation Failed.']
         ]
       end
+    end
+
+    def missing_shared_key_secret_response
+      [
+        500,
+        { 'Content-Type' => 'text/plain' },
+        ['Twilio Request Validation Failed: no SharedKey secret configured for a SharedKey-signed request.']
+      ]
     end
 
     # Decide whether a request path needs its signature validated.
@@ -110,6 +135,6 @@ module Rack
       end
     end
 
-    private :extract_params!, :protected_path?, :decode, :remove_dot_segments
+    private :missing_shared_key_secret_response, :extract_params!, :protected_path?, :decode, :remove_dot_segments
   end
 end

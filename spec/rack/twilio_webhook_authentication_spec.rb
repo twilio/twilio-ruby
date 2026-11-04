@@ -280,4 +280,60 @@ describe Rack::TwilioWebhookAuthentication do
       expect(status).to be(200)
     end
   end
+
+  describe 'validating SharedKey (HMAC-SHA256) webhooks' do
+    let(:url) { 'https://example.com/test' }
+    let(:params) { { 'foo' => 'bar' } }
+    let(:settings) { 'key=webhooks_sharedkey_123,algorithm=HMAC_SHA256' }
+
+    def signed_request(secret, algorithm, settings_header)
+      signature = Twilio::Security::RequestValidator.new(secret).build_signature_for(url, params, algorithm)
+      request = Rack::MockRequest.env_for(url, method: 'POST', params: params)
+      request['HTTP_X_TWILIO_SIGNATURE'] = signature
+      request['HTTP_X_TWILIO_WEBHOOKS_SIGNATURE_SETTINGS'] = settings_header if settings_header
+      request
+    end
+
+    it 'should validate with the shared key secret and the algorithm from the header' do
+      middleware = Rack::TwilioWebhookAuthentication.new(@app, 'authtoken', /\/test/, shared_key_secret: 'sharedsecret')
+
+      status, = middleware.call(signed_request('sharedsecret', 'HMAC_SHA256', settings))
+
+      expect(status).to be(200)
+    end
+
+    it 'should respond 403 if the request was signed with a different secret' do
+      middleware = Rack::TwilioWebhookAuthentication.new(@app, 'authtoken', /\/test/, shared_key_secret: 'sharedsecret')
+
+      status, = middleware.call(signed_request('authtoken', 'HMAC_SHA256', settings))
+
+      expect(status).to be(403)
+    end
+
+    it 'should respond 403 for an unsupported algorithm' do
+      middleware = Rack::TwilioWebhookAuthentication.new(@app, 'authtoken', /\/test/, shared_key_secret: 'sharedsecret')
+      request = signed_request('sharedsecret', 'HMAC_SHA256', 'key=k,algorithm=HMAC_SHA512')
+
+      expect_any_instance_of(Twilio::Security::RequestValidator).to receive(:warn).with(/Unsupported webhook signature algorithm/)
+      status, = middleware.call(request)
+
+      expect(status).to be(403)
+    end
+
+    it 'should respond 500 if no shared key secret is configured' do
+      middleware = Rack::TwilioWebhookAuthentication.new(@app, 'authtoken', /\/test/)
+
+      status, = middleware.call(signed_request('sharedsecret', 'HMAC_SHA256', settings))
+
+      expect(status).to be(500)
+    end
+
+    it 'should still validate auth token requests without the header' do
+      middleware = Rack::TwilioWebhookAuthentication.new(@app, 'authtoken', /\/test/, shared_key_secret: 'sharedsecret')
+
+      status, = middleware.call(signed_request('authtoken', nil, nil))
+
+      expect(status).to be(200)
+    end
+  end
 end
