@@ -25,14 +25,14 @@ module Twilio
                             # @param [friendly_name]: [String] A human-readable name for the brand registration.
                             # @param [notification_email]: [String] The email address to receive notifications about the registration.
                             # @param [business_name]: [String] The legal name of the business.
-                            # @param [business_registration_authority]: [String] The authority with which the business is registered.
+                            # @param [business_registration_authority]: [String] The authority with which the business is registered. The value is validated by the service; see the Twilio docs for accepted values.
                             # @param [business_registration_number]: [String] The business registration number (e.g., EIN, CBN, ACN). Maximum 21 characters.
-                            # @param [business_industry]: [String] The industry of the business.
+                            # @param [business_industry]: [String] The industry of the business. The value is validated by the service; see the Twilio docs for accepted values.
                             # @param [business_website]: [String] The business website URL (must use https://).
-                            # @param [business_type]: [String] The type of business entity.
+                            # @param [business_type]: [String] The type of business entity. The value is validated by the service; see the Twilio docs for accepted values.
                             # @param [business_stock_symbol]: [String] The stock symbol for publicly traded companies.
-                            # @param [business_stock_exchange]: [String] The stock exchange where the business is listed.
-                            # @param [business_tax_exempt_status]: [String] Nonprofit/political organization tax-exempt status per the U.S. tax code (e.g. 501c3, 501c1, 527). A value of 527 (political organization) requires a Campaign Verify token in brandExternalVettingToken.
+                            # @param [business_stock_exchange]: [String] The stock exchange where the business is listed. The value is validated by the service; see the Twilio docs for accepted values.
+                            # @param [business_tax_exempt_status]: [String] Nonprofit/political organization tax-exempt status per the U.S. tax code (e.g. 501c3, 501c1, 527). A value of 527 (political organization) requires a Campaign Verify token in brandExternalVettingToken. The value is validated by the service; see the Twilio docs for accepted values.
                             # @param [brand_external_vetting_token]: [String] Campaign Verify token for externally vetted brands.
                             # @param [business_street_address]: [String] The street address of the business.
                             # @param [business_street_address2]: [String] Additional street address information.

@@ -1078,6 +1078,7 @@ module Twilio
                             'group_sid' => payload['group_sid'],
                             'caller_name' => payload['caller_name'],
                             'queue_time' => payload['queue_time'],
+                            'stir_verstat' => payload['stir_verstat'],
                             'trunk_sid' => payload['trunk_sid'],
                             'uri' => payload['uri'],
                             'subresource_uris' => payload['subresource_uris'],
@@ -1235,6 +1236,12 @@ module Twilio
                     # @return [String] The wait time in milliseconds before the call is placed.
                     def queue_time
                         @properties['queue_time']
+                    end
+                    
+                    ##
+                    # @return [String] The STIR/SHAKEN verification status of the call, for example `TN-Validation-Passed-A`. Empty if the incoming call had no STIR/SHAKEN information.
+                    def stir_verstat
+                        @properties['stir_verstat']
                     end
                     
                     ##

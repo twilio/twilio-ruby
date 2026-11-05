@@ -20,17 +20,17 @@ module Twilio
                 class A2PCampaignRegistrationList < ListResource
                 
                     class TrusthubV1A2pCampaignRegistrationRequest
-                            # @param [a2p_brand_registration_sid]: [String] The legacy Twilio A2P Brand SID (BN-prefixed) for the brand this campaign is registered under. This is a different identifier from the `id` returned by the Initialize Brand endpoint (which is formatted as `tri1.us1.account.AC.../registration.BU...`). Retrieve the BN brand SID via [GET /v1/a2p/BrandRegistrations/{Sid}](https://www.twilio.com/docs/messaging/api/brand-registration-resource) on `messaging.twilio.com`.
-                            # @param [messaging_service_sid]: [String] The SID of the Messaging Service.
+                            # @param [a2p_brand_registration_sid]: [String] The legacy Twilio A2P Brand SID (BN-prefixed) for the brand this campaign is registered under. This is a different identifier from the `id` returned by the Initialize Brand endpoint (which is formatted as `tri1.us1.account.AC.../registration.BU...`). Retrieve the BN brand SID via [GET /v1/a2p/BrandRegistrations/{Sid}](https://www.twilio.com/docs/messaging/api/brand-registration-resource) on `messaging.twilio.com`. This field keeps the legacy Sid name because it carries a legacy Twilio SID (BN prefix) from messaging.twilio.com.
+                            # @param [messaging_service_sid]: [String] The SID of the Messaging Service. This field keeps the legacy Sid name because it carries a legacy Twilio SID (MG prefix) from messaging.twilio.com.
                             # @param [theme_set_id]: [String] Theme ID for styling the inquiry form.
-                            # @param [use_case_categories]: [Array<String>] The categories of the messaging use case.
+                            # @param [use_case_categories]: [Array<String>] The categories of the messaging use case. The value is validated by the service; see the Twilio docs for accepted values.
                             # @param [use_case_description]: [String] A description of the messaging use case.
                             # @param [use_case_sample_message1]: [String] A sample message for the use case.
                             # @param [use_case_sample_message2]: [String] A second sample message for the use case.
                             # @param [use_case_sample_message3]: [String] A third sample message for the use case.
                             # @param [use_case_sample_message4]: [String] A fourth sample message for the use case.
                             # @param [use_case_sample_message5]: [String] A fifth sample message for the use case.
-                            # @param [use_case_opt_in_types]: [Array<String>] The opt-in methods for the use case.
+                            # @param [use_case_opt_in_types]: [Array<String>] The opt-in methods for the use case. The value is validated by the service; see the Twilio docs for accepted values.
                             # @param [use_case_opt_in_description]: [String] A description of the opt-in process.
                             # @param [has_embedded_links]: [Boolean] Whether messages will contain embedded links.
                             # @param [has_embedded_phone]: [Boolean] Whether messages will contain embedded phone numbers.

@@ -45,7 +45,7 @@ module Twilio
                     @a2p_brand_registrations ||= A2PBrandRegistrationList.new self
                 end
                 ##
-                # @param [String] id The unique identifier for the A2P Brand Registration.
+                # @param [String] id The unique identifier for the A2P Brand Registration, as returned in the `id` field when the brand registration was created.
                 # @return [Twilio::REST::Trusthub::V1::A2PBrandRegistrationEmbeddedSessionList]
                 def a2p_brand_registration_embedded_sessions(id=:unset)
                     if id.nil?
@@ -64,7 +64,7 @@ module Twilio
                     @a2p_campaign_registrations ||= A2PCampaignRegistrationList.new self
                 end
                 ##
-                # @param [String] id The unique identifier for the A2P Campaign Registration. This can be either an A2P Campaign Registration ID (formatted `tri1.us1.account.AC.../registration.BU...`) returned from the Initialize Campaign endpoint, or a Messaging Service SID (`MG...`) for campaigns created outside the embeddable.
+                # @param [String] id The unique identifier for the A2P Campaign Registration. This is the A2P Campaign Registration ID (formatted `tri1.us1.account.AC.../registration.BU...`) returned in the `id` field when the campaign registration was created. For a campaign in FAILED status, use the Messaging Service SID (`MG...`) of the campaign instead.
                 # @return [Twilio::REST::Trusthub::V1::A2PCampaignRegistrationEmbeddedSessionList]
                 def a2p_campaign_registration_embedded_sessions(id=:unset)
                     if id.nil?

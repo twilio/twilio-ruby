@@ -71,7 +71,8 @@ module Twilio
                             # @param [id]: [String] 
                             # @param [code]: [String] 
                             # @param [webview_size]: [WebviewSizeType] 
-                        attr_accessor :type, :title, :url, :phone, :id, :code, :webview_size
+                            # @param [digitable_line]: [String] 
+                        attr_accessor :type, :title, :url, :phone, :id, :code, :webview_size, :digitable_line
                         def initialize(payload)
                                 @type = payload["type"]
                                 @title = payload["title"]
@@ -80,6 +81,7 @@ module Twilio
                                 @id = payload["id"]
                                 @code = payload["code"]
                                 @webview_size = payload["webview_size"]
+                                @digitable_line = payload["digitable_line"]
                         end
                         def to_json(options = {})
                         {
@@ -90,6 +92,7 @@ module Twilio
                                 "id": @id,
                                 "code": @code,
                                 "webview_size": @webview_size,
+                                "digitable_line": @digitable_line,
                         }.to_json(options)
                         end
                     end
@@ -693,7 +696,8 @@ module Twilio
                             # @param [id]: [String] 
                             # @param [code]: [String] 
                             # @param [webview_size]: [WebviewSizeType] 
-                        attr_accessor :type, :title, :url, :phone, :id, :code, :webview_size
+                            # @param [digitable_line]: [String] 
+                        attr_accessor :type, :title, :url, :phone, :id, :code, :webview_size, :digitable_line
                         def initialize(payload)
                                 @type = payload["type"]
                                 @title = payload["title"]
@@ -702,6 +706,7 @@ module Twilio
                                 @id = payload["id"]
                                 @code = payload["code"]
                                 @webview_size = payload["webview_size"]
+                                @digitable_line = payload["digitable_line"]
                         end
                         def to_json(options = {})
                         {
@@ -712,6 +717,7 @@ module Twilio
                                 "id": @id,
                                 "code": @code,
                                 "webview_size": @webview_size,
+                                "digitable_line": @digitable_line,
                         }.to_json(options)
                         end
                     end
