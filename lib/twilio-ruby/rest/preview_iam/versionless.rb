@@ -21,27 +21,9 @@ module Twilio
                 def initialize(domain)
                     super
                     @version = 'Organizations'
-                    @accounts = nil
                     @organization = nil
-                    @role_assignments = nil
-                    @users = nil
                 end
 
-                ##
-                # @param [String] organization_sid 
-                # @return [Twilio::REST::PreviewIam::Versionless::AccountContext] if organizationSid was passed.
-                # @return [Twilio::REST::PreviewIam::Versionless::AccountList]
-                def accounts(organization_sid=:unset)
-                    if organization_sid.nil?
-                        raise ArgumentError, 'organization_sid cannot be nil'
-                    end
-
-                    if organization_sid == :unset
-                        @accounts ||= AccountList.new self
-                    else
-                        AccountContext.new(self, organization_sid)
-                    end
-                end
                 ##
                 # @param [String] organization_sid 
                 # @return [Twilio::REST::PreviewIam::Versionless::OrganizationContext] if organizationSid was passed.
@@ -55,36 +37,6 @@ module Twilio
                         @organization ||= OrganizationList.new self
                     else
                         OrganizationContext.new(self, organization_sid)
-                    end
-                end
-                ##
-                # @param [String] organization_sid 
-                # @return [Twilio::REST::PreviewIam::Versionless::RoleAssignmentContext] if organizationSid was passed.
-                # @return [Twilio::REST::PreviewIam::Versionless::RoleAssignmentList]
-                def role_assignments(organization_sid=:unset)
-                    if organization_sid.nil?
-                        raise ArgumentError, 'organization_sid cannot be nil'
-                    end
-
-                    if organization_sid == :unset
-                        @role_assignments ||= RoleAssignmentList.new self
-                    else
-                        RoleAssignmentContext.new(self, organization_sid)
-                    end
-                end
-                ##
-                # @param [String] organization_sid 
-                # @return [Twilio::REST::PreviewIam::Versionless::UserContext] if organizationSid was passed.
-                # @return [Twilio::REST::PreviewIam::Versionless::UserList]
-                def users(organization_sid=:unset)
-                    if organization_sid.nil?
-                        raise ArgumentError, 'organization_sid cannot be nil'
-                    end
-
-                    if organization_sid == :unset
-                        @users ||= UserList.new self
-                    else
-                        UserContext.new(self, organization_sid)
                     end
                 end
                 ##
