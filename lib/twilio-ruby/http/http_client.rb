@@ -3,6 +3,8 @@
 require 'faraday'
 require 'faraday/middleware'
 
+require 'twilio-ruby/http/distrusted_intermediates'
+
 module Twilio
   module HTTP
     class Client
@@ -50,7 +52,12 @@ module Twilio
           f.params = request.params.nil? ? {} : request.params
 
           @configure_connection_blocks.each { |block| block.call(f) }
-          f.adapter @adapter
+          if @adapter == :net_http
+            # Net::HTTP calls this for every certificate in the chain OpenSSL builds.
+            f.adapter(@adapter) { |http| http.verify_callback = DistrustedIntermediates.verify_callback }
+          else
+            f.adapter @adapter
+          end
         end
 
         @last_request = request
