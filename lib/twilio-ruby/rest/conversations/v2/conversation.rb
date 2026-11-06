@@ -87,7 +87,7 @@ module Twilio
                     end
 
                     class CreateConversationWithConfigRequest
-                            # @param [configuration_id]: [String] The ID of an existing configuration.
+                            # @param [configuration_id]: [String] The ID of an existing configuration. Omit it to define the configuration inline in `configuration`.
                             # @param [name]: [String] The name of the conversation.
                             # @param [configuration]: [ConversationList.CreateConversationWithConfigRequestConfiguration] 
                             # @param [participants]: [Array<ConversationList.CreateConversationWithConfigRequestParticipants>] Optional list of Participants to create with the Conversation.
@@ -112,23 +112,83 @@ module Twilio
                     end
 
                     class CreateConversationWithConfigRequestConfiguration
+                            # @param [conversation_grouping_type]: [String] Type of Conversation grouping strategy: - `GROUP_BY_PROFILE`: Groups Communications by resolved Profile from the Memory Store.   A Profile is looked up or created for `CUSTOMER` Participant types. All Communications from the same Profile are in the same Conversation, regardless of address or channel. - `GROUP_BY_PARTICIPANT_ADDRESSES`: Groups Communications by Participant addresses across all channels.   A customer using +18005550100 will be in the same Conversation whether they contact by SMS, WhatsApp, or RCS. - `GROUP_BY_PARTICIPANT_ADDRESSES_AND_CHANNEL_TYPE`: Groups Communications by both Participant addresses AND channel.   A customer using +18005550100 by SMS will be in a different Conversation than the same customer by Voice. 
+                            # @param [memory_store_id]: [String] The memory store ID that Conversation Orchestrator uses for profile resolution.
+                            # @param [channel_settings]: [Hash<String, CreateConversationWithConfigRequestConfigurationChannelSettingsValue>] Status timeouts by channel type. Capture rules can only be set on a Configuration.
+                            # @param [memory_extraction_enabled]: [Boolean] Whether memory extraction is enabled for this Conversation. Without `configurationId`, defaults to false; with it, defaults to the Configuration's value.
                             # @param [intelligence_configuration_ids]: [Array<String>] A list of Conversational Intelligence configuration IDs.
                             # @param [trait_extraction_strategy_ids]: [Array<String>] A list of Trait Extraction Strategy IDs.
                             # @param [observation_extraction_strategy_ids]: [Array<String>] A list of Observation Extraction Strategy IDs.
+                            # @param [status_callbacks]: [Array<ConversationList.CreateConversationWithConfigRequestConfigurationStatusCallbacks>] The webhook configurations for this Conversation. Overrides the Configuration's own.
                             # @param [workflows]: [Array<ConversationList.ConversationWorkflow>] The Workflows to associate with this Conversation. Overrides the Configuration's own.
-                        attr_accessor :intelligence_configuration_ids, :trait_extraction_strategy_ids, :observation_extraction_strategy_ids, :workflows
+                        attr_accessor :conversation_grouping_type, :memory_store_id, :channel_settings, :memory_extraction_enabled, :intelligence_configuration_ids, :trait_extraction_strategy_ids, :observation_extraction_strategy_ids, :status_callbacks, :workflows
                         def initialize(payload)
+                                @conversation_grouping_type = payload["conversation_grouping_type"]
+                                @memory_store_id = payload["memory_store_id"]
+                                @channel_settings = payload["channel_settings"]
+                                @memory_extraction_enabled = payload["memory_extraction_enabled"]
                                 @intelligence_configuration_ids = payload["intelligence_configuration_ids"]
                                 @trait_extraction_strategy_ids = payload["trait_extraction_strategy_ids"]
                                 @observation_extraction_strategy_ids = payload["observation_extraction_strategy_ids"]
+                                @status_callbacks = payload["status_callbacks"]
                                 @workflows = payload["workflows"]
                         end
                         def to_json(options = {})
                         {
+                                "conversationGroupingType": @conversation_grouping_type,
+                                "memoryStoreId": @memory_store_id,
+                                "channelSettings": @channel_settings,
+                                "memoryExtractionEnabled": @memory_extraction_enabled,
                                 "intelligenceConfigurationIds": @intelligence_configuration_ids,
                                 "traitExtractionStrategyIds": @trait_extraction_strategy_ids,
                                 "observationExtractionStrategyIds": @observation_extraction_strategy_ids,
+                                "statusCallbacks": @status_callbacks,
                                 "workflows": @workflows,
+                        }.to_json(options)
+                        end
+                    end
+
+                    class CreateConversationWithConfigRequestConfigurationChannelSettingsValue
+                            # @param [status_timeouts]: [CreateConversationWithConfigRequestConfigurationChannelSettingsValueStatusTimeouts] 
+                        attr_accessor :status_timeouts
+                        def initialize(payload)
+                                @status_timeouts = payload["status_timeouts"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "statusTimeouts": @status_timeouts,
+                        }.to_json(options)
+                        end
+                    end
+
+                    class CreateConversationWithConfigRequestConfigurationChannelSettingsValueStatusTimeouts
+                            # @param [inactive]: [Integer] Inactivity timeout in minutes.
+                            # @param [closed]: [Integer] Close timeout in minutes.
+                        attr_accessor :inactive, :closed
+                        def initialize(payload)
+                                @inactive = payload["inactive"]
+                                @closed = payload["closed"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "inactive": @inactive,
+                                "closed": @closed,
+                        }.to_json(options)
+                        end
+                    end
+
+                    class CreateConversationWithConfigRequestConfigurationStatusCallbacks
+                            # @param [url]: [String] Destination URL for webhooks.
+                            # @param [method]: [String] HTTP method used to invoke the webhook URL.
+                        attr_accessor :url, :method
+                        def initialize(payload)
+                                @url = payload["url"]
+                                @method = payload["method"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "url": @url,
+                                "method": @method,
                         }.to_json(options)
                         end
                     end
@@ -297,7 +357,7 @@ module Twilio
                     end
 
                     class CreateConversationWithConfigRequest
-                            # @param [configuration_id]: [String] The ID of an existing configuration.
+                            # @param [configuration_id]: [String] The ID of an existing configuration. Omit it to define the configuration inline in `configuration`.
                             # @param [name]: [String] The name of the conversation.
                             # @param [configuration]: [ConversationList.CreateConversationWithConfigRequestConfiguration] 
                             # @param [participants]: [Array<ConversationList.CreateConversationWithConfigRequestParticipants>] Optional list of Participants to create with the Conversation.
@@ -322,23 +382,83 @@ module Twilio
                     end
 
                     class CreateConversationWithConfigRequestConfiguration
+                            # @param [conversation_grouping_type]: [String] Type of Conversation grouping strategy: - `GROUP_BY_PROFILE`: Groups Communications by resolved Profile from the Memory Store.   A Profile is looked up or created for `CUSTOMER` Participant types. All Communications from the same Profile are in the same Conversation, regardless of address or channel. - `GROUP_BY_PARTICIPANT_ADDRESSES`: Groups Communications by Participant addresses across all channels.   A customer using +18005550100 will be in the same Conversation whether they contact by SMS, WhatsApp, or RCS. - `GROUP_BY_PARTICIPANT_ADDRESSES_AND_CHANNEL_TYPE`: Groups Communications by both Participant addresses AND channel.   A customer using +18005550100 by SMS will be in a different Conversation than the same customer by Voice. 
+                            # @param [memory_store_id]: [String] The memory store ID that Conversation Orchestrator uses for profile resolution.
+                            # @param [channel_settings]: [Hash<String, CreateConversationWithConfigRequestConfigurationChannelSettingsValue>] Status timeouts by channel type. Capture rules can only be set on a Configuration.
+                            # @param [memory_extraction_enabled]: [Boolean] Whether memory extraction is enabled for this Conversation. Without `configurationId`, defaults to false; with it, defaults to the Configuration's value.
                             # @param [intelligence_configuration_ids]: [Array<String>] A list of Conversational Intelligence configuration IDs.
                             # @param [trait_extraction_strategy_ids]: [Array<String>] A list of Trait Extraction Strategy IDs.
                             # @param [observation_extraction_strategy_ids]: [Array<String>] A list of Observation Extraction Strategy IDs.
+                            # @param [status_callbacks]: [Array<ConversationList.CreateConversationWithConfigRequestConfigurationStatusCallbacks>] The webhook configurations for this Conversation. Overrides the Configuration's own.
                             # @param [workflows]: [Array<ConversationList.ConversationWorkflow>] The Workflows to associate with this Conversation. Overrides the Configuration's own.
-                        attr_accessor :intelligence_configuration_ids, :trait_extraction_strategy_ids, :observation_extraction_strategy_ids, :workflows
+                        attr_accessor :conversation_grouping_type, :memory_store_id, :channel_settings, :memory_extraction_enabled, :intelligence_configuration_ids, :trait_extraction_strategy_ids, :observation_extraction_strategy_ids, :status_callbacks, :workflows
                         def initialize(payload)
+                                @conversation_grouping_type = payload["conversation_grouping_type"]
+                                @memory_store_id = payload["memory_store_id"]
+                                @channel_settings = payload["channel_settings"]
+                                @memory_extraction_enabled = payload["memory_extraction_enabled"]
                                 @intelligence_configuration_ids = payload["intelligence_configuration_ids"]
                                 @trait_extraction_strategy_ids = payload["trait_extraction_strategy_ids"]
                                 @observation_extraction_strategy_ids = payload["observation_extraction_strategy_ids"]
+                                @status_callbacks = payload["status_callbacks"]
                                 @workflows = payload["workflows"]
                         end
                         def to_json(options = {})
                         {
+                                "conversationGroupingType": @conversation_grouping_type,
+                                "memoryStoreId": @memory_store_id,
+                                "channelSettings": @channel_settings,
+                                "memoryExtractionEnabled": @memory_extraction_enabled,
                                 "intelligenceConfigurationIds": @intelligence_configuration_ids,
                                 "traitExtractionStrategyIds": @trait_extraction_strategy_ids,
                                 "observationExtractionStrategyIds": @observation_extraction_strategy_ids,
+                                "statusCallbacks": @status_callbacks,
                                 "workflows": @workflows,
+                        }.to_json(options)
+                        end
+                    end
+
+                    class CreateConversationWithConfigRequestConfigurationChannelSettingsValue
+                            # @param [status_timeouts]: [CreateConversationWithConfigRequestConfigurationChannelSettingsValueStatusTimeouts] 
+                        attr_accessor :status_timeouts
+                        def initialize(payload)
+                                @status_timeouts = payload["status_timeouts"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "statusTimeouts": @status_timeouts,
+                        }.to_json(options)
+                        end
+                    end
+
+                    class CreateConversationWithConfigRequestConfigurationChannelSettingsValueStatusTimeouts
+                            # @param [inactive]: [Integer] Inactivity timeout in minutes.
+                            # @param [closed]: [Integer] Close timeout in minutes.
+                        attr_accessor :inactive, :closed
+                        def initialize(payload)
+                                @inactive = payload["inactive"]
+                                @closed = payload["closed"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "inactive": @inactive,
+                                "closed": @closed,
+                        }.to_json(options)
+                        end
+                    end
+
+                    class CreateConversationWithConfigRequestConfigurationStatusCallbacks
+                            # @param [url]: [String] Destination URL for webhooks.
+                            # @param [method]: [String] HTTP method used to invoke the webhook URL.
+                        attr_accessor :url, :method
+                        def initialize(payload)
+                                @url = payload["url"]
+                                @method = payload["method"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "url": @url,
+                                "method": @method,
                         }.to_json(options)
                         end
                     end
@@ -507,7 +627,7 @@ module Twilio
                     end
 
                     class CreateConversationWithConfigRequest
-                            # @param [configuration_id]: [String] The ID of an existing configuration.
+                            # @param [configuration_id]: [String] The ID of an existing configuration. Omit it to define the configuration inline in `configuration`.
                             # @param [name]: [String] The name of the conversation.
                             # @param [configuration]: [ConversationList.CreateConversationWithConfigRequestConfiguration] 
                             # @param [participants]: [Array<ConversationList.CreateConversationWithConfigRequestParticipants>] Optional list of Participants to create with the Conversation.
@@ -532,23 +652,83 @@ module Twilio
                     end
 
                     class CreateConversationWithConfigRequestConfiguration
+                            # @param [conversation_grouping_type]: [String] Type of Conversation grouping strategy: - `GROUP_BY_PROFILE`: Groups Communications by resolved Profile from the Memory Store.   A Profile is looked up or created for `CUSTOMER` Participant types. All Communications from the same Profile are in the same Conversation, regardless of address or channel. - `GROUP_BY_PARTICIPANT_ADDRESSES`: Groups Communications by Participant addresses across all channels.   A customer using +18005550100 will be in the same Conversation whether they contact by SMS, WhatsApp, or RCS. - `GROUP_BY_PARTICIPANT_ADDRESSES_AND_CHANNEL_TYPE`: Groups Communications by both Participant addresses AND channel.   A customer using +18005550100 by SMS will be in a different Conversation than the same customer by Voice. 
+                            # @param [memory_store_id]: [String] The memory store ID that Conversation Orchestrator uses for profile resolution.
+                            # @param [channel_settings]: [Hash<String, CreateConversationWithConfigRequestConfigurationChannelSettingsValue>] Status timeouts by channel type. Capture rules can only be set on a Configuration.
+                            # @param [memory_extraction_enabled]: [Boolean] Whether memory extraction is enabled for this Conversation. Without `configurationId`, defaults to false; with it, defaults to the Configuration's value.
                             # @param [intelligence_configuration_ids]: [Array<String>] A list of Conversational Intelligence configuration IDs.
                             # @param [trait_extraction_strategy_ids]: [Array<String>] A list of Trait Extraction Strategy IDs.
                             # @param [observation_extraction_strategy_ids]: [Array<String>] A list of Observation Extraction Strategy IDs.
+                            # @param [status_callbacks]: [Array<ConversationList.CreateConversationWithConfigRequestConfigurationStatusCallbacks>] The webhook configurations for this Conversation. Overrides the Configuration's own.
                             # @param [workflows]: [Array<ConversationList.ConversationWorkflow>] The Workflows to associate with this Conversation. Overrides the Configuration's own.
-                        attr_accessor :intelligence_configuration_ids, :trait_extraction_strategy_ids, :observation_extraction_strategy_ids, :workflows
+                        attr_accessor :conversation_grouping_type, :memory_store_id, :channel_settings, :memory_extraction_enabled, :intelligence_configuration_ids, :trait_extraction_strategy_ids, :observation_extraction_strategy_ids, :status_callbacks, :workflows
                         def initialize(payload)
+                                @conversation_grouping_type = payload["conversation_grouping_type"]
+                                @memory_store_id = payload["memory_store_id"]
+                                @channel_settings = payload["channel_settings"]
+                                @memory_extraction_enabled = payload["memory_extraction_enabled"]
                                 @intelligence_configuration_ids = payload["intelligence_configuration_ids"]
                                 @trait_extraction_strategy_ids = payload["trait_extraction_strategy_ids"]
                                 @observation_extraction_strategy_ids = payload["observation_extraction_strategy_ids"]
+                                @status_callbacks = payload["status_callbacks"]
                                 @workflows = payload["workflows"]
                         end
                         def to_json(options = {})
                         {
+                                "conversationGroupingType": @conversation_grouping_type,
+                                "memoryStoreId": @memory_store_id,
+                                "channelSettings": @channel_settings,
+                                "memoryExtractionEnabled": @memory_extraction_enabled,
                                 "intelligenceConfigurationIds": @intelligence_configuration_ids,
                                 "traitExtractionStrategyIds": @trait_extraction_strategy_ids,
                                 "observationExtractionStrategyIds": @observation_extraction_strategy_ids,
+                                "statusCallbacks": @status_callbacks,
                                 "workflows": @workflows,
+                        }.to_json(options)
+                        end
+                    end
+
+                    class CreateConversationWithConfigRequestConfigurationChannelSettingsValue
+                            # @param [status_timeouts]: [CreateConversationWithConfigRequestConfigurationChannelSettingsValueStatusTimeouts] 
+                        attr_accessor :status_timeouts
+                        def initialize(payload)
+                                @status_timeouts = payload["status_timeouts"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "statusTimeouts": @status_timeouts,
+                        }.to_json(options)
+                        end
+                    end
+
+                    class CreateConversationWithConfigRequestConfigurationChannelSettingsValueStatusTimeouts
+                            # @param [inactive]: [Integer] Inactivity timeout in minutes.
+                            # @param [closed]: [Integer] Close timeout in minutes.
+                        attr_accessor :inactive, :closed
+                        def initialize(payload)
+                                @inactive = payload["inactive"]
+                                @closed = payload["closed"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "inactive": @inactive,
+                                "closed": @closed,
+                        }.to_json(options)
+                        end
+                    end
+
+                    class CreateConversationWithConfigRequestConfigurationStatusCallbacks
+                            # @param [url]: [String] Destination URL for webhooks.
+                            # @param [method]: [String] HTTP method used to invoke the webhook URL.
+                        attr_accessor :url, :method
+                        def initialize(payload)
+                                @url = payload["url"]
+                                @method = payload["method"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "url": @url,
+                                "method": @method,
                         }.to_json(options)
                         end
                     end
@@ -1250,6 +1430,7 @@ module Twilio
                             'trait_extraction_strategy_ids' => payload['trait_extraction_strategy_ids'],
                             'observation_extraction_strategy_ids' => payload['observation_extraction_strategy_ids'],
                             'memory_extraction_enabled' => payload['memory_extraction_enabled'],
+                            'redaction_configuration_id' => payload['redaction_configuration_id'],
                             'conversations_v1_bridge' => payload['conversations_v1_bridge'],
                             'version' => payload['version'],
                         }
@@ -1283,7 +1464,7 @@ module Twilio
                     end
                     
                     ##
-                    # @return [String] Configuration ID.
+                    # @return [String] Configuration ID. Null when the Conversation was created with an inline configuration.
                     def configuration_id
                         @properties['configuration_id']
                     end
@@ -1406,6 +1587,12 @@ module Twilio
                     # @return [Boolean] Whether memory extraction is enabled for conversations under this configuration. Defaults to false.
                     def memory_extraction_enabled
                         @properties['memory_extraction_enabled']
+                    end
+                    
+                    ##
+                    # @return [String] The ID of the redaction configuration applied to communications in this configuration's conversations.
+                    def redaction_configuration_id
+                        @properties['redaction_configuration_id']
                     end
                     
                     ##

@@ -1587,6 +1587,7 @@ module Twilio
                             'trait_extraction_strategy_ids' => payload['trait_extraction_strategy_ids'],
                             'observation_extraction_strategy_ids' => payload['observation_extraction_strategy_ids'],
                             'memory_extraction_enabled' => payload['memory_extraction_enabled'],
+                            'redaction_configuration_id' => payload['redaction_configuration_id'],
                             'conversations_v1_bridge' => payload['conversations_v1_bridge'],
                             'created_at' => Twilio.deserialize_iso8601_datetime(payload['created_at']),
                             'updated_at' => Twilio.deserialize_iso8601_datetime(payload['updated_at']),
@@ -1685,6 +1686,12 @@ module Twilio
                     # @return [Boolean] Whether memory extraction is enabled for conversations under this configuration. Defaults to false.
                     def memory_extraction_enabled
                         @properties['memory_extraction_enabled']
+                    end
+                    
+                    ##
+                    # @return [String] The ID of the redaction configuration applied to communications in this configuration's conversations.
+                    def redaction_configuration_id
+                        @properties['redaction_configuration_id']
                     end
                     
                     ##

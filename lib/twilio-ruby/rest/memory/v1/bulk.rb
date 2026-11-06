@@ -165,14 +165,35 @@ module Twilio
                         # Marshaled Properties
                         @properties = { 
                             'message' => payload['message'],
+                            'operation_id' => payload['operation_id'],
+                            'created_at' => Twilio.deserialize_iso8601_datetime(payload['created_at']),
+                            'status_url' => payload['status_url'],
                         }
                     end
 
                     
                     ##
-                    # @return [String] 
+                    # @return [String] Confirmation message for the operation.
                     def message
                         @properties['message']
+                    end
+                    
+                    ##
+                    # @return [String] The ID of an asynchronous profile domain operation.
+                    def operation_id
+                        @properties['operation_id']
+                    end
+                    
+                    ##
+                    # @return [Time] ISO 8601 timestamp when the operation was created.
+                    def created_at
+                        @properties['created_at']
+                    end
+                    
+                    ##
+                    # @return [String] URL to query the operation status.
+                    def status_url
+                        @properties['status_url']
                     end
                     
                     ##

@@ -475,9 +475,11 @@ module Twilio
                         @properties = { 
                             'import_id' => payload['import_id'],
                             'url' => payload['url'],
+                            'operation_id' => payload['operation_id'],
+                            'created_at' => Twilio.deserialize_iso8601_datetime(payload['created_at']),
+                            'status_url' => payload['status_url'],
                             'status' => payload['status'],
                             'filename' => payload['filename'],
-                            'created_at' => Twilio.deserialize_iso8601_datetime(payload['created_at']),
                             'updated_at' => Twilio.deserialize_iso8601_datetime(payload['updated_at']),
                             'file_size' => payload['file_size'] == nil ? payload['file_size'] : payload['file_size'].to_i,
                             'column_mappings' => payload['column_mappings'],
@@ -515,6 +517,24 @@ module Twilio
                     end
                     
                     ##
+                    # @return [String] The ID of an asynchronous profile domain operation.
+                    def operation_id
+                        @properties['operation_id']
+                    end
+                    
+                    ##
+                    # @return [Time] ISO 8601 timestamp when the operation was created.
+                    def created_at
+                        @properties['created_at']
+                    end
+                    
+                    ##
+                    # @return [String] URL to query the operation status.
+                    def status_url
+                        @properties['status_url']
+                    end
+                    
+                    ##
                     # @return [String] Current processing status of the import task
                     def status
                         @properties['status']
@@ -524,12 +544,6 @@ module Twilio
                     # @return [String] Original filename of the uploaded CSV
                     def filename
                         @properties['filename']
-                    end
-                    
-                    ##
-                    # @return [Time] Timestamp when the import was created
-                    def created_at
-                        @properties['created_at']
                     end
                     
                     ##

@@ -2118,9 +2118,20 @@ module Twilio
       # deepgramSmartFormat:: This parameter enables Deepgram's smart formatting feature, which automatically applies punctuation, capitalization, and formatting (e.g. numbers, dates, currency) to transcripts
       # ignoreBackchannel:: This parameter brief caller acknowledgments (e.g. "yeah", "uh-huh") are ignored and will not interrupt the agent while it is speaking.
       # events:: This parameter allows you to enable event subscriptions
+      # partial_prompt_on_hangup:: Whether the in-progress partial transcript should be reported as a prompt when the call hangs up
+      # eager_eot_threshold:: Eager end-of-turn confidence threshold, which fires before the end-of-turn threshold. The value can be between 0.3 and 0.9
+      # asr_smart_format:: Whether smart formatting should be applied to transcripts. Takes precedence over deepgramSmartFormat
+      # tts_text_normalization:: Text normalization for text-to-speech. The value can be auto, on, or off. Takes precedence over elevenlabsTextNormalization
+      # tts_language_text_normalization:: Whether language-specific text normalization should be applied for text-to-speech
+      # elevenlabs_language_text_normalization:: Legacy alias of ttsLanguageTextNormalization
+      # include_in_prompt:: Extra fields to be included in prompt messages. The value can be turn-state or prompt-segments
+      # customer_name:: Customer name sent to Conversations and Conversational Intelligence. Defaults to the caller ID
+      # application_reconnect:: Whether the WebSocket connection to the application should be reconnected if it drops during the call. Defaults to false
+      # echo_prompt_filtering:: Whether transcripts that echo the agent's own text-to-speech should be dropped. Defaults to false
+      # turn_detection:: Whether turn detection should be used to decide when the caller has finished speaking. Defaults to false
       # keyword_args:: additional attributes
-      def conversation_relay(url: nil, language: nil, tts_language: nil, transcription_language: nil, tts_provider: nil, voice: nil, transcription_provider: nil, speech_model: nil, profanity_filter: nil, dtmf_detection: nil, welcome_greeting: nil, partial_prompts: nil, welcome_greeting_interruptible: nil, interruptible: nil, preemptible: nil, hints: nil, intelligence_service: nil, report_input_during_agent_speech: nil, elevenlabs_text_normalization: nil, interrupt_sensitivity: nil, debug: nil, backgroundNoiseReduction: nil, speechTimeout: nil, deepgramSmartFormat: nil, ignoreBackchannel: nil, events: nil, **keyword_args)
-        conversation_relay = ConversationRelay.new(url: url, language: language, tts_language: tts_language, transcription_language: transcription_language, tts_provider: tts_provider, voice: voice, transcription_provider: transcription_provider, speech_model: speech_model, profanity_filter: profanity_filter, dtmf_detection: dtmf_detection, welcome_greeting: welcome_greeting, partial_prompts: partial_prompts, welcome_greeting_interruptible: welcome_greeting_interruptible, interruptible: interruptible, preemptible: preemptible, hints: hints, intelligence_service: intelligence_service, report_input_during_agent_speech: report_input_during_agent_speech, elevenlabs_text_normalization: elevenlabs_text_normalization, interrupt_sensitivity: interrupt_sensitivity, debug: debug, backgroundNoiseReduction: backgroundNoiseReduction, speechTimeout: speechTimeout, deepgramSmartFormat: deepgramSmartFormat, ignoreBackchannel: ignoreBackchannel, events: events, **keyword_args)
+      def conversation_relay(url: nil, language: nil, tts_language: nil, transcription_language: nil, tts_provider: nil, voice: nil, transcription_provider: nil, speech_model: nil, profanity_filter: nil, dtmf_detection: nil, welcome_greeting: nil, partial_prompts: nil, welcome_greeting_interruptible: nil, interruptible: nil, preemptible: nil, hints: nil, intelligence_service: nil, report_input_during_agent_speech: nil, elevenlabs_text_normalization: nil, interrupt_sensitivity: nil, debug: nil, backgroundNoiseReduction: nil, speechTimeout: nil, deepgramSmartFormat: nil, ignoreBackchannel: nil, events: nil, partial_prompt_on_hangup: nil, eager_eot_threshold: nil, asr_smart_format: nil, tts_text_normalization: nil, tts_language_text_normalization: nil, elevenlabs_language_text_normalization: nil, include_in_prompt: nil, customer_name: nil, application_reconnect: nil, echo_prompt_filtering: nil, turn_detection: nil, **keyword_args)
+        conversation_relay = ConversationRelay.new(url: url, language: language, tts_language: tts_language, transcription_language: transcription_language, tts_provider: tts_provider, voice: voice, transcription_provider: transcription_provider, speech_model: speech_model, profanity_filter: profanity_filter, dtmf_detection: dtmf_detection, welcome_greeting: welcome_greeting, partial_prompts: partial_prompts, welcome_greeting_interruptible: welcome_greeting_interruptible, interruptible: interruptible, preemptible: preemptible, hints: hints, intelligence_service: intelligence_service, report_input_during_agent_speech: report_input_during_agent_speech, elevenlabs_text_normalization: elevenlabs_text_normalization, interrupt_sensitivity: interrupt_sensitivity, debug: debug, backgroundNoiseReduction: backgroundNoiseReduction, speechTimeout: speechTimeout, deepgramSmartFormat: deepgramSmartFormat, ignoreBackchannel: ignoreBackchannel, events: events, partial_prompt_on_hangup: partial_prompt_on_hangup, eager_eot_threshold: eager_eot_threshold, asr_smart_format: asr_smart_format, tts_text_normalization: tts_text_normalization, tts_language_text_normalization: tts_language_text_normalization, elevenlabs_language_text_normalization: elevenlabs_language_text_normalization, include_in_prompt: include_in_prompt, customer_name: customer_name, application_reconnect: application_reconnect, echo_prompt_filtering: echo_prompt_filtering, turn_detection: turn_detection, **keyword_args)
 
         yield(conversation_relay) if block_given?
         append(conversation_relay)
@@ -2184,9 +2195,13 @@ module Twilio
       # voice:: Voice to be used for text-to-speech of this language
       # transcription_provider:: Provider to be used for transcription of this language
       # speech_model:: Speech model to be used for transcription of this language
+      # hints:: Phrases to help better accuracy in speech recognition of this language
+      # asr_smart_format:: Whether smart formatting should be applied to transcripts of this language
+      # tts_text_normalization:: Text normalization for text-to-speech of this language. The value can be auto, on, or off
+      # tts_language_text_normalization:: Whether language-specific text normalization should be applied for text-to-speech of this language
       # keyword_args:: additional attributes
-      def language(code: nil, tts_provider: nil, voice: nil, transcription_provider: nil, speech_model: nil, **keyword_args)
-        append(Language.new(code: code, tts_provider: tts_provider, voice: voice, transcription_provider: transcription_provider, speech_model: speech_model, **keyword_args))
+      def language(code: nil, tts_provider: nil, voice: nil, transcription_provider: nil, speech_model: nil, hints: nil, asr_smart_format: nil, tts_text_normalization: nil, tts_language_text_normalization: nil, **keyword_args)
+        append(Language.new(code: code, tts_provider: tts_provider, voice: voice, transcription_provider: transcription_provider, speech_model: speech_model, hints: hints, asr_smart_format: asr_smart_format, tts_text_normalization: tts_text_normalization, tts_language_text_normalization: tts_language_text_normalization, **keyword_args))
       end
 
       ##

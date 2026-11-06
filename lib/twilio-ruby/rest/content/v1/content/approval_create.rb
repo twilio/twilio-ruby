@@ -25,17 +25,69 @@ module Twilio
                             # @param [name]: [String] Name of the template.
                             # @param [category]: [String] A WhatsApp recognized template category.
                             # @param [send_ttl_seconds]: [String] Time-to-live in seconds for attempting to send a message with this Content
-                        attr_accessor :name, :category, :send_ttl_seconds
+                            # @param [bid_amount]: [String] Maximum price per 1,000 message deliveries, expressed in the WABA currency's smallest unit (cents for USD). Only valid for MARKETING templates onboarded to Max Pricing.
+                        attr_accessor :name, :category, :send_ttl_seconds, :bid_amount
                         def initialize(payload)
                                 @name = payload["name"]
                                 @category = payload["category"]
                                 @send_ttl_seconds = payload["send_ttl_seconds"]
+                                @bid_amount = payload["bid_amount"]
                         end
                         def to_json(options = {})
                         {
                                 "name": @name,
                                 "category": @category,
                                 "send_ttl_seconds": @send_ttl_seconds,
+                                "bid_amount": @bid_amount,
+                        }.to_json(options)
+                        end
+                    end
+
+                    class ContentApprovalUpdateRequest
+                            # @param [bid_amount]: [String] Maximum price per 1,000 message deliveries, expressed in the WABA currency's smallest unit (cents for USD). Only valid for MARKETING templates onboarded to Max Pricing.
+                        attr_accessor :bid_amount
+                        def initialize(payload)
+                                @bid_amount = payload["bid_amount"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "bid_amount": @bid_amount,
+                        }.to_json(options)
+                        end
+                    end
+
+
+                    class ContentApprovalRequest
+                            # @param [name]: [String] Name of the template.
+                            # @param [category]: [String] A WhatsApp recognized template category.
+                            # @param [send_ttl_seconds]: [String] Time-to-live in seconds for attempting to send a message with this Content
+                            # @param [bid_amount]: [String] Maximum price per 1,000 message deliveries, expressed in the WABA currency's smallest unit (cents for USD). Only valid for MARKETING templates onboarded to Max Pricing.
+                        attr_accessor :name, :category, :send_ttl_seconds, :bid_amount
+                        def initialize(payload)
+                                @name = payload["name"]
+                                @category = payload["category"]
+                                @send_ttl_seconds = payload["send_ttl_seconds"]
+                                @bid_amount = payload["bid_amount"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "name": @name,
+                                "category": @category,
+                                "send_ttl_seconds": @send_ttl_seconds,
+                                "bid_amount": @bid_amount,
+                        }.to_json(options)
+                        end
+                    end
+
+                    class ContentApprovalUpdateRequest
+                            # @param [bid_amount]: [String] Maximum price per 1,000 message deliveries, expressed in the WABA currency's smallest unit (cents for USD). Only valid for MARKETING templates onboarded to Max Pricing.
+                        attr_accessor :bid_amount
+                        def initialize(payload)
+                                @bid_amount = payload["bid_amount"]
+                        end
+                        def to_json(options = {})
+                        {
+                                "bid_amount": @bid_amount,
                         }.to_json(options)
                         end
                     end
@@ -88,6 +140,54 @@ module Twilio
                         
                         
                         response = @version.create_with_metadata('POST', @uri, headers: headers, data: content_approval_request.to_json)
+                        approval_create_instance = ApprovalCreateInstance.new(
+                            @version,
+                            response.body,
+                            content_sid: @solution[:content_sid],
+                        )
+                        ApprovalCreateInstanceMetadata.new(
+                            @version,
+                            approval_create_instance,
+                            response.headers,
+                            response.status_code
+                        )
+                    end
+
+                    ##
+                    # Update the ApprovalCreateInstance
+                    # @param [ContentApprovalUpdateRequest] content_approval_update_request 
+                    # @return [ApprovalCreateInstance] Updated ApprovalCreateInstance
+                    def update(content_approval_update_request: nil
+                    )
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        headers['Content-Type'] = 'application/json'
+                        
+                        
+                        
+                        
+                        payload = @version.update('PATCH', @uri, headers: headers, data: content_approval_update_request.to_json)
+                        ApprovalCreateInstance.new(
+                            @version,
+                            payload,
+                            content_sid: @solution[:content_sid],
+                        )
+                    end
+
+                    ##
+                    # Update the ApprovalCreateInstanceMetadata
+                    # @param [ContentApprovalUpdateRequest] content_approval_update_request 
+                    # @return [ApprovalCreateInstance] Updated ApprovalCreateInstance
+                    def update_with_metadata(content_approval_update_request: nil
+                    )
+
+                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
+                        headers['Content-Type'] = 'application/json'
+                        
+                        
+                        
+                        
+                        response = @version.update_with_metadata('PATCH', @uri, headers: headers, data: content_approval_update_request.to_json)
                         approval_create_instance = ApprovalCreateInstance.new(
                             @version,
                             response.body,
@@ -163,6 +263,7 @@ module Twilio
                             'rejection_reason' => payload['rejection_reason'],
                             'allow_category_change' => payload['allow_category_change'],
                             'send_ttl_seconds' => payload['send_ttl_seconds'],
+                            'bid_amount' => payload['bid_amount'],
                         }
                     end
 
@@ -207,6 +308,12 @@ module Twilio
                     # @return [String] Time-to-live in seconds for attempting to send a message with this Content
                     def send_ttl_seconds
                         @properties['send_ttl_seconds']
+                    end
+                    
+                    ##
+                    # @return [String] Maximum price per 1,000 message deliveries, expressed in the WABA currency's smallest unit (cents for USD). Only set for MARKETING templates onboarded to Max Pricing.
+                    def bid_amount
+                        @properties['bid_amount']
                     end
                     
                     ##

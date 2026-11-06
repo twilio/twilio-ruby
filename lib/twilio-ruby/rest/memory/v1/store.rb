@@ -613,6 +613,7 @@ module Twilio
                             'status' => payload['status'],
                             'intelligence_service_id' => payload['intelligence_service_id'],
                             'version' => payload['version'] == nil ? payload['version'] : payload['version'].to_i,
+                            'data_as_of' => Twilio.deserialize_iso8601_datetime(payload['data_as_of']),
                             'stores' => payload['stores'],
                             'meta' => payload['meta'],
                         }
@@ -679,6 +680,12 @@ module Twilio
                     # @return [String] The current version number of the Memory Store. Incremented on each successful update.
                     def version
                         @properties['version']
+                    end
+                    
+                    ##
+                    # @return [Time] The time up to which data sent to this Memory Store has been processed by downstream systems. Equals the time the Memory Store was created when no data has been processed yet. Omitted when no value is available. Represents a high water mark for ingested data.
+                    def data_as_of
+                        @properties['data_as_of']
                     end
                     
                     ##

@@ -202,6 +202,11 @@ module Twilio
                 @voice ||= Voice.new self
             end
             ##
+            # Access the Webhooks Twilio Domain
+            def webhooks
+                @webhooks ||= Webhooks.new self
+            end
+            ##
             # Access the Wireless Twilio Domain
             def wireless
                 @wireless ||= Wireless.new self
