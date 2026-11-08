@@ -56,19 +56,15 @@ describe Twilio::REST::PageMetadata do
     end
 
     it 'returns nil when no previous page information is available' do
-      response = double('Twilio::Response', status_code: 200)
-      allow(response).to receive(:[]).with('meta').and_return(nil)
-      allow(response).to receive(:[]).with('previous_page_uri').and_return(nil)
+      response = Twilio::Response.new(200, '')
       page_metadata = Twilio::REST::PageMetadata.new(@version, response)
       expect(page_metadata.previous_page_url).to be_nil
     end
 
     it 'uses meta.previous_page_url when available' do
-      response = double('Twilio::Response', status_code: 200)
-      allow(response).to receive(:[]).with('meta').and_return({ 'previous_page_url' => '/v1/resource?page=1' })
-
-      uri_double = double('URI::Generic', request_uri: '/v1/resource?page=1')
-      allow(URI).to receive(:parse).with('/v1/resource?page=1').and_return(uri_double)
+      response = Twilio::Response.new(200, JSON.generate(
+                                             'meta' => { 'previous_page_url' => 'https://api.twilio.com/v1/resource?page=1' }
+                                           ))
 
       page_metadata = Twilio::REST::PageMetadata.new(@version, response)
       expect(@domain).to receive(:absolute_url).with('/v1/resource?page=1')
@@ -76,9 +72,7 @@ describe Twilio::REST::PageMetadata do
     end
 
     it 'uses previous_page_uri when meta.previous_page_url is not available' do
-      response = double('Twilio::Response', status_code: 200)
-      allow(response).to receive(:[]).with('meta').and_return(nil)
-      allow(response).to receive(:[]).with('previous_page_uri').and_return('/v1/resource?page=1')
+      response = Twilio::Response.new(200, JSON.generate('previous_page_uri' => '/v1/resource?page=1'))
       page_metadata = Twilio::REST::PageMetadata.new(@version, response)
       expect(@domain).to receive(:absolute_url).with('/v1/resource?page=1')
       page_metadata.previous_page_url
@@ -109,21 +103,21 @@ describe Twilio::REST::PageMetadata do
 
   describe '#previous_page' do
     it 'returns nil when previous_page_url is nil' do
-      response = instance_double('Twilio::Response', status_code: 200)
+      response = Twilio::Response.new(200, '{}')
       page_metadata = Twilio::REST::PageMetadata.new(@version, response)
 
-      allow(page_metadata).to receive(:previous_page_url).and_return(nil)
+      expect(@domain).not_to receive(:request)
       expect(page_metadata.previous_page).to be_nil
     end
 
     it 'makes a GET request to the previous_page_url when available' do
-      response = instance_double('Twilio::Response', status_code: 200)
+      response = Twilio::Response.new(200, JSON.generate('previous_page_uri' => '/v1/resource?page=1'))
       page_metadata = Twilio::REST::PageMetadata.new(@version, response)
 
-      allow(page_metadata).to receive(:previous_page_url).and_return('https://api.twilio.com/v1/resource?page=1')
-      expect(@domain).to receive(:request).with('GET', 'https://api.twilio.com/v1/resource?page=1')
+      expect(@domain).to receive(:absolute_url).with('/v1/resource?page=1').twice.and_return('https://api.twilio.com/v1/resource?page=1')
+      expect(@domain).to receive(:request).with('GET', 'https://api.twilio.com/v1/resource?page=1').and_return(response)
 
-      page_metadata.previous_page
+      expect(page_metadata.previous_page).to eq(response)
     end
   end
 
