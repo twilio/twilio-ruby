@@ -63,8 +63,8 @@ describe Twilio::REST::PageMetadata do
 
     it 'uses meta.previous_page_url when available' do
       response = Twilio::Response.new(200, JSON.generate(
-        'meta' => { 'previous_page_url' => 'https://api.twilio.com/v1/resource?page=1' }
-      ))
+                                             'meta' => { 'previous_page_url' => 'https://api.twilio.com/v1/resource?page=1' }
+                                           ))
 
       page_metadata = Twilio::REST::PageMetadata.new(@version, response)
       expect(@domain).to receive(:absolute_url).with('/v1/resource?page=1')
