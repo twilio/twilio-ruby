@@ -1,13 +1,13 @@
 name: Test and Deploy
 on:
   push:
-    branches: [ '*' ]
+    branches: [ main ]
     tags: [ '*' ]
-    pull_request:
-      branches: [ main ]
-    schedule:
-      # Run automatically at 8AM PST Monday-Friday
-      - cron: '0 15 * * 1-5'
+  pull_request:
+    branches: [ main ]
+  schedule:
+    # Run automatically at 8AM PST Monday-Friday
+    - cron: '0 15 * * 1-5'
   workflow_dispatch:
 
 env:
