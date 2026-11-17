@@ -38,3 +38,4 @@ cluster-test:
 
 prettier:
 	bundle exec rubocop -A -d --cache true --parallel
+
