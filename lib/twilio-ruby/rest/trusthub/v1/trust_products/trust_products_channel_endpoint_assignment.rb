@@ -510,6 +510,10 @@ module Twilio
                             'channel_endpoint_sid' => payload['channel_endpoint_sid'],
                             'date_created' => Twilio.deserialize_iso8601_datetime(payload['date_created']),
                             'url' => payload['url'],
+                            'code' => payload['code'],
+                            'message' => payload['message'],
+                            'more_info' => payload['more_info'],
+                            'status' => payload['status'],
                         }
 
                         # Context
@@ -568,6 +572,30 @@ module Twilio
                     # @return [String] The absolute URL of the Identity resource.
                     def url
                         @properties['url']
+                    end
+                    
+                    ##
+                    # @return [String] Twilio-specific error code
+                    def code
+                        @properties['code']
+                    end
+                    
+                    ##
+                    # @return [String] Error message
+                    def message
+                        @properties['message']
+                    end
+                    
+                    ##
+                    # @return [String] Link to Error Code References
+                    def more_info
+                        @properties['more_info']
+                    end
+                    
+                    ##
+                    # @return [String] HTTP response status code
+                    def status
+                        @properties['status']
                     end
                     
                     ##

@@ -289,6 +289,7 @@ module Twilio
                             'value' => payload['value'],
                             'trait_group' => payload['trait_group'],
                             'timestamp' => Twilio.deserialize_iso8601_datetime(payload['timestamp']),
+                            'source' => payload['source'],
                         }
                     end
 
@@ -315,6 +316,12 @@ module Twilio
                     # @return [Time] The time the trait was created or last updated.
                     def timestamp
                         @properties['timestamp']
+                    end
+                    
+                    ##
+                    # @return [String] Caller-set, descriptive, untrusted provenance metadata. Must follow the {company}/{product}/{version}/* convention. \"twilio\" is a reserved company name, only usable by authenticated internal callers.
+                    def source
+                        @properties['source']
                     end
                     
                     ##

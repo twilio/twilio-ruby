@@ -24,6 +24,7 @@ module Twilio
                     @auth_token_promotion = nil
                     @bulk_consents = nil
                     @bulk_contacts = nil
+                    @compliance_signals_check = nil
                     @credentials = nil
                     @messaging_geopermissions = nil
                     @safelist = nil
@@ -44,6 +45,11 @@ module Twilio
                 # @return [Twilio::REST::Accounts::V1::BulkContactsList]
                 def bulk_contacts
                     @bulk_contacts ||= BulkContactsList.new self
+                end
+                ##
+                # @return [Twilio::REST::Accounts::V1::ComplianceSignalsCheckList]
+                def compliance_signals_check
+                    @compliance_signals_check ||= ComplianceSignalsCheckList.new self
                 end
                 ##
                 # @param [String] sid The Twilio-provided string that uniquely identifies the PublicKey resource to fetch.

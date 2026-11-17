@@ -394,12 +394,59 @@ module Twilio
       # hints:: Hints to be provided to the transcription engine
       # enable_automatic_punctuation:: Enable Automatic Punctuation
       # intelligence_service:: The SID or the unique name of the Intelligence Service to be used
+      # conversation_id:: The ID of the Conversation
+      # conversation_configuration:: The ID or the unique name of the Conversation configuration to be used
       # keyword_args:: additional attributes
-      def transcription(name: nil, track: nil, status_callback_url: nil, status_callback_method: nil, inbound_track_label: nil, outbound_track_label: nil, partial_results: nil, language_code: nil, transcription_engine: nil, profanity_filter: nil, speech_model: nil, hints: nil, enable_automatic_punctuation: nil, intelligence_service: nil, **keyword_args)
-        transcription = Transcription.new(name: name, track: track, status_callback_url: status_callback_url, status_callback_method: status_callback_method, inbound_track_label: inbound_track_label, outbound_track_label: outbound_track_label, partial_results: partial_results, language_code: language_code, transcription_engine: transcription_engine, profanity_filter: profanity_filter, speech_model: speech_model, hints: hints, enable_automatic_punctuation: enable_automatic_punctuation, intelligence_service: intelligence_service, **keyword_args)
+      def transcription(name: nil, track: nil, status_callback_url: nil, status_callback_method: nil, inbound_track_label: nil, outbound_track_label: nil, partial_results: nil, language_code: nil, transcription_engine: nil, profanity_filter: nil, speech_model: nil, hints: nil, enable_automatic_punctuation: nil, intelligence_service: nil, conversation_id: nil, conversation_configuration: nil, **keyword_args)
+        transcription = Transcription.new(name: name, track: track, status_callback_url: status_callback_url, status_callback_method: status_callback_method, inbound_track_label: inbound_track_label, outbound_track_label: outbound_track_label, partial_results: partial_results, language_code: language_code, transcription_engine: transcription_engine, profanity_filter: profanity_filter, speech_model: speech_model, hints: hints, enable_automatic_punctuation: enable_automatic_punctuation, intelligence_service: intelligence_service, conversation_id: conversation_id, conversation_configuration: conversation_configuration, **keyword_args)
 
         yield(transcription) if block_given?
         append(transcription)
+      end
+
+      ##
+      # Create a new <MediaFilter> element
+      # name:: Friendly name given to the Media Filter
+      # filter_type:: Type of filter to be applied to the media
+      # model:: Model used by the media filter
+      # track:: Track to be filtered
+      # keyword_args:: additional attributes
+      def media_filter(name: nil, filter_type: nil, model: nil, track: nil, **keyword_args)
+        media_filter = MediaFilter.new(name: name, filter_type: filter_type, model: model, track: track, **keyword_args)
+
+        yield(media_filter) if block_given?
+        append(media_filter)
+      end
+    end
+
+    ##
+    # <MediaFilter> TwiML Noun
+    class MediaFilter < TwiML
+      def initialize(**keyword_args)
+        super(**keyword_args)
+        @name = 'MediaFilter'
+
+        yield(self) if block_given?
+      end
+
+      ##
+      # Create a new <Parameter> element
+      # name:: The name of the custom parameter
+      # value:: The value of the custom parameter
+      # keyword_args:: additional attributes
+      def parameter(name: nil, value: nil, **keyword_args)
+        append(Parameter.new(name: name, value: value, **keyword_args))
+      end
+    end
+
+    ##
+    # <Parameter> TwiML Noun
+    class Parameter < TwiML
+      def initialize(**keyword_args)
+        super(**keyword_args)
+        @name = 'Parameter'
+
+        yield(self) if block_given?
       end
     end
 
@@ -429,17 +476,6 @@ module Twilio
       # keyword_args:: additional attributes
       def parameter(name: nil, value: nil, **keyword_args)
         append(Parameter.new(name: name, value: value, **keyword_args))
-      end
-    end
-
-    ##
-    # <Parameter> TwiML Noun
-    class Parameter < TwiML
-      def initialize(**keyword_args)
-        super(**keyword_args)
-        @name = 'Parameter'
-
-        yield(self) if block_given?
       end
     end
 
@@ -553,12 +589,28 @@ module Twilio
       # hints:: Hints to be provided to the transcription engine
       # enable_automatic_punctuation:: Enable Automatic Punctuation
       # intelligence_service:: The SID or the unique name of the Intelligence Service to be used
+      # conversation_id:: The ID of the Conversation
+      # conversation_configuration:: The ID or the unique name of the Conversation configuration to be used
       # keyword_args:: additional attributes
-      def transcription(name: nil, track: nil, status_callback_url: nil, status_callback_method: nil, inbound_track_label: nil, outbound_track_label: nil, partial_results: nil, language_code: nil, transcription_engine: nil, profanity_filter: nil, speech_model: nil, hints: nil, enable_automatic_punctuation: nil, intelligence_service: nil, **keyword_args)
-        transcription = Transcription.new(name: name, track: track, status_callback_url: status_callback_url, status_callback_method: status_callback_method, inbound_track_label: inbound_track_label, outbound_track_label: outbound_track_label, partial_results: partial_results, language_code: language_code, transcription_engine: transcription_engine, profanity_filter: profanity_filter, speech_model: speech_model, hints: hints, enable_automatic_punctuation: enable_automatic_punctuation, intelligence_service: intelligence_service, **keyword_args)
+      def transcription(name: nil, track: nil, status_callback_url: nil, status_callback_method: nil, inbound_track_label: nil, outbound_track_label: nil, partial_results: nil, language_code: nil, transcription_engine: nil, profanity_filter: nil, speech_model: nil, hints: nil, enable_automatic_punctuation: nil, intelligence_service: nil, conversation_id: nil, conversation_configuration: nil, **keyword_args)
+        transcription = Transcription.new(name: name, track: track, status_callback_url: status_callback_url, status_callback_method: status_callback_method, inbound_track_label: inbound_track_label, outbound_track_label: outbound_track_label, partial_results: partial_results, language_code: language_code, transcription_engine: transcription_engine, profanity_filter: profanity_filter, speech_model: speech_model, hints: hints, enable_automatic_punctuation: enable_automatic_punctuation, intelligence_service: intelligence_service, conversation_id: conversation_id, conversation_configuration: conversation_configuration, **keyword_args)
 
         yield(transcription) if block_given?
         append(transcription)
+      end
+
+      ##
+      # Create a new <MediaFilter> element
+      # name:: Friendly name given to the Media Filter
+      # filter_type:: Type of filter to be applied to the media
+      # model:: Model used by the media filter
+      # track:: Track to be filtered
+      # keyword_args:: additional attributes
+      def media_filter(name: nil, filter_type: nil, model: nil, track: nil, **keyword_args)
+        media_filter = MediaFilter.new(name: name, filter_type: filter_type, model: model, track: track, **keyword_args)
+
+        yield(media_filter) if block_given?
+        append(media_filter)
       end
 
       ##
@@ -2129,9 +2181,11 @@ module Twilio
       # application_reconnect:: Whether the WebSocket connection to the application should be reconnected if it drops during the call. Defaults to false
       # echo_prompt_filtering:: Whether transcripts that echo the agent's own text-to-speech should be dropped. Defaults to false
       # turn_detection:: Whether turn detection should be used to decide when the caller has finished speaking. Defaults to false
+      # conversation_id:: The ID of the Conversation
+      # conversation_configuration:: The ID or the unique name of the Conversation configuration to be used
       # keyword_args:: additional attributes
-      def conversation_relay(url: nil, language: nil, tts_language: nil, transcription_language: nil, tts_provider: nil, voice: nil, transcription_provider: nil, speech_model: nil, profanity_filter: nil, dtmf_detection: nil, welcome_greeting: nil, partial_prompts: nil, welcome_greeting_interruptible: nil, interruptible: nil, preemptible: nil, hints: nil, intelligence_service: nil, report_input_during_agent_speech: nil, elevenlabs_text_normalization: nil, interrupt_sensitivity: nil, debug: nil, backgroundNoiseReduction: nil, speechTimeout: nil, deepgramSmartFormat: nil, ignoreBackchannel: nil, events: nil, partial_prompt_on_hangup: nil, eager_eot_threshold: nil, asr_smart_format: nil, tts_text_normalization: nil, tts_language_text_normalization: nil, elevenlabs_language_text_normalization: nil, include_in_prompt: nil, customer_name: nil, application_reconnect: nil, echo_prompt_filtering: nil, turn_detection: nil, **keyword_args)
-        conversation_relay = ConversationRelay.new(url: url, language: language, tts_language: tts_language, transcription_language: transcription_language, tts_provider: tts_provider, voice: voice, transcription_provider: transcription_provider, speech_model: speech_model, profanity_filter: profanity_filter, dtmf_detection: dtmf_detection, welcome_greeting: welcome_greeting, partial_prompts: partial_prompts, welcome_greeting_interruptible: welcome_greeting_interruptible, interruptible: interruptible, preemptible: preemptible, hints: hints, intelligence_service: intelligence_service, report_input_during_agent_speech: report_input_during_agent_speech, elevenlabs_text_normalization: elevenlabs_text_normalization, interrupt_sensitivity: interrupt_sensitivity, debug: debug, backgroundNoiseReduction: backgroundNoiseReduction, speechTimeout: speechTimeout, deepgramSmartFormat: deepgramSmartFormat, ignoreBackchannel: ignoreBackchannel, events: events, partial_prompt_on_hangup: partial_prompt_on_hangup, eager_eot_threshold: eager_eot_threshold, asr_smart_format: asr_smart_format, tts_text_normalization: tts_text_normalization, tts_language_text_normalization: tts_language_text_normalization, elevenlabs_language_text_normalization: elevenlabs_language_text_normalization, include_in_prompt: include_in_prompt, customer_name: customer_name, application_reconnect: application_reconnect, echo_prompt_filtering: echo_prompt_filtering, turn_detection: turn_detection, **keyword_args)
+      def conversation_relay(url: nil, language: nil, tts_language: nil, transcription_language: nil, tts_provider: nil, voice: nil, transcription_provider: nil, speech_model: nil, profanity_filter: nil, dtmf_detection: nil, welcome_greeting: nil, partial_prompts: nil, welcome_greeting_interruptible: nil, interruptible: nil, preemptible: nil, hints: nil, intelligence_service: nil, report_input_during_agent_speech: nil, elevenlabs_text_normalization: nil, interrupt_sensitivity: nil, debug: nil, backgroundNoiseReduction: nil, speechTimeout: nil, deepgramSmartFormat: nil, ignoreBackchannel: nil, events: nil, partial_prompt_on_hangup: nil, eager_eot_threshold: nil, asr_smart_format: nil, tts_text_normalization: nil, tts_language_text_normalization: nil, elevenlabs_language_text_normalization: nil, include_in_prompt: nil, customer_name: nil, application_reconnect: nil, echo_prompt_filtering: nil, turn_detection: nil, conversation_id: nil, conversation_configuration: nil, **keyword_args)
+        conversation_relay = ConversationRelay.new(url: url, language: language, tts_language: tts_language, transcription_language: transcription_language, tts_provider: tts_provider, voice: voice, transcription_provider: transcription_provider, speech_model: speech_model, profanity_filter: profanity_filter, dtmf_detection: dtmf_detection, welcome_greeting: welcome_greeting, partial_prompts: partial_prompts, welcome_greeting_interruptible: welcome_greeting_interruptible, interruptible: interruptible, preemptible: preemptible, hints: hints, intelligence_service: intelligence_service, report_input_during_agent_speech: report_input_during_agent_speech, elevenlabs_text_normalization: elevenlabs_text_normalization, interrupt_sensitivity: interrupt_sensitivity, debug: debug, backgroundNoiseReduction: backgroundNoiseReduction, speechTimeout: speechTimeout, deepgramSmartFormat: deepgramSmartFormat, ignoreBackchannel: ignoreBackchannel, events: events, partial_prompt_on_hangup: partial_prompt_on_hangup, eager_eot_threshold: eager_eot_threshold, asr_smart_format: asr_smart_format, tts_text_normalization: tts_text_normalization, tts_language_text_normalization: tts_language_text_normalization, elevenlabs_language_text_normalization: elevenlabs_language_text_normalization, include_in_prompt: include_in_prompt, customer_name: customer_name, application_reconnect: application_reconnect, echo_prompt_filtering: echo_prompt_filtering, turn_detection: turn_detection, conversation_id: conversation_id, conversation_configuration: conversation_configuration, **keyword_args)
 
         yield(conversation_relay) if block_given?
         append(conversation_relay)

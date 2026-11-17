@@ -21,32 +21,6 @@ module Twilio
 
                      class RoleAssignmentList < ListResource
                 
-                    class PublicApiCreateRoleAssignmentRequest
-                            # @param [role_sid]: [String] Twilio Role Sid representing assigned role
-                            # @param [scope]: [String] Twilio Sid representing scope of this assignment
-                            # @param [identity]: [String] Twilio Sid representing identity of this assignment
-                            # @param [resource_type]: [String] The resource type for resource-level role assignments
-                            # @param [resource_id]: [String] The resource id for resource-level role assignments
-                        attr_accessor :role_sid, :scope, :identity, :resource_type, :resource_id
-                        def initialize(payload)
-                                @role_sid = payload["role_sid"]
-                                @scope = payload["scope"]
-                                @identity = payload["identity"]
-                                @resource_type = payload["resource_type"]
-                                @resource_id = payload["resource_id"]
-                        end
-                        def to_json(options = {})
-                        {
-                                "role_sid": @role_sid,
-                                "scope": @scope,
-                                "identity": @identity,
-                                "resource_type": @resource_type,
-                                "resource_id": @resource_id,
-                        }.to_json(options)
-                        end
-                    end
-
-
                     ##
                     # Initialize the RoleAssignmentList
                     # @param [Version] version Version that contains the resource
@@ -56,207 +30,10 @@ module Twilio
                         
                         # Path Solution
                         @solution = { organization_sid: organization_sid }
-                        @uri = "/#{@solution[:organization_sid]}/RoleAssignments"
+                        
                         
                     end
-                    ##
-                    # Create the RoleAssignmentInstance
-                    # @param [PublicApiCreateRoleAssignmentRequest] public_api_create_role_assignment_request 
-                    # @return [RoleAssignmentInstance] Created RoleAssignmentInstance
-                    def create(public_api_create_role_assignment_request: nil
-                    )
-
-                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
-                        headers['Content-Type'] = 'application/json'
-                        
-                        
-                        
-                         headers['Accept'] = '*/*'
-                        payload = @version.create('POST', @uri, headers: headers, data: public_api_create_role_assignment_request.to_json)
-                        RoleAssignmentInstance.new(
-                            @version,
-                            payload,
-                            organization_sid: @solution[:organization_sid],
-                        )
-                    end
-
-                    ##
-                    # Create the RoleAssignmentInstanceMetadata
-                    # @param [PublicApiCreateRoleAssignmentRequest] public_api_create_role_assignment_request 
-                    # @return [RoleAssignmentInstance] Created RoleAssignmentInstance
-                    def create_with_metadata(public_api_create_role_assignment_request: nil
-                    )
-
-                        headers = Twilio::Values.of({'Content-Type' => 'application/x-www-form-urlencoded', })
-                        headers['Content-Type'] = 'application/json'
-                        
-                        
-                        
-                         headers['Accept'] = '*/*'
-                        response = @version.create_with_metadata('POST', @uri, headers: headers, data: public_api_create_role_assignment_request.to_json)
-                        role_assignment_instance = RoleAssignmentInstance.new(
-                            @version,
-                            response.body,
-                            organization_sid: @solution[:organization_sid],
-                        )
-                        RoleAssignmentInstanceMetadata.new(
-                            @version,
-                            role_assignment_instance,
-                            response.headers,
-                            response.status_code
-                        )
-                    end
-
                 
-                    ##
-                    # Lists RoleAssignmentInstance records from the API as a list.
-                    # Unlike stream(), this operation is eager and will load `limit` records into
-                    # memory before returning.
-                    # @param [String] identity 
-                    # @param [String] scope 
-                    # @param [String] resource_type Filter by resource type for resource-level role assignments
-                    # @param [String] resource_id Filter by resource id for resource-level role assignments
-                    # @param [Integer] limit Upper limit for the number of records to return. stream()
-                    #    guarantees to never return more than limit.  Default is no limit
-                    # @param [Integer] page_size Number of records to fetch per request, when
-                    #    not set will use the default value of 50 records.  If no page_size is defined
-                    #    but a limit is defined, stream() will attempt to read the limit with the most
-                    #    efficient page size, i.e. min(limit, 1000)
-                    # @return [Array] Array of up to limit results
-                    def list(identity: :unset, scope: :unset, resource_type: :unset, resource_id: :unset, limit: nil, page_size: nil)
-                        self.stream(
-                            identity: identity,
-                            scope: scope,
-                            resource_type: resource_type,
-                            resource_id: resource_id,
-                            limit: limit,
-                            page_size: page_size
-                        ).entries
-                    end
-
-                    ##
-                    # Streams Instance records from the API as an Enumerable.
-                    # This operation lazily loads records as efficiently as possible until the limit
-                    # is reached.
-                    # @param [String] identity 
-                    # @param [String] scope 
-                    # @param [String] resource_type Filter by resource type for resource-level role assignments
-                    # @param [String] resource_id Filter by resource id for resource-level role assignments
-                    # @param [Integer] limit Upper limit for the number of records to return. stream()
-                    #    guarantees to never return more than limit.  Default is no limit
-                    # @param [Integer] page_size Number of records to fetch per request, when
-                    #    not set will use the default value of 50 records.  If no page_size is defined
-                    #    but a limit is defined, stream() will attempt to read the limit with the most
-                    #    efficient page size, i.e. min(limit, 1000)
-                    # @return [Enumerable] Enumerable that will yield up to limit results
-                    def stream(identity: :unset, scope: :unset, resource_type: :unset, resource_id: :unset, limit: nil, page_size: nil)
-                        limits = @version.read_limits(limit, page_size)
-
-                        page = self.page(
-                            identity: identity,
-                            scope: scope,
-                            resource_type: resource_type,
-                            resource_id: resource_id,
-                            page_size: limits[:page_size], )
-
-                        return [].each if page.nil?
-
-                        result = @version.stream(page, limit: limits[:limit], page_limit: limits[:page_limit])
-                        return [].each if result.nil?
-                        result
-                    end
-
-                    ##
-                    # Lists RoleAssignmentPageMetadata records from the API as a list.
-                      # @param [String] identity 
-                      # @param [String] scope 
-                      # @param [String] resource_type Filter by resource type for resource-level role assignments
-                      # @param [String] resource_id Filter by resource id for resource-level role assignments
-                    # @param [Integer] limit Upper limit for the number of records to return. stream()
-                    #    guarantees to never return more than limit.  Default is no limit
-                    # @param [Integer] page_size Number of records to fetch per request, when
-                    #    not set will use the default value of 50 records.  If no page_size is defined
-                    #    but a limit is defined, stream() will attempt to read the limit with the most
-                    #    efficient page size, i.e. min(limit, 1000)
-                    # @return [Array] Array of up to limit results
-                    def list_with_metadata(identity: :unset, scope: :unset, resource_type: :unset, resource_id: :unset, limit: nil, page_size: nil)
-                        limits = @version.read_limits(limit, page_size)
-                        params = Twilio::Values.of({
-                            'Identity' => identity,
-                            'Scope' => scope,
-                            'ResourceType' => resource_type,
-                            'ResourceId' => resource_id,
-                            
-                            'PageSize' => limits[:page_size],
-                        });
-                        headers = Twilio::Values.of({})
-
-                        response = @version.page('GET', @uri, params: params, headers: headers)
-
-                        RoleAssignmentPageMetadata.new(@version, response, @solution, limits[:limit])
-                    end
-
-                    ##
-                    # When passed a block, yields RoleAssignmentInstance records from the API.
-                    # This operation lazily loads records as efficiently as possible until the limit
-                    # is reached.
-                    def each
-                        limits = @version.read_limits
-
-                        page = self.page(page_size: limits[:page_size], )
-
-                        return [].each if page.nil?
-
-                        result = @version.stream(page,
-                            limit: limits[:limit],
-                            page_limit: limits[:page_limit])
-                        return [].each if result.nil?
-                        result.each {|x| yield x}
-                    end
-
-                    ##
-                    # Retrieve a single page of RoleAssignmentInstance records from the API.
-                    # Request is executed immediately.
-                    # @param [String] identity 
-                    # @param [String] scope 
-                    # @param [String] resource_type Filter by resource type for resource-level role assignments
-                    # @param [String] resource_id Filter by resource id for resource-level role assignments
-                    # @param [String] page_token PageToken provided by the API
-                    # @param [Integer] page_number Page Number, this value is simply for client state
-                    # @param [Integer] page_size Number of records to return, defaults to 50
-                    # @return [Page] Page of RoleAssignmentInstance
-                    def page(identity: :unset, scope: :unset, resource_type: :unset, resource_id: :unset, page_token: :unset, page_number: :unset,page_size: :unset)
-                        params = Twilio::Values.of({
-                            'Identity' => identity,
-                            'Scope' => scope,
-                            'ResourceType' => resource_type,
-                            'ResourceId' => resource_id,
-                            'PageToken' => page_token,
-                            'Page' => page_number,
-                            'PageSize' => page_size,
-                        })
-                        headers = Twilio::Values.of({})
-                        
-                        
-
-                        response = @version.page('GET', @uri, params: params, headers: headers)
-
-                        RoleAssignmentPage.new(@version, response, @solution)
-                    end
-
-                    ##
-                    # Retrieve a single page of RoleAssignmentInstance records from the API.
-                    # Request is executed immediately.
-                    # @param [String] target_url API-generated URL for the requested results page
-                    # @return [Page] Page of RoleAssignmentInstance
-                    def get_page(target_url)
-                        response = @version.domain.request(
-                            'GET',
-                            target_url
-                        )
-                    RoleAssignmentPage.new(@version, response, @solution)
-                    end
-                    
 
 
                     # Provide a user friendly representation
@@ -408,65 +185,6 @@ module Twilio
                     end
                 end
 
-                class RoleAssignmentPageMetadata < PageMetadata
-                    attr_reader :role_assignment_page
-
-                    def initialize(version, response, solution, limit)
-                        super(version, response)
-                        @role_assignment_page = []
-                        @limit = limit
-                        key = get_key(response.body)
-                        records = 0
-                        while( limit != :unset && records < limit )
-                            @role_assignment_page << RoleAssignmentListResponse.new(version, @payload, key, limit - records)
-                            @payload = self.next_page
-                            break unless @payload
-                            records += (@payload.body[key] || []).size
-                        end
-                        # Path Solution
-                        @solution = solution
-                    end
-
-                    def each
-                        @role_assignment_page.each do |record|
-                          yield record
-                        end
-                    end
-
-                    def to_s
-                      '<Twilio::REST::PreviewIam::VersionlessPageMetadata>';
-                    end
-                end
-                class RoleAssignmentListResponse < InstanceListResource
-
-                    # @param [Array<RoleAssignmentInstance>] instance
-                    # @param [Hash{String => Object}] headers
-                    # @param [Integer] status_code
-                    def initialize(version, payload, key, limit = :unset)
-                      data_list = payload.body[key]  || []
-                      if limit != :unset
-                        data_list = data_list[0, limit]
-                      end
-                      @role_assignment = data_list.map do |data|
-                        RoleAssignmentInstance.new(version, data)
-                      end
-                      @headers = payload.headers
-                      @status_code = payload.status_code
-                    end
-
-                    def role_assignment
-                        @role_assignment
-                    end
-
-                    def headers
-                      @headers
-                    end
-
-                    def status_code
-                      @status_code
-                    end
-                end
-
                 class RoleAssignmentInstance < InstanceResource
                     ##
                     # Initialize the RoleAssignmentInstance
@@ -483,12 +201,6 @@ module Twilio
                         
                         # Marshaled Properties
                         @properties = { 
-                            'sid' => payload['sid'],
-                            'role_sid' => payload['role_sid'],
-                            'scope' => payload['scope'],
-                            'identity' => payload['identity'],
-                            'resource_type' => payload['resource_type'],
-                            'resource_id' => payload['resource_id'],
                             'code' => payload['code'],
                             'message' => payload['message'],
                             'more_info' => payload['more_info'],
@@ -509,42 +221,6 @@ module Twilio
                             @instance_context = RoleAssignmentContext.new(@version , @params['organization_sid'], @params['sid'])
                         end
                         @instance_context
-                    end
-                    
-                    ##
-                    # @return [String] Twilio Role Assignment Sid representing this role assignment
-                    def sid
-                        @properties['sid']
-                    end
-                    
-                    ##
-                    # @return [String] Twilio Role Sid representing assigned role
-                    def role_sid
-                        @properties['role_sid']
-                    end
-                    
-                    ##
-                    # @return [String] Twilio Sid representing identity of this assignment
-                    def scope
-                        @properties['scope']
-                    end
-                    
-                    ##
-                    # @return [String] Twilio Sid representing scope of this assignment
-                    def identity
-                        @properties['identity']
-                    end
-                    
-                    ##
-                    # @return [String] The resource type for resource-level role assignments
-                    def resource_type
-                        @properties['resource_type']
-                    end
-                    
-                    ##
-                    # @return [String] The resource id for resource-level role assignments
-                    def resource_id
-                        @properties['resource_id']
                     end
                     
                     ##
