@@ -23,7 +23,6 @@ module Twilio
         @port = 443
         @v1 = nil
         @v2 = nil
-        @v3 = nil
       end
 
       def v1
@@ -32,10 +31,6 @@ module Twilio
 
       def v2
         @v2 ||= Numbers::V2.new self
-      end
-
-      def v3
-        @v3 ||= Numbers::V3.new self
       end
 
       ##
