@@ -21,9 +21,15 @@ module Twilio
                 def initialize(domain)
                     super
                     @version = 'v3'
+                    @message_cost_estimate = nil
                     @typing_indicator = nil
                 end
 
+                ##
+                # @return [Twilio::REST::Messaging::V3::MessageCostEstimateList]
+                def message_cost_estimate
+                    @message_cost_estimate ||= MessageCostEstimateList.new self
+                end
                 ##
                 # @return [Twilio::REST::Messaging::V3::TypingIndicatorList]
                 def typing_indicator
