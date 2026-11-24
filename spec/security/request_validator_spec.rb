@@ -194,5 +194,26 @@ describe Twilio::Security::RequestValidator do
         expect(klass::SIGNATURE_SETTINGS_HEADER).to eq('X-Twilio-Webhooks-Signature-Settings')
       end
     end
+
+    describe 'duplicate or array-valued parameters' do
+      let(:validator) { Twilio::Security::RequestValidator.new('12345') }
+      let(:url) { 'https://mycompany.com/myapp.php' }
+
+      it 'still validates a single value' do
+        signature = validator.build_signature_for(url, { 'Body' => 'hello' })
+        expect(validator.validate(url, { 'Body' => 'hello' }, signature)).to be true
+      end
+
+      it 'rejects an array replayed under a single-value signature' do
+        signature = validator.build_signature_for(url, { 'Body' => 'hello' })
+        expect(validator.validate(url, { 'Body' => %w[hello] }, signature)).to be false
+        expect(validator.validate(url, { 'Body' => %w[hello hello] }, signature)).to be false
+      end
+
+      it 'rejects nested hashes' do
+        signature = validator.build_signature_for(url, { 'a' => 'b' })
+        expect(validator.validate(url, { 'a' => { 'b' => 'c' } }, signature)).to be false
+      end
+    end
   end
 end

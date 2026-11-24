@@ -70,6 +70,13 @@ module Twilio
           params_hash = {}
         end
 
+        # Twilio signs each parameter name once. Arrays and nested hashes can collapse to the same
+        # signed string as a single value, so they must not validate.
+        if multi_valued?(params_hash)
+          warn '[Twilio] Rejecting webhook with duplicate or array-valued parameters.'
+          return false
+        end
+
         # Check signature of the url with and without port numbers
         # since signature generation on the back end is inconsistent
         valid_signature_with_port = secure_compare(build_signature_for(url_with_port, params_hash, algorithm),
@@ -110,6 +117,10 @@ module Twilio
       end
 
       private
+
+      def multi_valued?(params)
+        params.respond_to?(:values) && params.values.any? { |v| v.is_a?(Array) || v.is_a?(Hash) }
+      end
 
       # Maps an algorithm name to an OpenSSL digest name, or nil when unsupported. nil or empty means HMAC_SHA1.
       def digest_name_for(algorithm)
