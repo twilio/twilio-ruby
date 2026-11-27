@@ -49,8 +49,8 @@ module Twilio
           f.options.timeout = request.timeout || @timeout
           f.params = request.params.nil? ? {} : request.params
 
-          @configure_connection_blocks.each { |block| block.call(f) }
           f.adapter @adapter
+          @configure_connection_blocks.each { |block| block.call(f) }
         end
 
         @last_request = request

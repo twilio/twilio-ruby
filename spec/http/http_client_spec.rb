@@ -20,13 +20,32 @@ describe Twilio::HTTP::Client do
       blocks_spy.second_block_called(f)
     end
 
-    expect(Faraday).to receive(:new).and_yield(@connection).and_return(@connection)
-    allow_any_instance_of(Faraday::Connection).to receive(:send).and_return(double('response', status: 301, body: {}, headers: {}))
+    allow(Faraday).to receive(:new).and_yield(@connection).and_return(@connection)
+    allow(@connection).to receive(:send).and_return(double('response', status: 301, body: {}, headers: {}))
 
     @client.request('host', 'port', 'GET', 'url', nil, nil, {}, ['a', 'b'])
 
     expect(blocks_spy).to have_received(:first_block_called).with(@connection)
     expect(blocks_spy).to have_received(:second_block_called).with(@connection)
+  end
+
+  it 'should allow the configuration block to set the connection adapter' do
+    @client = Twilio::HTTP::Client.new
+    @connection = Faraday::Connection.new
+
+    stub_const('TestAdapter', Class.new(Faraday::Adapter))
+    Faraday::Adapter.register_middleware test_adapter: TestAdapter
+
+    @client.configure_connection do |f|
+      f.adapter :test_adapter
+    end
+
+    allow(Faraday).to receive(:new).and_yield(@connection).and_return(@connection)
+    allow(@connection).to receive(:send).and_return(double('response', status: 301, body: {}, headers: {}))
+
+    @client.request('host', 'port', 'GET', 'url', nil, nil, {}, ['a', 'b'])
+
+    expect(@connection.adapter).to eq TestAdapter
   end
 
   it 'should allow setting a global timeout' do
