@@ -1,6 +1,9 @@
 module Twilio
   module REST
     class Api < ApiBase
+      # Autoload version classes
+      autoload :V2010, File.join(__dir__, 'api', 'v2010.rb')
+
       ##
       # Account provided as the authenticating account
       def account
